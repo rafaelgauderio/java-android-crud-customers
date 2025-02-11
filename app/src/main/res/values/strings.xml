@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">cadastroCliente</string>
+    <string name="app_name">Cadastro de Clientes</string>
+    <string name="nome">Nome</string>
+    <string name="media">Média</string>
 </resources>
