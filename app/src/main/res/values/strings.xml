@@ -7,4 +7,7 @@
     <string name="nome_completo">Nome Completo</string>
     <string name="media_final">Média Final</string>
     <string name="os_valores_de_nome_e_m_dia_foram_deletados">Os valores de campos nome e média foram deletados!</string>
+    <string name="campo_nome_preenchimento_obrigatorio">Campo nome é de preenchimento obrigatório.</string>
+    <string name="nome_valor">"Nome: "</string>
+    <string name="media_valor">"Média: "</string>
 </resources>
