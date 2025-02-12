@@ -4,4 +4,6 @@
     <string name="media">Média</string>
     <string name="clean">Limpar</string>
     <string name="save">Salvar</string>
+    <string name="nome_completo">Nome Completo</string>
+    <string name="media_final">Média Final</string>
 </resources>
