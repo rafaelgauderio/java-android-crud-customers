@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
         if (average == null || average.isEmpty() || average.isBlank()) {
-            Toast.makeText(this, "Campo média é de preenchumento obrigatório", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, R.string.campo_media_preenchimento_obrigatorio, Toast.LENGTH_LONG).show();
             editTextAverage.requestFocus();
             return;
         }
@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
         try {
             averageNumber = Integer.parseInt(average);
         } catch (NumberFormatException nfe) {
-            Toast.makeText(this, "A média dever ser um valor inteiro entre zero e 100", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, R.string.media_dever_ser_um_valor_inteiro_entre_zero_e_100, Toast.LENGTH_LONG).show();
             editTextAverage.requestFocus();
             editTextAverage.setSelection(0, average.length());
             return;
