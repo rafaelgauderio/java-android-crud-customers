@@ -34,7 +34,7 @@ public class CustomerActivity extends AppCompatActivity {
 
         String name = editTextName.getText().toString();
         String nameWithoutSpace = name.trim();
-        String average = editTextAverage.getText().toString();
+
 
         if (name == null || nameWithoutSpace.isEmpty() || nameWithoutSpace.isBlank()) {
             Toast.makeText(this, R.string.campo_nome_preenchimento_obrigatorio, Toast.LENGTH_LONG).show();
@@ -42,27 +42,43 @@ public class CustomerActivity extends AppCompatActivity {
             editTextName.requestFocus();
             return;
         }
-        if (average == null || average.isEmpty() || average.isBlank()) {
+
+        String averageString = editTextAverage.getText().toString();
+        if (averageString == null || averageString.trim().isEmpty() || averageString.trim().isBlank()) {
             Toast.makeText(this, R.string.campo_media_preenchimento_obrigatorio, Toast.LENGTH_LONG).show();
             editTextAverage.requestFocus();
             return;
         }
-        int averageNumber = 0;
+        int averageNumber=0;
 
         try {
-            averageNumber = Integer.parseInt(average);
+            averageNumber = Integer.parseInt(averageString);
         } catch (NumberFormatException nfe) {
-            Toast.makeText(this, R.string.media_dever_ser_um_valor_inteiro_entre_zero_e_100, Toast.LENGTH_LONG).show();
+            Toast.makeText(this, R.string.media_deve_ser_um_valor_inteiro, Toast.LENGTH_LONG).show();
             editTextAverage.requestFocus();
-            editTextAverage.setSelection(0, average.length());
+            editTextAverage.setSelection(0, averageString.length());
             return;
         }
-        StringBuilder finalToast = new StringBuilder();
-        finalToast.append(getString(R.string.nome_valor));
-        finalToast.append(name + "\n");
-        finalToast.append(R.string.media_valor);
-        finalToast.append(averageNumber);
+        if (averageNumber <0 || averageNumber >100) {
+            Toast.makeText(this, R.string.media_deve_ser_um_valor_maior_que_zero_e_menor_que_100, Toast.LENGTH_LONG).show();
+            editTextAverage.requestFocus();
+            editTextAverage.setSelection(0, averageString.length());
+            return;
+        }
+        StringBuilder finalMessage = new StringBuilder();
+        finalMessage.append(getString(R.string.nome_valor));
+        finalMessage.append(name);
+        finalMessage.append(System.getProperty("line.separator"));
+        finalMessage.append(getString(R.string.media_valor));
+        finalMessage.append(averageNumber);
         // if everithing ok, show values on a Toast
-        Toast.makeText(this, finalToast, Toast.LENGTH_LONG).show();
+        /*Toast.makeText(this,
+                getString(R.string.nome_valor) + name + "\n" +
+                getString(R.string.media_valor) + averageNumber,
+                Toast.LENGTH_LONG).show();
+         */
+        Toast.makeText(this,
+                finalMessage.toString(),
+                Toast.LENGTH_LONG).show();
     }
 }

@@ -11,5 +11,6 @@
     <string name="nome_valor">"Nome: "</string>
     <string name="media_valor">"Média: "</string>
     <string name="campo_media_preenchimento_obrigatorio">Campo média é de preenchimento obrigatório</string>
-    <string name="media_dever_ser_um_valor_inteiro_entre_zero_e_100">A média dever ser um valor inteiro entre zero e 100</string>
+    <string name="media_deve_ser_um_valor_inteiro">A média deve ser um valor inteiro</string>
+    <string name="media_deve_ser_um_valor_maior_que_zero_e_menor_que_100">A média deve ser um valor maior que zero e menor que 100.</string>
 </resources>
