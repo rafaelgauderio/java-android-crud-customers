@@ -26,10 +26,8 @@ public class MainActivity extends AppCompatActivity {
         editTextName.setText(null);
         editTextAverage.setText(null);
         editTextName.requestFocus();
-
         //message
         Toast.makeText(this, R.string.os_valores_de_nome_e_m_dia_foram_deletados, Toast.LENGTH_LONG).show();
-
     }
 
 }
