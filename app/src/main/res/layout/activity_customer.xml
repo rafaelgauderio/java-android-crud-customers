@@ -58,17 +58,6 @@
         app:layout_constraintTop_toBottomOf="@+id/TextViewMedia" />
 
     <Button
-        android:id="@+id/buttonClean"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="cleanfields"
-        android:text="@string/clean"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/buttonSave"
-        app:layout_constraintTop_toTopOf="@+id/buttonSave" />
-
-    <Button
         android:id="@+id/buttonSave"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -79,6 +68,26 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintHorizontal_chainStyle="spread"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextMedia" />
+        app:layout_constraintTop_toBottomOf="@+id/checkBoxRestriction" />
+
+    <Button
+        android:id="@+id/buttonClean"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="cleanfields"
+        android:text="@string/clean"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/buttonSave"
+        app:layout_constraintTop_toTopOf="@+id/buttonSave" />
+
+    <CheckBox
+        android:id="@+id/checkBoxRestriction"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Possui Restrição Financeira"
+        app:layout_constraintTop_toBottomOf="@+id/editTextMedia"
+        tools:layout_editor_absoluteX="30dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -13,4 +13,7 @@
     <string name="campo_media_preenchimento_obrigatorio">Campo média é de preenchimento obrigatório</string>
     <string name="media_deve_ser_um_valor_inteiro">A média deve ser um valor inteiro</string>
     <string name="media_deve_ser_um_valor_maior_que_zero_e_menor_que_100">A média deve ser um valor maior que zero e menor que 100.</string>
+    <string name="possui_restricao">Possui Restrição Financeira</string>
+    <string name="venda_somente_vista">\nVenda somente à vista</string>
+    <string name="nao_possui_restricao_financeira">Não possui restrição financeira\nPode faturar a prazo.</string>
 </resources>

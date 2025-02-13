@@ -2,6 +2,7 @@ package com.rafaeldeluca.cadastrocliente;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -10,7 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 public class CustomerActivity extends AppCompatActivity {
 
     private EditText editTextName, editTextAverage;
-
+    private CheckBox checkBoxRestriction;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,12 +21,14 @@ public class CustomerActivity extends AppCompatActivity {
 
         editTextName = findViewById((R.id.editTextNome));
         editTextAverage = findViewById(R.id.editTextMedia);
+        checkBoxRestriction = findViewById(R.id.checkBoxRestriction);
     }
 
     public void cleanfields(View view) {
         editTextName.setText(null);
         editTextAverage.setText(null);
         editTextName.requestFocus();
+        checkBoxRestriction.setChecked(false);
         //message
         Toast.makeText(this, R.string.os_valores_de_nome_e_m_dia_foram_deletados, Toast.LENGTH_LONG).show();
     }
@@ -65,12 +68,17 @@ public class CustomerActivity extends AppCompatActivity {
             editTextAverage.setSelection(0, averageString.length());
             return;
         }
+
+        boolean haveRestriction = checkBoxRestriction.isChecked();
+
         StringBuilder finalMessage = new StringBuilder();
         finalMessage.append(getString(R.string.nome_valor));
         finalMessage.append(name);
         finalMessage.append(System.getProperty("line.separator"));
         finalMessage.append(getString(R.string.media_valor));
         finalMessage.append(averageNumber);
+        finalMessage.append( haveRestriction==true ? getString(R.string.possui_restricao) +getString(R.string.venda_somente_vista)
+                : getString(R.string.nao_possui_restricao_financeira));
         // if everithing ok, show values on a Toast
         /*Toast.makeText(this,
                 getString(R.string.nome_valor) + name + "\n" +
