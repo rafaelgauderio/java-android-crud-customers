@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,6 +13,7 @@ public class CustomerActivity extends AppCompatActivity {
 
     private EditText editTextName, editTextAverage;
     private CheckBox checkBoxRestriction;
+    private RadioGroup radioGroupClientType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,22 +24,26 @@ public class CustomerActivity extends AppCompatActivity {
         editTextName = findViewById((R.id.editTextNome));
         editTextAverage = findViewById(R.id.editTextMedia);
         checkBoxRestriction = findViewById(R.id.checkBoxRestriction);
+        radioGroupClientType = findViewById(R.id.radioGroupClientType);
     }
 
     public void cleanfields(View view) {
         editTextName.setText(null);
         editTextAverage.setText(null);
-        editTextName.requestFocus();
         checkBoxRestriction.setChecked(false);
+        radioGroupClientType.clearCheck();
+
+        editTextName.requestFocus();
         //message
-        Toast.makeText(this, R.string.os_valores_de_nome_e_m_dia_foram_deletados, Toast.LENGTH_LONG).show();
+        Toast.makeText(this, R.string.os_valores_dos_campos_foram_limpos, Toast.LENGTH_LONG).show();
     }
 
     public void saveFiedlsValues(View view) {
 
         String name = editTextName.getText().toString();
         String nameWithoutSpace = name.trim();
-
+        String averageString = editTextAverage.getText().toString();
+        int radioButtonId = radioGroupClientType.getCheckedRadioButtonId();
 
         if (name == null || nameWithoutSpace.isEmpty() || nameWithoutSpace.isBlank()) {
             Toast.makeText(this, R.string.campo_nome_preenchimento_obrigatorio, Toast.LENGTH_LONG).show();
@@ -46,7 +52,7 @@ public class CustomerActivity extends AppCompatActivity {
             return;
         }
 
-        String averageString = editTextAverage.getText().toString();
+
         if (averageString == null || averageString.trim().isEmpty() || averageString.trim().isBlank()) {
             Toast.makeText(this, R.string.campo_media_preenchimento_obrigatorio, Toast.LENGTH_LONG).show();
             editTextAverage.requestFocus();
@@ -69,6 +75,21 @@ public class CustomerActivity extends AppCompatActivity {
             return;
         }
 
+        String clientType="";
+
+        if(radioButtonId == -1) {
+            Toast.makeText(this, R.string.necessario_escolher_o_tipo_de_cliente, Toast.LENGTH_LONG).show();
+            return;
+
+        } else {
+            if (radioButtonId==R.id.radioNewClient)
+                clientType = getString(R.string.cliente_novo);
+            else if(radioButtonId==R.id.radioButtonClientReativated)
+                clientType = getString(R.string.cliente_reativado);
+                        else if (radioButtonId==R.id.radioButtonRecurringClient)
+                            clientType = getString(R.string.cliente_recorrente);
+        }
+
         boolean haveRestriction = checkBoxRestriction.isChecked();
 
         StringBuilder finalMessage = new StringBuilder();
@@ -81,12 +102,10 @@ public class CustomerActivity extends AppCompatActivity {
         finalMessage.append( haveRestriction==true
                 ? getString(R.string.possui_restricao) +getString(R.string.venda_somente_vista)
                 : getString(R.string.nao_possui_restricao_financeira));
-        // if everithing ok, show values on a Toast
-        /*Toast.makeText(this,
-                getString(R.string.nome_valor) + name + "\n" +
-                getString(R.string.media_valor) + averageNumber,
-                Toast.LENGTH_LONG).show();
-         */
+        finalMessage.append(System.getProperty("line.separator"));
+        finalMessage.append(clientType);
+
+        // if everithing ok, show fields values on a Toast
         Toast.makeText(this,
                 finalMessage.toString(),
                 Toast.LENGTH_LONG).show();

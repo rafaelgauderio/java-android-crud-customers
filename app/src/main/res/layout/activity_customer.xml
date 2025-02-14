@@ -68,7 +68,7 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintHorizontal_chainStyle="spread"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/checkBoxRestriction" />
+        app:layout_constraintTop_toBottomOf="@+id/radioGroupClientType" />
 
     <Button
         android:id="@+id/buttonClean"
@@ -88,6 +88,36 @@
         android:layout_marginTop="8dp"
         android:text="Possui Restrição Financeira"
         app:layout_constraintTop_toBottomOf="@+id/editTextMedia"
-        tools:layout_editor_absoluteX="30dp" />
+        tools:layout_editor_absoluteX="30dp"
+        tools:ignore="MissingConstraints" />
+
+    <RadioGroup
+        android:id="@+id/radioGroupClientType"
+        android:layout_width="250dp"
+        android:layout_height="150dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:orientation="vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/checkBoxRestriction">
+
+        <RadioButton
+            android:id="@+id/radioNewClient"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/cliente_novo" />
+
+        <RadioButton
+            android:id="@+id/radioButtonClientReativated"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/cliente_reativado" />
+
+        <RadioButton
+            android:id="@+id/radioButtonRecurringClient"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/cliente_recorrente" />
+    </RadioGroup>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
