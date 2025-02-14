@@ -60,13 +60,14 @@ public class CustomerActivity extends AppCompatActivity {
         editTextAverage.setText(null);
         checkBoxRestriction.setChecked(false);
         radioGroupClientType.clearCheck();
+        spinnerDivision.setSelection(0); // spiner always have a select option, can not be null
 
         editTextName.requestFocus();
         //message
         Toast.makeText(this, R.string.os_valores_dos_campos_foram_limpos, Toast.LENGTH_LONG).show();
     }
 
-    public void saveFiedlsValues(View view) {
+    public void saveFieldsValues(View view) {
 
         String name = editTextName.getText().toString();
         String nameWithoutSpace = name.trim();
@@ -118,6 +119,13 @@ public class CustomerActivity extends AppCompatActivity {
                             clientType = getString(R.string.cliente_recorrente);
         }
 
+        String division = (String) spinnerDivision.getSelectedItem();
+
+        if(division==null) {
+            Toast.makeText(this,"O spinner não carregou os dados", Toast.LENGTH_LONG).show();
+            return;
+        }
+
         boolean haveRestriction = checkBoxRestriction.isChecked();
 
         StringBuilder finalMessage = new StringBuilder();
@@ -132,6 +140,9 @@ public class CustomerActivity extends AppCompatActivity {
                 : getString(R.string.nao_possui_restricao_financeira));
         finalMessage.append(System.getProperty("line.separator"));
         finalMessage.append(clientType);
+        finalMessage.append(System.getProperty("line.separator"));
+        finalMessage.append(getString(R.string.divisao_valor));
+        finalMessage.append(division);
 
         // if everithing ok, show fields values on a Toast
         Toast.makeText(this,

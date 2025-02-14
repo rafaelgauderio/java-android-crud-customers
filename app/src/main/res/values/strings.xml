@@ -29,4 +29,6 @@
     <string name="condominio">Condomínio</string>
     <string name="escritorio">Escritório</string>
     <string name="outros">Outros</string>
+    <string name="o_spinner_nao_possui_dados">O spinner não possui dados</string>
+    <string name="divisao_valor">"Divisão: "</string>
 </resources>
