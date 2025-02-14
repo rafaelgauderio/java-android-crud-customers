@@ -20,4 +20,5 @@
     <string name="cliente_reativado">Cliente antigo reativado</string>
     <string name="cliente_recorrente">Cliente compra com recorrência</string>
     <string name="necessario_escolher_o_tipo_de_cliente">Necessário escolher o tipo de cliente</string>
+    <string name="tipo_cliente">Tipo</string>
 </resources>

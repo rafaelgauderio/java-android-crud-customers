@@ -61,7 +61,7 @@
         android:id="@+id/buttonSave"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:onClick="saveFiedlsValues"
         android:text="@string/save"
         app:layout_constraintEnd_toStartOf="@+id/buttonClean"
@@ -74,6 +74,7 @@
         android:id="@+id/buttonClean"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:onClick="cleanfields"
         android:text="@string/clean"
         app:layout_constraintEnd_toEndOf="parent"
@@ -85,10 +86,10 @@
         android:id="@+id/checkBoxRestriction"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginStart="8dp"
         android:text="Possui Restrição Financeira"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextMedia"
-        tools:layout_editor_absoluteX="30dp"
         tools:ignore="MissingConstraints" />
 
     <RadioGroup
@@ -96,10 +97,9 @@
         android:layout_width="250dp"
         android:layout_height="150dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         android:orientation="vertical"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/checkBoxRestriction">
+        app:layout_constraintTop_toBottomOf="@+id/textViewClienteType">
 
         <RadioButton
             android:id="@+id/radioNewClient"
@@ -119,5 +119,15 @@
             android:layout_height="wrap_content"
             android:text="@string/cliente_recorrente" />
     </RadioGroup>
+
+    <TextView
+        android:id="@+id/textViewClienteType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/tipo_cliente"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/checkBoxRestriction" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
