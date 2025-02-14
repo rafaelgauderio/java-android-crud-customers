@@ -2,18 +2,24 @@ package com.rafaeldeluca.cadastrocliente;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RadioGroup;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import java.util.ArrayList;
 
 public class CustomerActivity extends AppCompatActivity {
 
     private EditText editTextName, editTextAverage;
     private CheckBox checkBoxRestriction;
     private RadioGroup radioGroupClientType;
+    private Spinner spinnerDivision;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +31,28 @@ public class CustomerActivity extends AppCompatActivity {
         editTextAverage = findViewById(R.id.editTextMedia);
         checkBoxRestriction = findViewById(R.id.checkBoxRestriction);
         radioGroupClientType = findViewById(R.id.radioGroupClientType);
+        spinnerDivision = findViewById(R.id.spinnerDivision);
+
+        insertDataSpinnerDivision ();
+    }
+
+    private void insertDataSpinnerDivision() {
+        ArrayList<String> arrayDivisions = new ArrayList<String>();
+
+        arrayDivisions.add(getString(R.string.lazer_restaurantes_bares));
+        arrayDivisions.add(getString(R.string.saude_clinicas_hospitais));
+        arrayDivisions.add(getString(R.string.comercio_lojas_supermercados));
+        arrayDivisions.add(getString(R.string.industria));
+        arrayDivisions.add(getString(R.string.condominio));
+        arrayDivisions.add(getString(R.string.escritorio));
+        arrayDivisions.add(getString(R.string.outros));
+
+        // renderizing each line of the spinner
+        ArrayAdapter<String> adapterDivisons = new ArrayAdapter<>(
+                this, android.R.layout.preference_category, arrayDivisions
+        );
+        spinnerDivision.setAdapter(adapterDivisons);
+
     }
 
     public void cleanfields(View view) {

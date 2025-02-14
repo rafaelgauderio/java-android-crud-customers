@@ -21,4 +21,12 @@
     <string name="cliente_recorrente">Cliente compra com recorrência</string>
     <string name="necessario_escolher_o_tipo_de_cliente">Necessário escolher o tipo de cliente</string>
     <string name="tipo_cliente">Tipo</string>
+    <string name="divisao">Divisão</string>
+    <string name="lazer_restaurantes_bares">Lazer (Restaurantes, Bares...)</string>
+    <string name="saude_clinicas_hospitais">Saúde (Clínicas, Hospitais...)</string>
+    <string name="comercio_lojas_supermercados">Comércio (Lojas, Supermercados...)</string>
+    <string name="industria">Indústria</string>
+    <string name="condominio">Condomínio</string>
+    <string name="escritorio">Escritório</string>
+    <string name="outros">Outros</string>
 </resources>
