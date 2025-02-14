@@ -77,7 +77,9 @@ public class CustomerActivity extends AppCompatActivity {
         finalMessage.append(System.getProperty("line.separator"));
         finalMessage.append(getString(R.string.media_valor));
         finalMessage.append(averageNumber);
-        finalMessage.append( haveRestriction==true ? getString(R.string.possui_restricao) +getString(R.string.venda_somente_vista)
+        finalMessage.append(System.getProperty("line.separator"));
+        finalMessage.append( haveRestriction==true
+                ? getString(R.string.possui_restricao) +getString(R.string.venda_somente_vista)
                 : getString(R.string.nao_possui_restricao_financeira));
         // if everithing ok, show values on a Toast
         /*Toast.makeText(this,
