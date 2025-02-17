@@ -32,30 +32,39 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/TextViewName" />
 
-    <TextView
-        android:id="@+id/TextViewMedia"
+    <CheckBox
+        android:id="@+id/checkBoxRestriction"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="@string/media"
+        android:text="Possui Restrição Financeira"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextNome" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextRazao"
+        tools:ignore="MissingConstraints" />
 
-    <EditText
-        android:id="@+id/editTextMedia"
-        android:layout_width="0dp"
-        android:layout_height="49dp"
+    <TextView
+        android:id="@+id/textViewDivision"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="8dp"
-        android:ems="10"
-        android:hint="@string/media_final"
-        android:inputType="number"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        android:layout_marginTop="8dp"
+        android:text="@string/divisao"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/TextViewMedia" />
+        app:layout_constraintTop_toBottomOf="@+id/radioGroupClientType" />
+
+    <Button
+        android:id="@+id/buttonSave"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="36dp"
+        android:onClick="saveFieldsValues"
+        android:text="@string/save"
+        app:layout_constraintEnd_toStartOf="@+id/buttonClean"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_chainStyle="spread"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spinnerDivision" />
 
     <Button
         android:id="@+id/buttonClean"
@@ -68,34 +77,36 @@
         app:layout_constraintStart_toEndOf="@+id/buttonSave"
         app:layout_constraintTop_toTopOf="@+id/buttonSave" />
 
-    <Button
-        android:id="@+id/buttonSave"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:onClick="saveFieldsValues"
-        android:text="@string/save"
-        app:layout_constraintEnd_toStartOf="@+id/buttonClean"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintHorizontal_chainStyle="spread"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinnerDivision" />
-
-    <CheckBox
-        android:id="@+id/checkBoxRestriction"
+    <TextView
+        android:id="@+id/textViewClienteType"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:text="Possui Restrição Financeira"
+        android:layout_marginTop="20dp"
+        android:text="@string/tipo_cliente"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextMedia"
-        tools:ignore="MissingConstraints" />
+        app:layout_constraintTop_toBottomOf="@+id/checkBoxRestriction" />
+
+    <Spinner
+        android:id="@+id/spinnerDivision"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:entries="@array/divisions"
+        android:spinnerMode="dialog"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewDivision" />
 
     <RadioGroup
         android:id="@+id/radioGroupClientType"
         android:layout_width="250dp"
         android:layout_height="150dp"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="20dp"
         android:orientation="vertical"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewClienteType">
@@ -120,36 +131,25 @@
     </RadioGroup>
 
     <TextView
-        android:id="@+id/textViewClienteType"
+        android:id="@+id/textViewRazao"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:text="@string/tipo_cliente"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/checkBoxRestriction" />
-
-    <Spinner
-        android:id="@+id/spinnerDivision"
-        android:layout_width="0dp"
-        android:layout_height="48dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:spinnerMode="dialog"
-        android:entries="@array/divisions"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:text="@string/razao"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewDivision" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextNome" />
 
-    <TextView
-        android:id="@+id/textViewDivision"
+    <EditText
+        android:id="@+id/editTextRazao"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:text="@string/divisao"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:inputType="text"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/radioGroupClientType" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewRazao" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

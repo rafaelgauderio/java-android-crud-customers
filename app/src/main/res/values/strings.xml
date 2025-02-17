@@ -1,18 +1,13 @@
 <resources>
     <string name="app_name">Cadastro de Clientes</string>
-    <string name="nome">Nome</string>
-    <string name="media">Média</string>
+    <string name="nome">Nome/Comprador</string>
     <string name="clean">Limpar</string>
     <string name="save">Salvar</string>
     <string name="nome_completo">Nome Completo</string>
-    <string name="media_final">Média Final</string>
     <string name="os_valores_dos_campos_foram_limpos">Os valores de todos os campos foram deletados!</string>
     <string name="campo_nome_preenchimento_obrigatorio">Campo nome é de preenchimento obrigatório.</string>
     <string name="nome_valor">"Nome: "</string>
-    <string name="media_valor">"Média: "</string>
-    <string name="campo_media_preenchimento_obrigatorio">Campo média é de preenchimento obrigatório</string>
-    <string name="media_deve_ser_um_valor_inteiro">A média deve ser um valor inteiro</string>
-    <string name="media_deve_ser_um_valor_maior_que_zero_e_menor_que_100">A média deve ser um valor maior que zero e menor que 100.</string>
+    <string name="campo_razao_preenchimento_obrigatorio">Razão Social é de preenchimento obrigatório</string>
     <string name="possui_restricao">Possui Restrição Financeira</string>
     <string name="venda_somente_vista">\nVenda somente à vista</string>
     <string name="nao_possui_restricao_financeira">Não possui restrição financeira\nPode faturar a prazo.</string>
@@ -31,4 +26,7 @@
     <string name="outros">Outros</string>
     <string name="o_spinner_nao_possui_dados">O spinner não possui dados</string>
     <string name="divisao_valor">"Divisão: "</string>
+    <string name="razao_social">Razão Social\n</string>
+    <string name="razao">Razão Social</string>
+    <string name="razao_social_edit">Razão Social</string>
 </resources>

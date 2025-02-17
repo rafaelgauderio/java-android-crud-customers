@@ -15,7 +15,8 @@ import java.util.ArrayList;
 
 public class CustomerActivity extends AppCompatActivity {
 
-    private EditText editTextName, editTextAverage;
+    private EditText editTextName;
+    private EditText editTextRazao;
     private CheckBox checkBoxRestriction;
     private RadioGroup radioGroupClientType;
     private Spinner spinnerDivision;
@@ -28,7 +29,7 @@ public class CustomerActivity extends AppCompatActivity {
         setContentView(R.layout.activity_customer);
 
         editTextName = findViewById((R.id.editTextNome));
-        editTextAverage = findViewById(R.id.editTextMedia);
+        editTextRazao = findViewById(R.id.editTextRazao);
         checkBoxRestriction = findViewById(R.id.checkBoxRestriction);
         radioGroupClientType = findViewById(R.id.radioGroupClientType);
         spinnerDivision = findViewById(R.id.spinnerDivision);
@@ -59,7 +60,7 @@ public class CustomerActivity extends AppCompatActivity {
 
     public void cleanfields(View view) {
         editTextName.setText(null);
-        editTextAverage.setText(null);
+        editTextRazao.setText(null);
         checkBoxRestriction.setChecked(false);
         radioGroupClientType.clearCheck();
         spinnerDivision.setSelection(0); // spiner always have a select option, can not be null
@@ -73,7 +74,9 @@ public class CustomerActivity extends AppCompatActivity {
 
         String name = editTextName.getText().toString();
         String nameWithoutSpace = name.trim();
-        String averageString = editTextAverage.getText().toString();
+        String razao = editTextRazao.getText().toString();
+        String razaoWithoutSpace = razao.trim();
+
         int radioButtonId = radioGroupClientType.getCheckedRadioButtonId();
 
         if (name == null || nameWithoutSpace.isEmpty() || nameWithoutSpace.isBlank()) {
@@ -83,26 +86,9 @@ public class CustomerActivity extends AppCompatActivity {
             return;
         }
 
-
-        if (averageString == null || averageString.trim().isEmpty() || averageString.trim().isBlank()) {
-            Toast.makeText(this, R.string.campo_media_preenchimento_obrigatorio, Toast.LENGTH_LONG).show();
-            editTextAverage.requestFocus();
-            return;
-        }
-        int averageNumber=0;
-
-        try {
-            averageNumber = Integer.parseInt(averageString);
-        } catch (NumberFormatException nfe) {
-            Toast.makeText(this, R.string.media_deve_ser_um_valor_inteiro, Toast.LENGTH_LONG).show();
-            editTextAverage.requestFocus();
-            editTextAverage.setSelection(0, averageString.length());
-            return;
-        }
-        if (averageNumber <0 || averageNumber >100) {
-            Toast.makeText(this, R.string.media_deve_ser_um_valor_maior_que_zero_e_menor_que_100, Toast.LENGTH_LONG).show();
-            editTextAverage.requestFocus();
-            editTextAverage.setSelection(0, averageString.length());
+        if(razao ==null || razaoWithoutSpace.isEmpty() || razaoWithoutSpace.isBlank()) {
+            Toast.makeText(this, R.string.campo_razao_preenchimento_obrigatorio, Toast.LENGTH_LONG).show();
+            editTextRazao.requestFocus();
             return;
         }
 
@@ -134,8 +120,8 @@ public class CustomerActivity extends AppCompatActivity {
         finalMessage.append(getString(R.string.nome_valor));
         finalMessage.append(name);
         finalMessage.append(System.getProperty("line.separator"));
-        finalMessage.append(getString(R.string.media_valor));
-        finalMessage.append(averageNumber);
+        finalMessage.append(getString(R.string.razao_social));
+        finalMessage.append(razao);
         finalMessage.append(System.getProperty("line.separator"));
         finalMessage.append( haveRestriction==true
                 ? getString(R.string.possui_restricao) +getString(R.string.venda_somente_vista)
