@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="divisions">
+        <item>@string/comercio</item>
+        <item>@string/condominio</item>
+        <item>@string/escritorio</item>
+        <item>@string/industria</item>
+        <item>@string/lazer</item>
+        <item>@string/saude</item>
+        <item>@string/outros</item>
+    </string-array >
+</resources>

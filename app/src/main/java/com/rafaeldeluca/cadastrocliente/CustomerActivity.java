@@ -33,15 +33,15 @@ public class CustomerActivity extends AppCompatActivity {
         radioGroupClientType = findViewById(R.id.radioGroupClientType);
         spinnerDivision = findViewById(R.id.spinnerDivision);
 
-        insertDataSpinnerDivision ();
+        //insertDataSpinnerDivision ();
     }
-
+    /*
     private void insertDataSpinnerDivision() {
         ArrayList<String> arrayDivisions = new ArrayList<String>();
 
-        arrayDivisions.add(getString(R.string.lazer_restaurantes_bares));
-        arrayDivisions.add(getString(R.string.saude_clinicas_hospitais));
-        arrayDivisions.add(getString(R.string.comercio_lojas_supermercados));
+        arrayDivisions.add(getString(R.string.lazer));
+        arrayDivisions.add(getString(R.string.saude));
+        arrayDivisions.add(getString(R.string.comercio));
         arrayDivisions.add(getString(R.string.industria));
         arrayDivisions.add(getString(R.string.condominio));
         arrayDivisions.add(getString(R.string.escritorio));
@@ -54,6 +54,8 @@ public class CustomerActivity extends AppCompatActivity {
         spinnerDivision.setAdapter(adapterDivisons);
 
     }
+
+     */
 
     public void cleanfields(View view) {
         editTextName.setText(null);
