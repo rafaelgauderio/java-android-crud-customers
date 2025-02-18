@@ -20,6 +20,7 @@ public class CustomerActivity extends AppCompatActivity {
     private CheckBox checkBoxRestriction;
     private RadioGroup radioGroupClientType;
     private Spinner spinnerDivision;
+    private EditText editTextEmailComercial;
 
 
     @Override
@@ -33,6 +34,7 @@ public class CustomerActivity extends AppCompatActivity {
         checkBoxRestriction = findViewById(R.id.checkBoxRestriction);
         radioGroupClientType = findViewById(R.id.radioGroupClientType);
         spinnerDivision = findViewById(R.id.spinnerDivision);
+        editTextEmailComercial = findViewById(R.id.editTextEmailComercial);
 
         //insertDataSpinnerDivision ();
     }
@@ -61,6 +63,7 @@ public class CustomerActivity extends AppCompatActivity {
     public void cleanfields(View view) {
         editTextName.setText(null);
         editTextRazao.setText(null);
+        editTextEmailComercial.setText(null);
         checkBoxRestriction.setChecked(false);
         radioGroupClientType.clearCheck();
         spinnerDivision.setSelection(0); // spiner always have a select option, can not be null
@@ -76,6 +79,7 @@ public class CustomerActivity extends AppCompatActivity {
         String nameWithoutSpace = name.trim();
         String razao = editTextRazao.getText().toString();
         String razaoWithoutSpace = razao.trim();
+        String email = editTextEmailComercial.getText().toString();
 
         int radioButtonId = radioGroupClientType.getCheckedRadioButtonId();
 
@@ -89,6 +93,12 @@ public class CustomerActivity extends AppCompatActivity {
         if(razao ==null || razaoWithoutSpace.isEmpty() || razaoWithoutSpace.isBlank()) {
             Toast.makeText(this, R.string.campo_razao_preenchimento_obrigatorio, Toast.LENGTH_LONG).show();
             editTextRazao.requestFocus();
+            return;
+        }
+
+        if(email ==null || email.trim().isBlank() || email.trim().isBlank()) {
+            Toast.makeText(this, R.string.campo_email_de_preenchimento_obrigatorio, Toast.LENGTH_LONG).show();
+            editTextEmailComercial.requestFocus();
             return;
         }
 
@@ -122,6 +132,9 @@ public class CustomerActivity extends AppCompatActivity {
         finalMessage.append(System.getProperty("line.separator"));
         finalMessage.append(getString(R.string.razao_valor));
         finalMessage.append(razao);
+        finalMessage.append(System.getProperty("line.separator"));
+        finalMessage.append(getString(R.string.email_valor));
+        finalMessage.append(email);
         finalMessage.append(System.getProperty("line.separator"));
         finalMessage.append( haveRestriction==true
                 ? getString(R.string.possui_restricao) +getString(R.string.venda_somente_vista)

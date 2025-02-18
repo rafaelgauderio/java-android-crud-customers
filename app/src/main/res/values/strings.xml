@@ -15,7 +15,7 @@
     <string name="cliente_reativado">Cliente antigo reativado</string>
     <string name="cliente_recorrente">Cliente compra com recorrência</string>
     <string name="necessario_escolher_o_tipo_de_cliente">Necessário escolher o tipo de cliente</string>
-    <string name="tipo_cliente">Tipo</string>
+    <string name="tipo_cliente">Tipo de cliente</string>
     <string name="divisao">Divisão</string>
     <string name="lazer">Lazer (Restaurantes, Bares...)</string>
     <string name="saude">Saúde (Clínicas, Hospitais...)</string>
@@ -30,4 +30,8 @@
     <string name="razao">Razão Social</string>
     <string name="razao_social_edit">Razão Social</string>
     <string name="razao_fantasia">Razão Social ou Fantasia</string>
+    <string name="email">Email</string>
+    <string name="email_hint">Email Comercial</string>
+    <string name="campo_email_de_preenchimento_obrigatorio">Campo email é de preenchimento obrigatório!</string>
+    <string name="email_valor">"Email: "</string>
 </resources>
