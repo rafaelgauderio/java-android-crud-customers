@@ -120,7 +120,7 @@ public class CustomerActivity extends AppCompatActivity {
         finalMessage.append(getString(R.string.nome_valor));
         finalMessage.append(name);
         finalMessage.append(System.getProperty("line.separator"));
-        finalMessage.append(getString(R.string.razao_social));
+        finalMessage.append(getString(R.string.razao_valor));
         finalMessage.append(razao);
         finalMessage.append(System.getProperty("line.separator"));
         finalMessage.append( haveRestriction==true

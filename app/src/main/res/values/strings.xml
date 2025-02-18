@@ -26,7 +26,8 @@
     <string name="outros">Outros</string>
     <string name="o_spinner_nao_possui_dados">O spinner não possui dados</string>
     <string name="divisao_valor">"Divisão: "</string>
-    <string name="razao_social">Razão Social\n</string>
+    <string name="razao_valor">"Razão Social: "</string>
     <string name="razao">Razão Social</string>
     <string name="razao_social_edit">Razão Social</string>
+    <string name="razao_fantasia">Razão Social ou Fantasia</string>
 </resources>
