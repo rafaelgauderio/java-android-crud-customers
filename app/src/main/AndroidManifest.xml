@@ -23,8 +23,7 @@
         </activity>
         <activity
             android:name=".CustomerActivity"
-            android:exported="false">
-        </activity>
+            android:exported="false"></activity>
     </application>
 
 </manifest>
