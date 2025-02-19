@@ -45,8 +45,8 @@ public class CustomersActivity extends AppCompatActivity {
         boolean restriction;
         Type type;
         Type[] valuesCustomersType = Type.values();
-
-        for (int index = 0; customersBuyerName.length > index; index++) {
+        int index =0;
+        for (String s : customersBuyerName) {
             if (customersRestriction[index] == 1) {
                 restriction = true;
             } else {
@@ -59,6 +59,7 @@ public class CustomersActivity extends AppCompatActivity {
                     restriction, type, customersDivision[index]);
 
             customersList.add(customer);
+            index++;
         } // end for
 
         ArrayAdapter<Customer> customerAdapter = new ArrayAdapter<>(this,
