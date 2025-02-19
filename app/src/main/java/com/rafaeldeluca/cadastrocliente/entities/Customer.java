@@ -11,7 +11,6 @@ public class Customer implements Serializable {
     private String email;
     private boolean restriction;
     private Type type;
-
     private int division;
 
     public Customer(String buyerName, String corporateReason, String email, boolean restriction, Type type, int division) {
@@ -80,6 +79,5 @@ public class Customer implements Serializable {
                 restriction + "\n" +
                 type + "\n" +
                 division;
-
     }
 }

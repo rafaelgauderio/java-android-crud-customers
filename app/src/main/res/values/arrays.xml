@@ -8,5 +8,84 @@
         <item>@string/lazer</item>
         <item>@string/saude</item>
         <item>@string/outros</item>
-    </string-array >
+    </string-array>
+
+    <string-array name="customers_buyers_name">
+        <item>Rafael de luca</item>
+        <item>Carolina Silva</item>
+        <item>Luciana Vieira</item>
+        <item>Claudia Lima</item>
+        <item>Atena Souza</item>
+        <item>Larissa Paz</item>
+        <item>Hanibal Pereira</item>
+        <item>Artur Paiva</item>
+        <item>Rubens Fonseca</item>
+        <item>Letícia Heck</item>
+    </string-array>
+
+    <string-array name="customers_corporate_reason">
+        <item>Grendene SA</item>
+        <item>Gerdau SA</item>
+        <item>Petrobras SA</item>
+        <item>Vale SA</item>
+        <item>Bar do Tião ltda</item>
+        <item>Restaurante Mangiare ltda</item>
+        <item>Hotel Baixo Custo ltda</item>
+        <item>Itau SA</item>
+        <item>Bradesco SA</item>
+        <item>Sicredi SA</item>
+    </string-array>
+
+    <string-array name="customers_email">
+        <item>rafael.luca@gmail.com</item>
+        <item>carolina.silva@gmail.com</item>
+        <item>luciana.vieira@bol.com.br</item>
+        <item>claudia.lima@gmail.com</item>
+        <item>atena.souza@outlook.com</item>
+        <item>larissa.paz@gmail.com</item>
+        <item>habibal35@gmail.com</item>
+        <item>artur.paiva@ig.com.br</item>
+        <item>rubens.fonseca@globo.com</item>
+        <item>leticia.heck@gmail.com</item>
+    </string-array>
+
+    <string-array name="customers_restriction">
+        <item>1</item>
+        <item>0</item>
+        <item>0</item>
+        <item>0</item>
+        <item>1</item>
+        <item>1</item>
+        <item>1</item>
+        <item>0</item>
+        <item>1</item>
+        <item>0</item>
+    </string-array>
+
+    <string-array name="customers_type">
+        <item>2</item>
+        <item>1</item>
+        <item>0</item>
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>1</item>
+        <item>1</item>
+        <item>2</item>
+        <item>0</item>
+    </string-array>
+
+    <string-array name="customers_divison">
+        <item>6</item>
+        <item>5</item>
+        <item>4</item>
+        <item>3</item>
+        <item>2</item>
+        <item>1</item>
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+
 </resources>
