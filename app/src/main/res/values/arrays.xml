@@ -49,7 +49,7 @@
         <item>leticia.heck@gmail.com</item>
     </string-array>
 
-    <string-array name="customers_restriction">
+    <integer-array name="customers_restriction">
         <item>1</item>
         <item>0</item>
         <item>0</item>
@@ -60,9 +60,9 @@
         <item>0</item>
         <item>1</item>
         <item>0</item>
-    </string-array>
+    </integer-array>
 
-    <string-array name="customers_type">
+    <integer-array name="customers_type">
         <item>2</item>
         <item>1</item>
         <item>0</item>
@@ -73,9 +73,9 @@
         <item>1</item>
         <item>2</item>
         <item>0</item>
-    </string-array>
+    </integer-array>
 
-    <string-array name="customers_divison">
+    <integer-array name="customers_divison">
         <item>6</item>
         <item>5</item>
         <item>4</item>
@@ -86,6 +86,6 @@
         <item>1</item>
         <item>2</item>
         <item>3</item>
-    </string-array>
+    </integer-array>
 
 </resources>
