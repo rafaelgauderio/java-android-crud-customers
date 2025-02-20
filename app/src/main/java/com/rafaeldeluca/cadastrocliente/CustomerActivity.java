@@ -16,7 +16,7 @@ import java.util.ArrayList;
 public class CustomerActivity extends AppCompatActivity {
 
     private EditText editTextName;
-    private EditText editTextRazao;
+    private EditText editTextReason;
     private CheckBox checkBoxRestriction;
     private RadioGroup radioGroupClientType;
     private Spinner spinnerDivision;
@@ -30,7 +30,7 @@ public class CustomerActivity extends AppCompatActivity {
         setContentView(R.layout.activity_customer);
 
         editTextName = findViewById((R.id.editTextNome));
-        editTextRazao = findViewById(R.id.editTextRazao);
+        editTextReason = findViewById(R.id.editTextReason);
         checkBoxRestriction = findViewById(R.id.checkBoxRestriction);
         radioGroupClientType = findViewById(R.id.radioGroupClientType);
         spinnerDivision = findViewById(R.id.spinnerDivision);
@@ -62,7 +62,7 @@ public class CustomerActivity extends AppCompatActivity {
 
     public void cleanfields(View view) {
         editTextName.setText(null);
-        editTextRazao.setText(null);
+        editTextReason.setText(null);
         editTextEmailComercial.setText(null);
         checkBoxRestriction.setChecked(false);
         radioGroupClientType.clearCheck();
@@ -77,8 +77,8 @@ public class CustomerActivity extends AppCompatActivity {
 
         String name = editTextName.getText().toString();
         String nameWithoutSpace = name.trim();
-        String razao = editTextRazao.getText().toString();
-        String razaoWithoutSpace = razao.trim();
+        String reason = editTextReason.getText().toString();
+        String reasonWithoutSpace = reason.trim();
         String email = editTextEmailComercial.getText().toString();
 
         int radioButtonId = radioGroupClientType.getCheckedRadioButtonId();
@@ -90,9 +90,9 @@ public class CustomerActivity extends AppCompatActivity {
             return;
         }
 
-        if(razao ==null || razaoWithoutSpace.isEmpty() || razaoWithoutSpace.isBlank()) {
+        if(reason ==null || reasonWithoutSpace.isEmpty() || reasonWithoutSpace.isBlank()) {
             Toast.makeText(this, R.string.campo_razao_preenchimento_obrigatorio, Toast.LENGTH_LONG).show();
-            editTextRazao.requestFocus();
+            editTextReason.requestFocus();
             return;
         }
 
@@ -131,7 +131,7 @@ public class CustomerActivity extends AppCompatActivity {
         finalMessage.append(name);
         finalMessage.append(System.getProperty("line.separator"));
         finalMessage.append(getString(R.string.razao_valor));
-        finalMessage.append(razao);
+        finalMessage.append(reason);
         finalMessage.append(System.getProperty("line.separator"));
         finalMessage.append(getString(R.string.email_valor));
         finalMessage.append(email);

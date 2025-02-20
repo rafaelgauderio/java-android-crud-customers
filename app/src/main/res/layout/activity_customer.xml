@@ -149,7 +149,7 @@
         app:layout_constraintTop_toBottomOf="@+id/editTextNome" />
 
     <EditText
-        android:id="@+id/editTextRazao"
+        android:id="@+id/editTextReason"
         android:layout_width="0dp"
         android:layout_height="49dp"
         android:layout_marginStart="8dp"
@@ -170,7 +170,7 @@
         android:layout_marginTop="8dp"
         android:text="@string/email"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextRazao" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextReason" />
 
     <EditText
         android:id="@+id/editTextEmailComercial"
