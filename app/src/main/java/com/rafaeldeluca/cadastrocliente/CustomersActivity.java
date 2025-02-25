@@ -1,8 +1,11 @@
 package com.rafaeldeluca.cadastrocliente;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -28,6 +31,21 @@ public class CustomersActivity extends AppCompatActivity {
         setContentView(R.layout.activity_customers);
 
         customersListView = findViewById(R.id.listViewCustomers);
+
+        //  event handling when user clicks on an item in the list
+        customersListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            // create a lambda funcion on click
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                Customer customer = (Customer) customersListView.getItemAtPosition(position);
+                Toast.makeText(getApplicationContext(),
+                        getString(R.string.empresa_de_razao_social) + customer.getCorporateReason().toUpperCase() + getString(R.string.foi_selecionada),
+                             Toast.LENGTH_LONG).show();
+
+            }
+        });
+
 
         //insertData
         insertCustomersListData();
