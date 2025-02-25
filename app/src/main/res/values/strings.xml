@@ -8,7 +8,7 @@
     <string name="campo_nome_preenchimento_obrigatorio">Campo nome é de preenchimento obrigatório.</string>
     <string name="nome_valor">"Nome do Comprador: "</string>
     <string name="campo_razao_preenchimento_obrigatorio">Razão Social é de preenchimento obrigatório</string>
-    <string name="possui_restricao">Possui Restrição Financeira</string>
+    <string name="possui_restricao">Possui Restrição Financeira\nVenda somente à vista.</string>
     <string name="venda_somente_vista">\nVenda somente à vista</string>
     <string name="nao_possui_restricao_financeira">Não possui restrição financeira\nPode faturar a prazo.</string>
     <string name="cliente_novo">Cliente novo</string>

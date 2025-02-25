@@ -7,6 +7,7 @@ import android.widget.ListView;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.rafaeldeluca.cadastrocliente.apapters.CustomerAdapter;
 import com.rafaeldeluca.cadastrocliente.entities.Customer;
 import com.rafaeldeluca.cadastrocliente.entities.enums.Type;
 
@@ -17,6 +18,8 @@ public class CustomersActivity extends AppCompatActivity {
 
     private ListView customersListView;
     private List<Customer> customersList;
+
+    private CustomerAdapter customerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,8 +65,13 @@ public class CustomersActivity extends AppCompatActivity {
             index++;
         } // end for
 
+        /*
         ArrayAdapter<Customer> customerAdapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_list_item_1, customersList);
+
+        */
+        // change the arrayAdapter for a customerAdapter
+        customerAdapter = new CustomerAdapter(this, customersList);
         customersListView.setAdapter(customerAdapter);
     }
 }
