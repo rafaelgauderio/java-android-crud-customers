@@ -1,15 +1,15 @@
-package com.rafaeldeluca.cadastrocliente;
+package com.rafaeldeluca.cadastrocliente.activities;
 
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.rafaeldeluca.cadastrocliente.R;
 import com.rafaeldeluca.cadastrocliente.apapters.CustomerAdapter;
 import com.rafaeldeluca.cadastrocliente.entities.Customer;
 import com.rafaeldeluca.cadastrocliente.entities.enums.Type;
