@@ -37,4 +37,5 @@
     <string name="email_valor">"Email: "</string>
     <string name="empresa_de_razao_social">Empresa de razão social \"</string>
     <string name="foi_selecionada">\"\nfoi selecionada!</string>
+    <string name="recebeu_um_click_longo">\"\nrecebeu um click longo</string>
 </resources>

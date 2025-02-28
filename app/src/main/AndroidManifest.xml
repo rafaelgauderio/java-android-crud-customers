@@ -22,7 +22,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".apapters.CustomerActivity"
+            android:name=".activities.CustomerActivity"
             android:exported="false"></activity>
     </application>
 

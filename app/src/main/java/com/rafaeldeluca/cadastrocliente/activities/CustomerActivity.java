@@ -1,4 +1,4 @@
-package com.rafaeldeluca.cadastrocliente.apapters;
+package com.rafaeldeluca.cadastrocliente.activities;
 
 import android.os.Bundle;
 import android.view.View;

@@ -2,15 +2,16 @@ package com.rafaeldeluca.cadastrocliente.activities;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.rafaeldeluca.cadastrocliente.R;
-import com.rafaeldeluca.cadastrocliente.apapters.CustomerAdapter;
+import com.rafaeldeluca.cadastrocliente.adapters.CustomerRecyclerViewAdapter;
 import com.rafaeldeluca.cadastrocliente.entities.Customer;
 import com.rafaeldeluca.cadastrocliente.entities.enums.Type;
 
@@ -19,10 +20,11 @@ import java.util.List;
 
 public class CustomersActivity extends AppCompatActivity {
 
-    private ListView customersListView;
     private List<Customer> customersList;
-
-    private CustomerAdapter customerAdapter;
+    private RecyclerView recyclerViewCustomers;
+    private RecyclerView.LayoutManager layoutManager;
+    private CustomerRecyclerViewAdapter customerRecyclerViewAdapter;
+    private CustomerRecyclerViewAdapter.OnItemClickListener onItemClickListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,23 +32,33 @@ public class CustomersActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_customers);
 
-        customersListView = findViewById(R.id.listViewCustomers);
+        recyclerViewCustomers = findViewById(R.id.recyclerViewCustomers);
+        // mandatory define a layoutManager to a RecycleView
+        layoutManager = new LinearLayoutManager(this);
+        recyclerViewCustomers.setLayoutManager(layoutManager);
+        recyclerViewCustomers.setHasFixedSize(true); // optimize de rendering with the rows have fixed size
+        recyclerViewCustomers.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
 
         //  event handling when user clicks on an item in the list
-        customersListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            // create a lambda funcion on click
+        onItemClickListener = new CustomerRecyclerViewAdapter.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemClick(View view, int position) {
 
-                Customer customer = (Customer) customersListView.getItemAtPosition(position);
+                Customer customer = customersList.get(position);
                 Toast.makeText(getApplicationContext(),
                         getString(R.string.empresa_de_razao_social) + customer.getCorporateReason().toUpperCase() + getString(R.string.foi_selecionada),
-                             Toast.LENGTH_LONG).show();
-
+                        Toast.LENGTH_LONG).show();
             }
-        });
 
+            @Override
+            public void onItemLongClick(View view, int position) {
+                Customer customer = customersList.get(position);
+                Toast.makeText(getApplicationContext(),
+                        getString(R.string.empresa_de_razao_social) + customer.getCorporateReason().toUpperCase() + getString(R.string.recebeu_um_click_longo),
+                        Toast.LENGTH_LONG).show();
+            }
 
+        };
         //insertData
         insertCustomersListData();
     }
@@ -88,8 +100,8 @@ public class CustomersActivity extends AppCompatActivity {
                 android.R.layout.simple_list_item_1, customersList);
 
         */
-        // change the arrayAdapter for a customerAdapter
-        customerAdapter = new CustomerAdapter(this, customersList);
-        customersListView.setAdapter(customerAdapter);
+        // change the arrayAdapter for a customerRecycleViewAdapter
+        customerRecyclerViewAdapter = new CustomerRecyclerViewAdapter(this, customersList, onItemClickListener);
+        recyclerViewCustomers.setAdapter(customerRecyclerViewAdapter);
     }
 }
