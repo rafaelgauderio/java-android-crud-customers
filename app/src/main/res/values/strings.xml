@@ -35,7 +35,7 @@
     <string name="email_hint">Email Comercial</string>
     <string name="campo_email_de_preenchimento_obrigatorio">Campo email é de preenchimento obrigatório!</string>
     <string name="email_valor">"Email: "</string>
-    <string name="empresa_de_razao_social">Empresa de razão social \"</string>
+    <string name="empresa_de_razao_social">Empresa de razão social\n\"</string>
     <string name="foi_selecionada">\"\nfoi selecionada!</string>
     <string name="recebeu_um_click_longo">\"\nrecebeu um click longo</string>
 </resources>
