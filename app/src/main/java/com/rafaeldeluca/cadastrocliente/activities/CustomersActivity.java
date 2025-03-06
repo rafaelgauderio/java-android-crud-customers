@@ -1,5 +1,6 @@
 package com.rafaeldeluca.cadastrocliente.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
@@ -29,8 +30,10 @@ public class CustomersActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
+        //EdgeToEdge.enable(this);
         setContentView(R.layout.activity_customers);
+
+        setTitle(getString(R.string.controle_de_clientes));
 
         recyclerViewCustomers = findViewById(R.id.recyclerViewCustomers);
         // mandatory define a layoutManager to a RecycleView
@@ -103,5 +106,11 @@ public class CustomersActivity extends AppCompatActivity {
         // change the arrayAdapter for a customerRecycleViewAdapter
         customerRecyclerViewAdapter = new CustomerRecyclerViewAdapter(this, customersList, onItemClickListener);
         recyclerViewCustomers.setAdapter(customerRecyclerViewAdapter);
+    }
+
+    public void actionButtonAbout (View view) {
+        // object that moves between activities
+        Intent intentOpen = new Intent(this, AboutActivity.class);
+        startActivity(intentOpen);
     }
 }
