@@ -38,4 +38,7 @@
     <string name="empresa_de_razao_social">Empresa de razão social\n\"</string>
     <string name="foi_selecionada">\"\nfoi selecionada!</string>
     <string name="recebeu_um_click_longo">\"\nrecebeu um click longo</string>
+    <string name="logo_utfpr">Logo da UTFPR</string>
+    <string name="description">Cadastro de Cliente Android</string>
+    <string name="author">Autor: Rafael de Luca</string>
 </resources>
