@@ -43,5 +43,25 @@ public class AboutActivity extends AppCompatActivity {
         }
     }
 
+    public void sendEmailToAuthor (View view) {
+        sendEmail(new String[]{"rafaelluca@alunos.utfpr.edu.br"}, getString(R.string.email_enviado_pelo_aplicativo));
+    }
+
+    private void sendEmail(String [] addresses, String subject) {
+        Intent intentOpen = new Intent(Intent.ACTION_SEND);
+        intentOpen.setData(Uri.parse("mailto:"));
+        intentOpen.putExtra(Intent.EXTRA_EMAIL, addresses);
+        intentOpen.putExtra(Intent.EXTRA_SUBJECT, subject);
+
+        if(intentOpen.resolveActivity(getPackageManager())==null) {
+            Toast.makeText(this,
+                    R.string.nenhum_aplicativo_instalado_para_enviar_email,
+                    Toast.LENGTH_LONG).show();
+        } else {
+            startActivity(intentOpen);
+        }
+
+    }
+
 
 }
