@@ -1,7 +1,10 @@
 package com.rafaeldeluca.cadastrocliente.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Adapter;
+import android.widget.AdapterView;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RadioGroup;
@@ -11,9 +14,19 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.rafaeldeluca.cadastrocliente.R;
+import com.rafaeldeluca.cadastrocliente.entities.Customer;
+import com.rafaeldeluca.cadastrocliente.entities.enums.Type;
+
+import java.security.Key;
 
 public class CustomerActivity extends AppCompatActivity {
 
+    public static final String KEY_REASON = "KEY_REASON";
+    public static final String KEY_NAME = "KEY_NAME";
+    public static final String KEY_EMAIL = "KEY_EMAIL";
+    public static final String KEY_RESTRICTION = "KEY_RESTRICTION";
+    public static final String KEY_TYPE = "KEY_TYPE";
+    public static final String KEY_DIVISION = "KEY_DIVISION";
     private EditText editTextName;
     private EditText editTextReason;
     private CheckBox checkBoxRestriction;
@@ -27,6 +40,8 @@ public class CustomerActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_customer);
+
+        this.setTitle(getString(R.string.inserir_cliente_novo));
 
         editTextName = findViewById((R.id.editTextNome));
         editTextReason = findViewById(R.id.editTextReason);
@@ -101,7 +116,7 @@ public class CustomerActivity extends AppCompatActivity {
             return;
         }
 
-        String clientType="";
+        Type clientType = null;
 
         if(radioButtonId == -1) {
             Toast.makeText(this, R.string.necessario_escolher_o_tipo_de_cliente, Toast.LENGTH_LONG).show();
@@ -109,44 +124,32 @@ public class CustomerActivity extends AppCompatActivity {
 
         } else {
             if (radioButtonId==R.id.radioNewClient)
-                clientType = getString(R.string.cliente_novo);
+                clientType = Type.NOVO;
             else if(radioButtonId==R.id.radioButtonClientReativated)
-                clientType = getString(R.string.cliente_reativado);
+                clientType = Type.REATIVADO;
                         else if (radioButtonId==R.id.radioButtonRecurringClient)
-                            clientType = getString(R.string.cliente_recorrente);
+                            clientType = Type.RECORRENTE;
         }
 
-        String division = (String) spinnerDivision.getSelectedItem();
+        int division =  spinnerDivision.getSelectedItemPosition();
 
-        if(division==null) {
+        if(division== AdapterView.INVALID_POSITION) {
             Toast.makeText(this,"O spinner não carregou os dados", Toast.LENGTH_LONG).show();
             return;
         }
 
         boolean haveRestriction = checkBoxRestriction.isChecked();
 
-        StringBuilder finalMessage = new StringBuilder();
-        finalMessage.append(getString(R.string.nome_valor));
-        finalMessage.append(name);
-        finalMessage.append(System.getProperty("line.separator"));
-        finalMessage.append(getString(R.string.razao_valor));
-        finalMessage.append(reason);
-        finalMessage.append(System.getProperty("line.separator"));
-        finalMessage.append(getString(R.string.email_valor));
-        finalMessage.append(email);
-        finalMessage.append(System.getProperty("line.separator"));
-        finalMessage.append( haveRestriction==true
-                ? getString(R.string.possui_restricao) +getString(R.string.venda_somente_vista)
-                : getString(R.string.nao_possui_restricao_financeira));
-        finalMessage.append(System.getProperty("line.separator"));
-        finalMessage.append(clientType);
-        finalMessage.append(System.getProperty("line.separator"));
-        finalMessage.append(getString(R.string.divisao_valor));
-        finalMessage.append(division);
+        Intent intentResponse = new Intent();
+        intentResponse.putExtra(KEY_REASON,reason);
+        intentResponse.putExtra(KEY_NAME,name);
+        intentResponse.putExtra(KEY_EMAIL,email);
+        intentResponse.putExtra(KEY_RESTRICTION,haveRestriction);
+        intentResponse.putExtra(KEY_TYPE, clientType.toString());
+        intentResponse.putExtra(KEY_DIVISION,division);
 
-        // if everithing ok, show fields values on a Toast
-        Toast.makeText(this,
-                finalMessage.toString(),
-                Toast.LENGTH_LONG).show();
+        setResult(CustomerActivity.RESULT_OK, intentResponse);
+        finish();
+
     }
 }

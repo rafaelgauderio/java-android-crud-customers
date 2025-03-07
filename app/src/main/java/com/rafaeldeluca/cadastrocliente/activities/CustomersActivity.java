@@ -6,6 +6,10 @@ import android.view.View;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -68,16 +72,16 @@ public class CustomersActivity extends AppCompatActivity {
 
     private void insertCustomersListData() {
 
-        String[] customersBuyerName = getResources().getStringArray(R.array.customers_buyers_name);
+       /* String[] customersBuyerName = getResources().getStringArray(R.array.customers_buyers_name);
         String[] customersCorporateReason = getResources().getStringArray(R.array.customers_corporate_reason);
         String[] customersEmail = getResources().getStringArray(R.array.customers_email);
         int[] customersRestriction = getResources().getIntArray(R.array.customers_restriction);
         int[] customersType = getResources().getIntArray(R.array.customers_type);
         int[] customersDivision = getResources().getIntArray(R.array.customers_divison);
-
+*/
         customersList = new ArrayList<Customer>();
 
-        Customer customer;
+        /*Customer customer;
         boolean restriction;
         Type type;
         Type[] valuesCustomersType = Type.values();
@@ -96,7 +100,7 @@ public class CustomersActivity extends AppCompatActivity {
 
             customersList.add(customer);
             index++;
-        } // end for
+        } // end for*/
 
         /*
         ArrayAdapter<Customer> customerAdapter = new ArrayAdapter<>(this,
@@ -104,6 +108,7 @@ public class CustomersActivity extends AppCompatActivity {
 
         */
         // change the arrayAdapter for a customerRecycleViewAdapter
+
         customerRecyclerViewAdapter = new CustomerRecyclerViewAdapter(this, customersList, onItemClickListener);
         recyclerViewCustomers.setAdapter(customerRecyclerViewAdapter);
     }
@@ -112,5 +117,38 @@ public class CustomersActivity extends AppCompatActivity {
         // object that moves between activities
         Intent intentOpen = new Intent(this, AboutActivity.class);
         startActivity(intentOpen);
+    }
+
+    ActivityResultLauncher<Intent> launcherNewCustomer = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+            new ActivityResultCallback<ActivityResult>() {
+                @Override
+                public void onActivityResult(ActivityResult activityResult) {
+                        if(activityResult.getResultCode() == CustomersActivity.RESULT_OK) {
+                            Intent intent = activityResult.getData();
+
+                            Bundle bundle = intent.getExtras();
+
+                            if(bundle != null) {
+                                String reason = bundle.getString(CustomerActivity.KEY_REASON);
+                                String name = bundle.getString(CustomerActivity.KEY_NAME);
+                                String email = bundle.getString(CustomerActivity.KEY_EMAIL);
+                                boolean haveRestriction = bundle.getBoolean(CustomerActivity.KEY_RESTRICTION);
+                                String clientTypeString = bundle.getString(CustomerActivity.KEY_TYPE);
+                                int division = bundle.getInt(CustomerActivity.KEY_DIVISION);
+
+                                Customer customer = new Customer(name,reason,email,haveRestriction,Type.valueOf(clientTypeString),division);
+                                customersList.add(customer);
+                                // alert adapter that the list have been change, a new list is render;
+                                customerRecyclerViewAdapter.notifyDataSetChanged();
+                            }
+
+                        }
+                }
+            });
+
+    public void actionButtonAddNewCustomer (View view) {
+
+        Intent intentOpen = new Intent(this, CustomerActivity.class);
+        launcherNewCustomer.launch(intentOpen);
     }
 }
