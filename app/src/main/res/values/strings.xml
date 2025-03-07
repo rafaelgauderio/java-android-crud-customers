@@ -48,4 +48,5 @@
     <string name="curso"><a href="https://pos-graduacao-ead.cp.utfpr.edu.br/java/">Pós-Graduação em Java</a></string>
     <string name="detail_description">Inserção, Deleção, Atualização e Listagem de Clientes</string>
     <string name="email_author">rafaelluca@alunos.utfpr.edu.br</string>
+    <string name="nenhum_aplicativo_instalado_para_abrir_paginas_web">Nenhum aplicativo instalado para abrir páginas web</string>
 </resources>
