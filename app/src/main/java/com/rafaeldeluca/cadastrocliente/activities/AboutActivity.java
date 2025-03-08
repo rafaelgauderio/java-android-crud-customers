@@ -28,7 +28,7 @@ public class AboutActivity extends AppCompatActivity {
     }
 
     public void openSiteAuthor (View view) {
-    openUrl("https://github.com/rafaelgauderio");
+        openUrl("https://github.com/rafaelgauderio");
     }
 
     private void openUrl(String stringUrl) {
@@ -48,7 +48,7 @@ public class AboutActivity extends AppCompatActivity {
     }
 
     private void sendEmail(String [] addresses, String subject) {
-        Intent intentOpen = new Intent(Intent.ACTION_SEND);
+        Intent intentOpen = new Intent(Intent.ACTION_SENDTO);
         intentOpen.setData(Uri.parse("mailto:"));
         intentOpen.putExtra(Intent.EXTRA_EMAIL, addresses);
         intentOpen.putExtra(Intent.EXTRA_SUBJECT, subject);
