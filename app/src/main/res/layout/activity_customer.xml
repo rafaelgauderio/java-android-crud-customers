@@ -60,30 +60,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/radioGroupClientType" />
 
-    <Button
-        android:id="@+id/buttonSave"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
-        android:onClick="saveFieldsValues"
-        android:text="@string/save"
-        app:layout_constraintEnd_toStartOf="@+id/buttonClean"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintHorizontal_chainStyle="spread"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinnerDivision" />
-
-    <Button
-        android:id="@+id/buttonClean"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="cleanfields"
-        android:text="@string/clean"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/buttonSave"
-        app:layout_constraintTop_toTopOf="@+id/buttonSave" />
-
     <TextView
         android:id="@+id/textViewClienteType"
         android:layout_width="wrap_content"

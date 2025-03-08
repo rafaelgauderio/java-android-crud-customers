@@ -2,6 +2,8 @@ package com.rafaeldeluca.cadastrocliente.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Adapter;
 import android.widget.AdapterView;
@@ -11,6 +13,7 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.rafaeldeluca.cadastrocliente.R;
@@ -74,7 +77,7 @@ public class CustomerActivity extends AppCompatActivity {
 
      */
 
-    public void cleanfields(View view) {
+    public void cleanFields() {
         editTextName.setText(null);
         editTextReason.setText(null);
         editTextEmailComercial.setText(null);
@@ -87,7 +90,7 @@ public class CustomerActivity extends AppCompatActivity {
         Toast.makeText(this, R.string.os_valores_dos_campos_foram_limpos, Toast.LENGTH_LONG).show();
     }
 
-    public void saveFieldsValues(View view) {
+    public void saveFieldsValues() {
 
         String name = editTextName.getText().toString();
         String nameWithoutSpace = name.trim();
@@ -150,6 +153,27 @@ public class CustomerActivity extends AppCompatActivity {
 
         setResult(CustomerActivity.RESULT_OK, intentResponse);
         finish();
+    }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        this.getMenuInflater().inflate(R.menu.custosmer_options, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem menuItem) {
+        int menuItemId = menuItem.getItemId();
+        if(menuItemId == R.id.menuItemClean) {
+            cleanFields();
+            return true;
+        } else {
+            if(menuItemId == R.id.menuItemSave) {
+                saveFieldsValues();
+                return true;
+            } else {
+                return super.onOptionsItemSelected(menuItem);
+            }
+        }
     }
 }
