@@ -2,6 +2,8 @@ package com.rafaeldeluca.cadastrocliente.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
@@ -10,6 +12,7 @@ import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -113,7 +116,7 @@ public class CustomersActivity extends AppCompatActivity {
         recyclerViewCustomers.setAdapter(customerRecyclerViewAdapter);
     }
 
-    public void actionButtonAbout (View view) {
+    public void actionMenuAbout () {
         // object that moves between activities
         Intent intentOpen = new Intent(this, AboutActivity.class);
         startActivity(intentOpen);
@@ -146,9 +149,32 @@ public class CustomersActivity extends AppCompatActivity {
                 }
             });
 
-    public void actionButtonAddNewCustomer (View view) {
+    public void actionMenuAddNewCustomer () {
 
         Intent intentOpen = new Intent(this, CustomerActivity.class);
         launcherNewCustomer.launch(intentOpen);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        this.getMenuInflater().inflate(R.menu.customers_options, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int menuItemId = item.getItemId();
+        if(menuItemId == R.id.menuItemAdd) {
+            actionMenuAddNewCustomer();
+            return true;
+
+        } else {
+            if(menuItemId == R.id.menuItemAbout) {
+                actionMenuAbout();
+                return true;
+            } else {
+                return super.onOptionsItemSelected(item);
+            }
+        }
     }
 }
