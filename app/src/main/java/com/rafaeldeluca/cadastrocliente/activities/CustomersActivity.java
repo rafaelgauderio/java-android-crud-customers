@@ -34,7 +34,7 @@ public class CustomersActivity extends AppCompatActivity {
     private RecyclerView recyclerViewCustomers;
     private RecyclerView.LayoutManager layoutManager;
     private CustomerRecyclerViewAdapter customerRecyclerViewAdapter;
-    private CustomerRecyclerViewAdapter.OnItemClickListener onItemClickListener;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +74,8 @@ public class CustomersActivity extends AppCompatActivity {
         //insertData
         insertCustomersListData();
 
-        this.registerForContextMenu(recyclerViewCustomers);
+        // work only for ListView, don´t work on a RecyclerView
+       //this.registerForContextMenu(recyclerViewCustomers);
     }
 
     private void insertCustomersListData() {
@@ -116,7 +117,37 @@ public class CustomersActivity extends AppCompatActivity {
         */
         // change the arrayAdapter for a customerRecycleViewAdapter
 
-        customerRecyclerViewAdapter = new CustomerRecyclerViewAdapter(this, customersList, onItemClickListener);
+        customerRecyclerViewAdapter = new CustomerRecyclerViewAdapter(this, customersList);
+
+        // implement floating Context Menu
+        customerRecyclerViewAdapter.setOnCreateContextMenu(new CustomerRecyclerViewAdapter.OnCreateContextMenu() {
+            @Override
+            public void onCreateContextMenu(ContextMenu contextMenu, View view,
+                                            ContextMenu.ContextMenuInfo contextMenuInfo,
+                                            int position, MenuItem.OnMenuItemClickListener onMenuItemClickListener) {
+                getMenuInflater().inflate(R.menu.customers_selected_item, contextMenu);
+
+                for(int i=0; i < contextMenu.size(); i++) {
+                    contextMenu.getItem(i).setOnMenuItemClickListener(onMenuItemClickListener);
+                }
+            }
+        });
+
+        customerRecyclerViewAdapter.setOnContextMenuClickListener(new CustomerRecyclerViewAdapter.OnContextMenuClickListener() {
+            @Override
+            public boolean onContextMenuItemListener(MenuItem menuItem, int position) {
+                int menuItemId = menuItem.getItemId();
+                if(menuItemId== R.id.menuItemDelete) {
+                    removeCustomer(position);
+                    return true;
+                } else {
+                    if(menuItemId == R.id.menuItemUpdate) {
+                        return true;
+                    }
+                }
+                return false;
+            }
+        });
         recyclerViewCustomers.setAdapter(customerRecyclerViewAdapter);
     }
 
@@ -181,7 +212,7 @@ public class CustomersActivity extends AppCompatActivity {
             }
         }
     }
-
+/*
     @Override
     public void onCreateContextMenu(ContextMenu contextMenu, View view, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(contextMenu, view, menuInfo);
@@ -207,7 +238,7 @@ public class CustomersActivity extends AppCompatActivity {
             }
         }
     }
-
+*/
     private void removeCustomer (int index) {
         customersList.remove(index);
         // render the list without the remove item

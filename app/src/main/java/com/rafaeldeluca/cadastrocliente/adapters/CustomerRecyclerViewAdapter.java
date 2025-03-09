@@ -1,7 +1,9 @@
 package com.rafaeldeluca.cadastrocliente.adapters;
 
 import android.content.Context;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -19,18 +21,33 @@ public class CustomerRecyclerViewAdapter extends RecyclerView.Adapter<CustomerRe
     private Context context;
     private List<Customer> customersList;
     private String[] divisionsSpinner;
-
     private OnItemClickListener onItemClickListener;
+    private OnItemLongClickListener onItemLongClickListener;
+    private OnCreateContextMenu onCreateContextMenu;
+    private OnContextMenuClickListener  onContextMenuClickListener;
 
-    public interface OnItemClickListener {
 
+    interface OnItemClickListener {
         void onItemClick(View view, int position);
+    }
 
+    interface OnItemLongClickListener {
         void onItemLongClick(View view, int position);
     }
 
+    public interface OnCreateContextMenu {
+        void onCreateContextMenu (ContextMenu contextMenu,View view,
+                                  ContextMenu.ContextMenuInfo contextMenuInfo, int position,
+                                  MenuItem.OnMenuItemClickListener onMenuItemClickListener);
+    }
+
+    public interface OnContextMenuClickListener {
+        boolean onContextMenuItemListener(MenuItem menuItem, int position);
+    }
+
     // mandatory use design pattern holder
-    public class CustomerHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
+    public class CustomerHolder extends RecyclerView.ViewHolder
+            implements View.OnClickListener, View.OnLongClickListener, View.OnCreateContextMenuListener {
 
         public TextView textViewValueName;
         public TextView textViewValueReason;
@@ -51,37 +68,54 @@ public class CustomerRecyclerViewAdapter extends RecyclerView.Adapter<CustomerRe
 
             itemView.setOnClickListener(this);
             itemView.setOnLongClickListener(this);
+            itemView.setOnCreateContextMenuListener(this);
         }
 
         @Override
         public void onClick(View view) {
-            if(onItemClickListener !=null) {
+
                 int position = getAdapterPosition();
-                if (position != RecyclerView.NO_POSITION) {
+                if (onItemClickListener != null) {
                     onItemClickListener.onItemClick(view, position);
-                }
             }
         }
 
         @Override
         public boolean onLongClick(View view) {
-            if(onItemClickListener !=null) {
                 int position = getAdapterPosition();
-                if (position != RecyclerView.NO_POSITION) {
-                    onItemClickListener.onItemLongClick(view, position);
+                if (onItemLongClickListener != null) {
+                    onItemLongClickListener.onItemLongClick(view, position);
                     return true;
-                }
             }
             return false;
         }
-    }
+
+        @Override
+        public void onCreateContextMenu(ContextMenu contextMenu, View view, ContextMenu.ContextMenuInfo contextMenuInfo) {
+            if(onCreateContextMenu !=null) {
+                onCreateContextMenu.onCreateContextMenu(contextMenu, view, contextMenuInfo,
+                                                        getAdapterPosition(), onMenuItemClickListener);
+            }
+        }
+
+        MenuItem.OnMenuItemClickListener onMenuItemClickListener = new MenuItem.OnMenuItemClickListener() {
+
+            @Override
+            public boolean onMenuItemClick(@NonNull MenuItem menuItem) {
+                if(onContextMenuClickListener !=null) {
+                    onContextMenuClickListener.onContextMenuItemListener(menuItem, getAdapterPosition());
+                    return true;
+                }
+
+                return false;
+            }
+        };
+    } // end of holder
 
     // constructor
-    public CustomerRecyclerViewAdapter(Context context, List<Customer> customersList, OnItemClickListener listener) {
+    public CustomerRecyclerViewAdapter(Context context, List<Customer> customersList) {
         this.context = context;
         this.customersList = customersList;
-        this.onItemClickListener = listener;
-
         divisionsSpinner = context.getResources().getStringArray(R.array.divisions);
     }
 
@@ -131,4 +165,35 @@ public class CustomerRecyclerViewAdapter extends RecyclerView.Adapter<CustomerRe
         return customersList.size();
     }
 
+    public OnItemClickListener getOnItemClickListener() {
+        return onItemClickListener;
+    }
+
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
+    }
+
+    public OnItemLongClickListener getOnItemLongClickListener() {
+        return onItemLongClickListener;
+    }
+
+    public void setOnItemLongClickListener(OnItemLongClickListener onItemLongClickListener) {
+        this.onItemLongClickListener = onItemLongClickListener;
+    }
+
+    public OnCreateContextMenu getOnCreateContextMenu() {
+        return onCreateContextMenu;
+    }
+
+    public void setOnCreateContextMenu(OnCreateContextMenu onCreateContextMenu) {
+        this.onCreateContextMenu = onCreateContextMenu;
+    }
+
+    public OnContextMenuClickListener getOnContextMenuClickListener() {
+        return onContextMenuClickListener;
+    }
+
+    public void setOnContextMenuClickListener(OnContextMenuClickListener onContextMenuClickListener) {
+        this.onContextMenuClickListener = onContextMenuClickListener;
+    }
 }
