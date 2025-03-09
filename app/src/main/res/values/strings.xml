@@ -51,4 +51,6 @@
     <string name="nenhum_aplicativo_instalado_para_abrir_paginas_web">Nenhum aplicativo instalado para abrir páginas web</string>
     <string name="nenhum_aplicativo_instalado_para_enviar_email">Nenhum aplicativo instalado para enviar email</string>
     <string name="email_enviado_pelo_aplicativo">Email enviado pelo aplicativo</string>
+    <string name="delete">Excluir</string>
+    <string name="edit">Editar</string>
 </resources>

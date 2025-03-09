@@ -2,9 +2,11 @@ package com.rafaeldeluca.cadastrocliente.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -50,7 +52,7 @@ public class CustomersActivity extends AppCompatActivity {
         recyclerViewCustomers.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
 
         //  event handling when user clicks on an item in the list
-        onItemClickListener = new CustomerRecyclerViewAdapter.OnItemClickListener() {
+       /* onItemClickListener = new CustomerRecyclerViewAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
 
@@ -60,6 +62,7 @@ public class CustomersActivity extends AppCompatActivity {
                         Toast.LENGTH_LONG).show();
             }
 
+
             @Override
             public void onItemLongClick(View view, int position) {
                 Customer customer = customersList.get(position);
@@ -67,10 +70,11 @@ public class CustomersActivity extends AppCompatActivity {
                         getString(R.string.empresa_de_razao_social) + customer.getCorporateReason().toUpperCase() + getString(R.string.recebeu_um_click_longo),
                         Toast.LENGTH_LONG).show();
             }
-
-        };
+        };*/
         //insertData
         insertCustomersListData();
+
+        this.registerForContextMenu(recyclerViewCustomers);
     }
 
     private void insertCustomersListData() {
@@ -176,5 +180,37 @@ public class CustomersActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
             }
         }
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu contextMenu, View view, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(contextMenu, view, menuInfo);
+        this.getMenuInflater().inflate(R.menu.customers_selected_item, contextMenu);
+    }
+
+    @Override
+    public boolean onContextItemSelected(@NonNull MenuItem menuItem) {
+
+        AdapterView.AdapterContextMenuInfo menuInfo;
+        menuInfo = (AdapterView.AdapterContextMenuInfo) menuItem.getMenuInfo();
+
+
+        int menuItemId = menuItem.getItemId();
+        if(menuItemId==R.id.menuItemDelete) {
+            this.removeCustomer(menuInfo.position);
+            return true;
+        } else {
+            if(menuItemId==R.id.menuItemUpdate) {
+                return true;
+            } else {
+                return super.onContextItemSelected(menuItem);
+            }
+        }
+    }
+
+    private void removeCustomer (int index) {
+        customersList.remove(index);
+        // render the list without the remove item
+        customerRecyclerViewAdapter.notifyDataSetChanged();
     }
 }
