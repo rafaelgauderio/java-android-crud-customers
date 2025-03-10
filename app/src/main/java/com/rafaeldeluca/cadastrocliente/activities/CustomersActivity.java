@@ -229,6 +229,11 @@ public class CustomersActivity extends AppCompatActivity {
                             }
                         }
                         selectedPosition = -1; // no object of the list is selected
+
+                        // unselected object from list
+                        if(actionMode !=null) {
+                            actionMode.finish();
+                        }
                     }
                 });
 
