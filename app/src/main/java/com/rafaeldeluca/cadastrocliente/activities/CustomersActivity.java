@@ -159,7 +159,6 @@ public class CustomersActivity extends AppCompatActivity {
                                 // alert adapter that the list have been change, a new list is render;
                                 customerRecyclerViewAdapter.notifyDataSetChanged();
                             }
-
                         }
                 }
             });

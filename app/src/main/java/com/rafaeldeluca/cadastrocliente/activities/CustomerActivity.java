@@ -16,6 +16,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.rafaeldeluca.cadastrocliente.R;
+import com.rafaeldeluca.cadastrocliente.entities.Customer;
 import com.rafaeldeluca.cadastrocliente.entities.enums.Type;
 
 public class CustomerActivity extends AppCompatActivity {
@@ -37,6 +38,7 @@ public class CustomerActivity extends AppCompatActivity {
     private Spinner spinnerDivision;
     private EditText editTextEmailCommercial;
     private int mode;
+    private Customer originalCustomer;
 
 
     @Override
@@ -79,6 +81,8 @@ public class CustomerActivity extends AppCompatActivity {
                 editTextEmailCommercial.setText(email);
                 checkBoxRestriction.setChecked(haveRestriction);
                 spinnerDivision.setSelection(division);
+
+                originalCustomer = new Customer(name, reason, email, haveRestriction, clientType, division);
 
                 if (clientType == Type.NOVO) {
                     radioButtonNew.setChecked(true);
@@ -183,6 +187,21 @@ public class CustomerActivity extends AppCompatActivity {
         }
 
         boolean haveRestriction = checkBoxRestriction.isChecked();
+
+        // test with it was any change on the edition mode, if not don´t update the object
+        if(mode == MODE_UPDATE &&
+                name.equalsIgnoreCase(originalCustomer.getBuyerName()) &&
+                reason.equalsIgnoreCase(originalCustomer.getCorporateReason()) &&
+                email.equalsIgnoreCase(originalCustomer.getEmail()) &&
+                haveRestriction == originalCustomer.isRestriction() &&
+                division== originalCustomer.getDivision() &&
+                clientType== originalCustomer.getType()) {
+
+            // the values are the same, do not save
+            this.setResult(CustomerActivity.RESULT_CANCELED);
+            finish();
+            return;
+        }
 
         Intent intentResponse = new Intent();
         intentResponse.putExtra(KEY_REASON,reason);
