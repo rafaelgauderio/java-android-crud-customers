@@ -31,8 +31,8 @@ public class CustomerRecyclerViewAdapter extends RecyclerView.Adapter<CustomerRe
         void onItemClick(View view, int position);
     }
 
-    interface OnItemLongClickListener {
-        void onItemLongClick(View view, int position);
+    public interface OnItemLongClickListener {
+        boolean onItemLongClick(View view, int position);
     }
 
     public interface OnCreateContextMenu {

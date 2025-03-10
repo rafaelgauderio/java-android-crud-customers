@@ -1,21 +1,21 @@
 package com.rafaeldeluca.cadastrocliente.activities;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.view.ContextMenu;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.view.ActionMode;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -35,12 +35,56 @@ public class CustomersActivity extends AppCompatActivity {
     private RecyclerView.LayoutManager layoutManager;
     private CustomerRecyclerViewAdapter customerRecyclerViewAdapter;
     private int selectedPosition = -1; // no customer has been selected
+    private View selectedView;
+    private Drawable backgroundDrawable;
+    private ActionMode actionMode; //lib androidx
+    private ActionMode.Callback actionModeCallback = new ActionMode.Callback() {
 
+        @Override
+        public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+            MenuInflater menuInflater = mode.getMenuInflater();
+            menuInflater.inflate(R.menu.customers_selected_item, menu);
+            return true;
+        }
+
+        @Override
+        public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+            return false;
+        }
+
+        @Override
+        public boolean onActionItemClicked(ActionMode actionMode, MenuItem menuItem) {
+            int menuItemId = menuItem.getItemId();
+            if (menuItemId == R.id.menuItemDelete) {
+                removeCustomer();
+                actionMode.finish(); // close menu
+                return true;
+            } else {
+                if (menuItemId == R.id.menuItemUpdate) {
+                    updateCustomer();
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        }
+
+        @Override
+        public void onDestroyActionMode(ActionMode mode) {
+            if(selectedView!= null) {
+                selectedView.setBackground(backgroundDrawable);
+            }
+            // release objects on memory
+            actionMode=null;
+            selectedView=null;
+            backgroundDrawable=null;
+            recyclerViewCustomers.setEnabled(true);
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //EdgeToEdge.enable(this);
         setContentView(R.layout.activity_customers);
 
         setTitle(getString(R.string.controle_de_clientes));
@@ -52,113 +96,38 @@ public class CustomersActivity extends AppCompatActivity {
         recyclerViewCustomers.setHasFixedSize(true); // optimize de rendering with the rows have fixed size
         recyclerViewCustomers.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
 
-        //  event handling when user clicks on an item in the list
-       /* onItemClickListener = new CustomerRecyclerViewAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-
-                Customer customer = customersList.get(position);
-                Toast.makeText(getApplicationContext(),
-                        getString(R.string.empresa_de_razao_social) + customer.getCorporateReason().toUpperCase() + getString(R.string.foi_selecionada),
-                        Toast.LENGTH_LONG).show();
-            }
-
-
-            @Override
-            public void onItemLongClick(View view, int position) {
-                Customer customer = customersList.get(position);
-                Toast.makeText(getApplicationContext(),
-                        getString(R.string.empresa_de_razao_social) + customer.getCorporateReason().toUpperCase() + getString(R.string.recebeu_um_click_longo),
-                        Toast.LENGTH_LONG).show();
-            }
-        };*/
-        //insertData
         insertCustomersListData();
-
-        // work only for ListView, don´t work on a RecyclerView
-       //this.registerForContextMenu(recyclerViewCustomers);
     }
 
     private void insertCustomersListData() {
 
-       /* String[] customersBuyerName = getResources().getStringArray(R.array.customers_buyers_name);
-        String[] customersCorporateReason = getResources().getStringArray(R.array.customers_corporate_reason);
-        String[] customersEmail = getResources().getStringArray(R.array.customers_email);
-        int[] customersRestriction = getResources().getIntArray(R.array.customers_restriction);
-        int[] customersType = getResources().getIntArray(R.array.customers_type);
-        int[] customersDivision = getResources().getIntArray(R.array.customers_divison);
-*/
         customersList = new ArrayList<Customer>();
-
-        /*Customer customer;
-        boolean restriction;
-        Type type;
-        Type[] valuesCustomersType = Type.values();
-        int index =0;
-        for (String s : customersBuyerName) {
-            if (customersRestriction[index] == 1) {
-                restriction = true;
-            } else {
-                restriction = false;
-            }
-            type = valuesCustomersType[customersType[index]];
-            customer = new Customer(customersBuyerName[index],
-                    customersCorporateReason[index],
-                    customersEmail[index],
-                    restriction, type, customersDivision[index]);
-
-            customersList.add(customer);
-            index++;
-        } // end for*/
-
-        /*
-        ArrayAdapter<Customer> customerAdapter = new ArrayAdapter<>(this,
-                android.R.layout.simple_list_item_1, customersList);
-
-        */
-        // change the arrayAdapter for a customerRecycleViewAdapter
-
         customerRecyclerViewAdapter = new CustomerRecyclerViewAdapter(this, customersList);
-
-        // implement floating Context Menu
-        customerRecyclerViewAdapter.setOnCreateContextMenu(new CustomerRecyclerViewAdapter.OnCreateContextMenu() {
-            @Override
-            public void onCreateContextMenu(ContextMenu contextMenu, View view,
-                                            ContextMenu.ContextMenuInfo contextMenuInfo,
-                                            int position, MenuItem.OnMenuItemClickListener onMenuItemClickListener) {
-                getMenuInflater().inflate(R.menu.customers_selected_item, contextMenu);
-
-                for(int i=0; i < contextMenu.size(); i++) {
-                    contextMenu.getItem(i).setOnMenuItemClickListener(onMenuItemClickListener);
-                }
-            }
-        });
-
-        customerRecyclerViewAdapter.setOnContextMenuClickListener(new CustomerRecyclerViewAdapter.OnContextMenuClickListener() {
-            @Override
-            public boolean onContextMenuItemListener(MenuItem menuItem, int position) {
-                int menuItemId = menuItem.getItemId();
-                if(menuItemId== R.id.menuItemDelete) {
-                    removeCustomer(position);
-                    return true;
-                } else {
-                    if(menuItemId == R.id.menuItemUpdate) {
-                        updateCustomer(position);
-                        return true;
-                    }
-                }
-                return false;
-            }
-        });
 
         // simple click
         customerRecyclerViewAdapter.setOnItemClickListener(new CustomerRecyclerViewAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                updateCustomer(position);
+                updateCustomer();
             }
         });
 
+        // long click
+        customerRecyclerViewAdapter.setOnItemLongClickListener(new CustomerRecyclerViewAdapter.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(View view, int position) {
+                if(actionMode!=null) {
+                    return false;
+                }
+                selectedPosition = position;
+                selectedView = view;
+                backgroundDrawable = view.getBackground();
+                view.setBackgroundColor(Color.GRAY);
+                recyclerViewCustomers.setEnabled(false);
+                actionMode = startSupportActionMode(actionModeCallback);
+                return true;
+            }
+        });
         recyclerViewCustomers.setAdapter(customerRecyclerViewAdapter);
     }
 
@@ -224,35 +193,9 @@ public class CustomersActivity extends AppCompatActivity {
             }
         }
     }
-/*
-    @Override
-    public void onCreateContextMenu(ContextMenu contextMenu, View view, ContextMenu.ContextMenuInfo menuInfo) {
-        super.onCreateContextMenu(contextMenu, view, menuInfo);
-        this.getMenuInflater().inflate(R.menu.customers_selected_item, contextMenu);
-    }
 
-    @Override
-    public boolean onContextItemSelected(@NonNull MenuItem menuItem) {
-
-        AdapterView.AdapterContextMenuInfo menuInfo;
-        menuInfo = (AdapterView.AdapterContextMenuInfo) menuItem.getMenuInfo();
-
-
-        int menuItemId = menuItem.getItemId();
-        if(menuItemId==R.id.menuItemDelete) {
-            this.removeCustomer(menuInfo.position);
-            return true;
-        } else {
-            if(menuItemId==R.id.menuItemUpdate) {
-                return true;
-            } else {
-                return super.onContextItemSelected(menuItem);
-            }
-        }
-    }
-*/
-    private void removeCustomer (int index) {
-        customersList.remove(index);
+    private void removeCustomer () {
+        customersList.remove(selectedPosition);
         // render the list without the remove item
         customerRecyclerViewAdapter.notifyDataSetChanged();
     }
@@ -289,8 +232,7 @@ public class CustomersActivity extends AppCompatActivity {
                     }
                 });
 
-    private void updateCustomer(int position) {
-        selectedPosition = position;
+    private void updateCustomer() {
         Customer updateCustomer = customersList.get(selectedPosition);
         Intent intentOpen = new Intent(this, CustomerActivity.class);
 
@@ -304,7 +246,6 @@ public class CustomersActivity extends AppCompatActivity {
 
         // load screen with customer data
         launcherUpdateCustomer.launch(intentOpen);
-
     }
 
 }
