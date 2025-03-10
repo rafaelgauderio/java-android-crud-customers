@@ -34,6 +34,7 @@ public class CustomersActivity extends AppCompatActivity {
     private RecyclerView recyclerViewCustomers;
     private RecyclerView.LayoutManager layoutManager;
     private CustomerRecyclerViewAdapter customerRecyclerViewAdapter;
+    private int selectedPosition = -1; // no customer has been selected
 
 
     @Override
@@ -142,12 +143,22 @@ public class CustomersActivity extends AppCompatActivity {
                     return true;
                 } else {
                     if(menuItemId == R.id.menuItemUpdate) {
+                        updateCustomer(position);
                         return true;
                     }
                 }
                 return false;
             }
         });
+
+        // simple click
+        customerRecyclerViewAdapter.setOnItemClickListener(new CustomerRecyclerViewAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                updateCustomer(position);
+            }
+        });
+
         recyclerViewCustomers.setAdapter(customerRecyclerViewAdapter);
     }
 
@@ -187,6 +198,7 @@ public class CustomersActivity extends AppCompatActivity {
     public void actionMenuAddNewCustomer () {
 
         Intent intentOpen = new Intent(this, CustomerActivity.class);
+        intentOpen.putExtra(CustomerActivity.KEY_MODE, CustomerActivity.MODE_INSERT);
         launcherNewCustomer.launch(intentOpen);
     }
 
@@ -244,4 +256,55 @@ public class CustomersActivity extends AppCompatActivity {
         // render the list without the remove item
         customerRecyclerViewAdapter.notifyDataSetChanged();
     }
+
+            ActivityResultLauncher<Intent> launcherUpdateCustomer = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+                new ActivityResultCallback<ActivityResult>() {
+                    @Override
+                    public void onActivityResult(ActivityResult activityResult) {
+                        if(activityResult.getResultCode() == CustomersActivity.RESULT_OK) {
+                            Intent intent = activityResult.getData();
+                            Bundle bundle = intent.getExtras();
+
+                            if(bundle != null) {
+                                String reason = bundle.getString(CustomerActivity.KEY_REASON);
+                                String name = bundle.getString(CustomerActivity.KEY_NAME);
+                                String email = bundle.getString(CustomerActivity.KEY_EMAIL);
+                                boolean haveRestriction = bundle.getBoolean(CustomerActivity.KEY_RESTRICTION);
+                                String clientTypeString = bundle.getString(CustomerActivity.KEY_TYPE);
+                                int division = bundle.getInt(CustomerActivity.KEY_DIVISION);
+
+                                Customer updateCustomer = customersList.get(selectedPosition);
+                                updateCustomer.setCorporateReason(reason);
+                                updateCustomer.setBuyerName(name);
+                                updateCustomer.setEmail(email);
+                                updateCustomer.setDivision(division);
+                                updateCustomer.setRestriction(haveRestriction);
+                                Type clientType = Type.valueOf(clientTypeString);
+                                updateCustomer.setType(clientType);
+
+                                customerRecyclerViewAdapter.notifyDataSetChanged();
+                            }
+                        }
+                        selectedPosition = -1; // no object of the list is selected
+                    }
+                });
+
+    private void updateCustomer(int position) {
+        selectedPosition = position;
+        Customer updateCustomer = customersList.get(selectedPosition);
+        Intent intentOpen = new Intent(this, CustomerActivity.class);
+
+        intentOpen.putExtra(CustomerActivity.KEY_MODE, CustomerActivity.MODE_UPDATE);
+        intentOpen.putExtra(CustomerActivity.KEY_NAME, updateCustomer.getBuyerName());
+        intentOpen.putExtra(CustomerActivity.KEY_REASON, updateCustomer.getCorporateReason());
+        intentOpen.putExtra(CustomerActivity.KEY_EMAIL, updateCustomer.getEmail());
+        intentOpen.putExtra(CustomerActivity.KEY_RESTRICTION, updateCustomer.isRestriction());
+        intentOpen.putExtra(CustomerActivity.KEY_DIVISION, updateCustomer.getDivision());
+        intentOpen.putExtra(CustomerActivity.KEY_TYPE, updateCustomer.getType().toString());
+
+        // load screen with customer data
+        launcherUpdateCustomer.launch(intentOpen);
+
+    }
+
 }

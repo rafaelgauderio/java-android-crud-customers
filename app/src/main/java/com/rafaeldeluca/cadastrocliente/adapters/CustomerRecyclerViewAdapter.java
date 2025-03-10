@@ -27,7 +27,7 @@ public class CustomerRecyclerViewAdapter extends RecyclerView.Adapter<CustomerRe
     private OnContextMenuClickListener  onContextMenuClickListener;
 
 
-    interface OnItemClickListener {
+    public interface OnItemClickListener {
         void onItemClick(View view, int position);
     }
 

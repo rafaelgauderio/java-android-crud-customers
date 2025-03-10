@@ -53,4 +53,5 @@
     <string name="email_enviado_pelo_aplicativo">Email enviado pelo aplicativo</string>
     <string name="delete">Excluir</string>
     <string name="edit">Editar</string>
+    <string name="update_customer">Editar Cliente</string>
 </resources>
