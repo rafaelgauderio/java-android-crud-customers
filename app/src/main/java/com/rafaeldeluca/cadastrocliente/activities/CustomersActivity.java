@@ -1,5 +1,7 @@
 package com.rafaeldeluca.cadastrocliente.activities;
 
+import static com.rafaeldeluca.cadastrocliente.entities.Customer.orderByBuyerNameDesc;
+
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
@@ -26,6 +28,7 @@ import com.rafaeldeluca.cadastrocliente.entities.Customer;
 import com.rafaeldeluca.cadastrocliente.entities.enums.Type;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class CustomersActivity extends AppCompatActivity {
@@ -108,6 +111,7 @@ public class CustomersActivity extends AppCompatActivity {
         customerRecyclerViewAdapter.setOnItemClickListener(new CustomerRecyclerViewAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
+                selectedPosition = position;
                 updateCustomer();
             }
         });
@@ -156,6 +160,9 @@ public class CustomersActivity extends AppCompatActivity {
 
                                 Customer customer = new Customer(name,reason,email,haveRestriction,Type.valueOf(clientTypeString),division);
                                 customersList.add(customer);
+
+                                // sort the list by buyer name
+                                Collections.sort(customersList, orderByBuyerNameDesc);
                                 // alert adapter that the list have been change, a new list is render;
                                 customerRecyclerViewAdapter.notifyDataSetChanged();
                             }
@@ -224,6 +231,8 @@ public class CustomersActivity extends AppCompatActivity {
                                 Type clientType = Type.valueOf(clientTypeString);
                                 updateCustomer.setType(clientType);
 
+                                // sort the list by buyer name
+                                Collections.sort(customersList, orderByBuyerNameDesc);
                                 customerRecyclerViewAdapter.notifyDataSetChanged();
                             }
                         }

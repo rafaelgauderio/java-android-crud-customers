@@ -6,8 +6,8 @@
         <item>@string/escritorio</item>
         <item>@string/industria</item>
         <item>@string/lazer</item>
-        <item>@string/saude</item>
         <item>@string/outros</item>
+        <item>@string/saude</item>
     </string-array>
 
     <string-array name="customers_buyers_name">

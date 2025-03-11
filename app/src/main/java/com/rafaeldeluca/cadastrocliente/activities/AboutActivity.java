@@ -65,6 +65,7 @@ public class AboutActivity extends AppCompatActivity {
 
     }
 
+    /*
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem menuItem) {
         int menuItemId = menuItem.getItemId();
@@ -75,4 +76,5 @@ public class AboutActivity extends AppCompatActivity {
             return super.onOptionsItemSelected(menuItem);
         }
     }
+     */
 }

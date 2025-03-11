@@ -3,8 +3,16 @@ package com.rafaeldeluca.cadastrocliente.entities;
 import com.rafaeldeluca.cadastrocliente.entities.enums.Type;
 
 import java.io.Serializable;
+import java.util.Comparator;
 
 public class Customer implements Serializable {
+
+    public static Comparator<Customer> orderByBuyerNameDesc = new Comparator<Customer>() {
+        @Override
+        public int compare(Customer c1, Customer c2) {
+                return c1.getBuyerName().compareToIgnoreCase(c2.getBuyerName());
+        }
+    };
 
     private String buyerName;
     private String corporateReason;
@@ -12,6 +20,8 @@ public class Customer implements Serializable {
     private boolean restriction;
     private Type type;
     private int division;
+
+
 
     public Customer(String buyerName, String corporateReason, String email, boolean restriction, Type type, int division) {
         this.buyerName = buyerName;
