@@ -122,7 +122,7 @@ public class CustomersActivity extends AppCompatActivity {
                 selectedPosition = position;
                 selectedView = view;
                 backgroundDrawable = view.getBackground();
-                view.setBackgroundColor(Color.GRAY);
+                view.setBackgroundColor(Color.rgb(3,234,116));
                 recyclerViewCustomers.setEnabled(false);
                 actionMode = startSupportActionMode(actionModeCallback);
                 return true;
