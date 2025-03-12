@@ -33,6 +33,7 @@ import java.util.List;
 
 public class CustomersActivity extends AppCompatActivity {
 
+    public static final String FILE_PREFERENCES = "com.rafaeldeluca.cadastrocliente.PREFERENCES";
     private List<Customer> customersList;
     private RecyclerView recyclerViewCustomers;
     private RecyclerView.LayoutManager layoutManager;
@@ -41,6 +42,7 @@ public class CustomersActivity extends AppCompatActivity {
     private View selectedView;
     private Drawable backgroundDrawable;
     private ActionMode actionMode; //lib androidx
+
     private ActionMode.Callback actionModeCallback = new ActionMode.Callback() {
 
         @Override

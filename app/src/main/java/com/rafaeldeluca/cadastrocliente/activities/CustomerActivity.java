@@ -1,6 +1,8 @@
 package com.rafaeldeluca.cadastrocliente.activities;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -28,6 +30,8 @@ public class CustomerActivity extends AppCompatActivity {
     public static final String KEY_TYPE = "KEY_TYPE";
     public static final String KEY_DIVISION = "KEY_DIVISION";
     public static final String KEY_MODE = "MODE";
+    public static final String KEY_SUGGEST_DIVISION = "SUGGEST_DIVISION";
+    public static final String KEY_LAST_DIVISION = "LAST_DIVISION";
     public static final int MODE_INSERT = 0;
     public static final int MODE_UPDATE = 1;
     private EditText editTextName;
@@ -39,6 +43,8 @@ public class CustomerActivity extends AppCompatActivity {
     private EditText editTextEmailCommercial;
     private int mode;
     private Customer originalCustomer;
+    private boolean suggestDivision = false;
+    private int lastDivision = 0;
 
 
     @Override
@@ -57,6 +63,7 @@ public class CustomerActivity extends AppCompatActivity {
         radioButtonReactivated = findViewById(R.id.radioButtonClientReativated);
         radioButtonRecurrence = findViewById(R.id.radioButtonRecurrenceClient);
 
+        this.readPreferences();
         Intent intentOpen = getIntent();
         Bundle bundle = intentOpen.getExtras();
 
@@ -64,6 +71,9 @@ public class CustomerActivity extends AppCompatActivity {
             mode = bundle.getInt(KEY_MODE);
             if(mode == MODE_INSERT) {
                 this.setTitle(getString(R.string.inserir_cliente_novo));
+                if(suggestDivision==true) {
+                    spinnerDivision.setSelection(lastDivision);
+                }
             } else {
                 this.setTitle(getString(R.string.update_customer));
 
@@ -128,7 +138,7 @@ public class CustomerActivity extends AppCompatActivity {
         editTextEmailCommercial.setText(null);
         checkBoxRestriction.setChecked(false);
         radioGroupClientType.clearCheck();
-        spinnerDivision.setSelection(0); // spiner always have a select option, can not be null
+        spinnerDivision.setSelection(0); // spinner always have a select option, can not be null
 
         editTextName.requestFocus();
         //message
@@ -180,14 +190,11 @@ public class CustomerActivity extends AppCompatActivity {
         }
 
         int division =  spinnerDivision.getSelectedItemPosition();
-
         if(division== AdapterView.INVALID_POSITION) {
             Toast.makeText(this,"O spinner não carregou os dados", Toast.LENGTH_LONG).show();
             return;
         }
-
         boolean haveRestriction = checkBoxRestriction.isChecked();
-
         // test with it was any change on the edition mode, if not don´t update the object
         if(mode == MODE_UPDATE &&
                 name.equalsIgnoreCase(originalCustomer.getBuyerName()) &&
@@ -202,6 +209,8 @@ public class CustomerActivity extends AppCompatActivity {
             finish();
             return;
         }
+
+        this.saveLastDivision(division);
 
         Intent intentResponse = new Intent();
         intentResponse.putExtra(KEY_REASON,reason);
@@ -222,18 +231,60 @@ public class CustomerActivity extends AppCompatActivity {
     }
 
     @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        MenuItem menuItem = menu.findItem(R.id.menuItemSuggestDivision);
+        menuItem.setChecked(suggestDivision);
+        return true; // mandatory to show de Menu of division options
+    }
+
+    @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem menuItem) {
         int menuItemId = menuItem.getItemId();
         if(menuItemId == R.id.menuItemClean) {
-            cleanFields();
+            this.cleanFields();
             return true;
         } else {
             if(menuItemId == R.id.menuItemSave) {
-                saveFieldsValues();
+                this.saveFieldsValues();
                 return true;
             } else {
-                return super.onOptionsItemSelected(menuItem);
+                if (menuItemId == R.id.menuItemSuggestDivision) {
+                    boolean menuItemValue = !menuItem.isChecked();
+                    this.saveSuggestDivision(menuItemValue);
+                    menuItem.setChecked(menuItemValue);
+                    // if user habilitate suggest division, show last division used
+                    if(suggestDivision==true) {
+                        spinnerDivision.setSelection(lastDivision);
+                    }
+                    return true;
+                } else {
+                    return super.onOptionsItemSelected(menuItem);
+                }
             }
         }
+    }
+
+
+    private void readPreferences () {
+
+        SharedPreferences sharedPreferences = getSharedPreferences(CustomersActivity.FILE_PREFERENCES, Context.MODE_PRIVATE);
+        suggestDivision = sharedPreferences.getBoolean(KEY_SUGGEST_DIVISION, suggestDivision);
+        lastDivision = sharedPreferences.getInt(KEY_LAST_DIVISION, lastDivision);
+    }
+
+    private void saveSuggestDivision (boolean newBooleanValue) {
+        SharedPreferences sharedPreferences = getSharedPreferences(CustomersActivity.FILE_PREFERENCES, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean(KEY_SUGGEST_DIVISION, newBooleanValue);
+        editor.commit(); // synchronous - thread safe
+        suggestDivision = newBooleanValue;
+    }
+
+    private void saveLastDivision(int newDivisionValue) {
+        SharedPreferences sharedPreferences = getSharedPreferences(CustomersActivity.FILE_PREFERENCES, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt(KEY_LAST_DIVISION, newDivisionValue);
+        editor.commit();
+        lastDivision = newDivisionValue;
     }
 }

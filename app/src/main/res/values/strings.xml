@@ -54,4 +54,5 @@
     <string name="delete">Excluir</string>
     <string name="edit">Editar</string>
     <string name="update_customer">Editar Cliente</string>
+    <string name="sugerir_divisao">Sugerir Divisão</string>
 </resources>

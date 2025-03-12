@@ -12,4 +12,8 @@
         android:icon="@android:drawable/ic_menu_close_clear_cancel"
         android:title="@string/clean"
         app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/menuItemSuggestDivision"
+        android:checkable="true"
+        android:title="@string/sugerir_divisao" />
 </menu>
