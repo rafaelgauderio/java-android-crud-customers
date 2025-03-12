@@ -2,8 +2,10 @@ package com.rafaeldeluca.cadastrocliente.activities;
 
 import static com.rafaeldeluca.cadastrocliente.entities.Customer.orderByBuyerNameDesc;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.Menu;
@@ -87,6 +89,7 @@ public class CustomersActivity extends AppCompatActivity {
         }
     };
 
+    @SuppressLint("ResourceAsColor")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -99,7 +102,10 @@ public class CustomersActivity extends AppCompatActivity {
         layoutManager = new LinearLayoutManager(this);
         recyclerViewCustomers.setLayoutManager(layoutManager);
         recyclerViewCustomers.setHasFixedSize(true); // optimize de rendering with the rows have fixed size
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
+        dividerItemDecoration.setDrawable(new ColorDrawable(R.color.green_dark));
         recyclerViewCustomers.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
+        recyclerViewCustomers.addItemDecoration(dividerItemDecoration);
 
         insertCustomersListData();
     }
