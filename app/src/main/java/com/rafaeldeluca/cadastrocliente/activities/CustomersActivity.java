@@ -49,8 +49,7 @@ public class CustomersActivity extends AppCompatActivity {
     private Drawable backgroundDrawable;
     private ActionMode actionMode; //lib androidx
     private boolean ascendingOrder = true;
-    private MenuItem MenuItemSort;
-
+    private MenuItem menuItemSort;
 
     private ActionMode.Callback actionModeCallback = new ActionMode.Callback() {
 
@@ -192,7 +191,14 @@ public class CustomersActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         this.getMenuInflater().inflate(R.menu.customers_options, menu);
+        menuItemSort = menu.findItem(R.id.menuItemSort);
         return true;
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+       this.updateOrderIcon();
+       return true;
     }
 
     @Override
@@ -209,6 +215,7 @@ public class CustomersActivity extends AppCompatActivity {
             } else {
                 if(menuItemId==R.id.menuItemSort) {
                     savePreferencesAscendingOrder(!ascendingOrder);
+                    updateOrderIcon();
                     sortCustomerList();
                     return true;
                 } else {
@@ -297,6 +304,13 @@ public class CustomersActivity extends AppCompatActivity {
         }
         // render list after sort
         this.customerRecyclerViewAdapter.notifyDataSetChanged();
+    }
+    private void updateOrderIcon () {
+        if(ascendingOrder==true) {
+            menuItemSort.setIcon(R.drawable.ic_action_name_ascending_order);
+        } else {
+            menuItemSort.setIcon(R.drawable.ic_action_name_descending_order);
+        }
     }
 
 }
