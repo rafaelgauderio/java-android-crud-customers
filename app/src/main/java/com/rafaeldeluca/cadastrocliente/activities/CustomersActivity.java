@@ -15,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
@@ -40,6 +41,7 @@ public class CustomersActivity extends AppCompatActivity {
 
     public static final String FILE_PREFERENCES = "com.rafaeldeluca.cadastrocliente.PREFERENCES";
     public static final String KEY_ASCENDING_ORDER = "ASCENDING_ORDER";
+    public static final boolean INITIAL_ASCENDING_SORT_PATTER = true;
     private List<Customer> customersList;
     private RecyclerView recyclerViewCustomers;
     private RecyclerView.LayoutManager layoutManager;
@@ -48,7 +50,7 @@ public class CustomersActivity extends AppCompatActivity {
     private View selectedView;
     private Drawable backgroundDrawable;
     private ActionMode actionMode; //lib androidx
-    private boolean ascendingOrder = true;
+    private boolean ascendingOrder = INITIAL_ASCENDING_SORT_PATTER;
     private MenuItem menuItemSort;
 
     private ActionMode.Callback actionModeCallback = new ActionMode.Callback() {
@@ -219,12 +221,19 @@ public class CustomersActivity extends AppCompatActivity {
                     sortCustomerList();
                     return true;
                 } else {
-                    return super.onOptionsItemSelected(item);
+                    if(menuItemId==R.id.menuItemRestoreFactoryDefaults) {
+                        restoreFactoryDefaults();
+                        updateOrderIcon();
+                        sortCustomerList();
+                        Toast.makeText(this, R.string.configuracoes_restauradas_para_o_padrao_de_fabrica, Toast.LENGTH_SHORT).show();
+                        return true;
+                    } else {
+                        return super.onOptionsItemSelected(item);
+                    }
                 }
             }
         }
     }
-
     private void removeCustomer () {
         customersList.remove(selectedPosition);
         // render the list without the remove item
@@ -312,5 +321,21 @@ public class CustomersActivity extends AppCompatActivity {
             menuItemSort.setIcon(R.drawable.ic_action_name_descending_order);
         }
     }
+
+    private void restoreFactoryDefaults () {
+        SharedPreferences sharedPreferences = getSharedPreferences("FILE_PREFERENCES", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        /* clean by each key
+        editor.remove(KEY_ASCENDING_ORDER);
+        editor.remove(CustomerActivity.KEY_SUGGEST_DIVISION);
+        editor.remove(CustomerActivity.KEY_LAST_DIVISION);
+         */
+        // clean all menus
+        editor.clear();
+        editor.apply();
+        ascendingOrder = INITIAL_ASCENDING_SORT_PATTER;
+    }
+
 
 }

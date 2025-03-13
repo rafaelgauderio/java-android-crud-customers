@@ -63,7 +63,7 @@ public class CustomerActivity extends AppCompatActivity {
         radioButtonReactivated = findViewById(R.id.radioButtonClientReativated);
         radioButtonRecurrence = findViewById(R.id.radioButtonRecurrenceClient);
 
-        this.readPreferences();
+        readPreferences();
         Intent intentOpen = getIntent();
         Bundle bundle = intentOpen.getExtras();
 
@@ -74,6 +74,7 @@ public class CustomerActivity extends AppCompatActivity {
                 if(suggestDivision==true) {
                     spinnerDivision.setSelection(lastDivision);
                 }
+
             } else {
                 this.setTitle(getString(R.string.update_customer));
 
@@ -129,9 +130,7 @@ public class CustomerActivity extends AppCompatActivity {
         spinnerDivision.setAdapter(adapterDivisions);
 
     }
-
      */
-
     public void cleanFields() {
         editTextName.setText(null);
         editTextReason.setText(null);
@@ -139,7 +138,6 @@ public class CustomerActivity extends AppCompatActivity {
         checkBoxRestriction.setChecked(false);
         radioGroupClientType.clearCheck();
         spinnerDivision.setSelection(0); // spinner always have a select option, can not be null
-
         editTextName.requestFocus();
         //message
         Toast.makeText(this, R.string.os_valores_dos_campos_foram_limpos, Toast.LENGTH_LONG).show();
@@ -250,7 +248,7 @@ public class CustomerActivity extends AppCompatActivity {
             } else {
                 if (menuItemId == R.id.menuItemSuggestDivision) {
                     boolean menuItemValue = !menuItem.isChecked();
-                    this.saveSuggestDivision(menuItemValue);
+                    saveSuggestDivision(menuItemValue);
                     menuItem.setChecked(menuItemValue);
                     // if user habilitate suggest division, show last division used
                     if(suggestDivision==true) {
@@ -272,12 +270,12 @@ public class CustomerActivity extends AppCompatActivity {
         lastDivision = sharedPreferences.getInt(KEY_LAST_DIVISION, lastDivision);
     }
 
-    private void saveSuggestDivision (boolean newBooleanValue) {
+    private void saveSuggestDivision (boolean newSuggestValue) {
         SharedPreferences sharedPreferences = getSharedPreferences(CustomersActivity.FILE_PREFERENCES, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putBoolean(KEY_SUGGEST_DIVISION, newBooleanValue);
+        editor.putBoolean(KEY_SUGGEST_DIVISION, newSuggestValue);
         editor.commit(); // synchronous - thread safe
-        suggestDivision = newBooleanValue;
+        suggestDivision = newSuggestValue;
     }
 
     private void saveLastDivision(int newDivisionValue) {

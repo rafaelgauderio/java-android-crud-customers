@@ -56,4 +56,6 @@
     <string name="update_customer">Editar Cliente</string>
     <string name="sugerir_divisao">Sugerir Divisão</string>
     <string name="order">Ordenação</string>
+    <string name="factory_defauls">Restaurar para Padrões Fábrica</string>
+    <string name="configuracoes_restauradas_para_o_padrao_de_fabrica">Configurações restauradas para o padrão de fábrica.</string>
 </resources>
