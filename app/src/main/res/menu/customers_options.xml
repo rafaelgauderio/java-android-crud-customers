@@ -11,6 +11,11 @@
         android:title="@string/add"
         app:showAsAction="ifRoom" />
     <item
+        android:id="@+id/menuItemSort"
+        android:icon="@android:drawable/ic_menu_sort_by_size"
+        android:title="@string/order"
+        app:showAsAction="ifRoom" />
+    <item
         android:id="@+id/menuItemAbout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

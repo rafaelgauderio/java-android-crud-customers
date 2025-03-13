@@ -7,10 +7,17 @@ import java.util.Comparator;
 
 public class Customer implements Serializable {
 
-    public static Comparator<Customer> orderByBuyerNameDesc = new Comparator<Customer>() {
+    public static Comparator<Customer> orderByBuyerNameAsc = new Comparator<Customer>() {
         @Override
         public int compare(Customer c1, Customer c2) {
                 return c1.getBuyerName().compareToIgnoreCase(c2.getBuyerName());
+        }
+    };
+
+    public static Comparator<Customer> orderByBuyerNameDesc = new Comparator<Customer>() {
+        @Override
+        public int compare(Customer c1, Customer c2) {
+            return c2.getBuyerName().compareToIgnoreCase(c1.getBuyerName());
         }
     };
 

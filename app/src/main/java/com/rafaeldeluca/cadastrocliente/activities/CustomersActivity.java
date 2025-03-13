@@ -1,9 +1,12 @@
 package com.rafaeldeluca.cadastrocliente.activities;
 
+import static com.rafaeldeluca.cadastrocliente.entities.Customer.orderByBuyerNameAsc;
 import static com.rafaeldeluca.cadastrocliente.entities.Customer.orderByBuyerNameDesc;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
@@ -36,6 +39,7 @@ import java.util.List;
 public class CustomersActivity extends AppCompatActivity {
 
     public static final String FILE_PREFERENCES = "com.rafaeldeluca.cadastrocliente.PREFERENCES";
+    public static final String KEY_ASCENDING_ORDER = "ASCENDING_ORDER";
     private List<Customer> customersList;
     private RecyclerView recyclerViewCustomers;
     private RecyclerView.LayoutManager layoutManager;
@@ -44,6 +48,9 @@ public class CustomersActivity extends AppCompatActivity {
     private View selectedView;
     private Drawable backgroundDrawable;
     private ActionMode actionMode; //lib androidx
+    private boolean ascendingOrder = true;
+    private MenuItem MenuItemSort;
+
 
     private ActionMode.Callback actionModeCallback = new ActionMode.Callback() {
 
@@ -107,6 +114,7 @@ public class CustomersActivity extends AppCompatActivity {
         recyclerViewCustomers.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
         recyclerViewCustomers.addItemDecoration(dividerItemDecoration);
 
+        readPreferences();
         insertCustomersListData();
     }
 
@@ -168,11 +176,7 @@ public class CustomersActivity extends AppCompatActivity {
 
                                 Customer customer = new Customer(name,reason,email,haveRestriction,Type.valueOf(clientTypeString),division);
                                 customersList.add(customer);
-
-                                // sort the list by buyer name
-                                Collections.sort(customersList, orderByBuyerNameDesc);
-                                // alert adapter that the list have been change, a new list is render;
-                                customerRecyclerViewAdapter.notifyDataSetChanged();
+                                sortCustomerList();
                             }
                         }
                 }
@@ -203,7 +207,13 @@ public class CustomersActivity extends AppCompatActivity {
                 actionMenuAbout();
                 return true;
             } else {
-                return super.onOptionsItemSelected(item);
+                if(menuItemId==R.id.menuItemSort) {
+                    savePreferencesAscendingOrder(!ascendingOrder);
+                    sortCustomerList();
+                    return true;
+                } else {
+                    return super.onOptionsItemSelected(item);
+                }
             }
         }
     }
@@ -239,9 +249,7 @@ public class CustomersActivity extends AppCompatActivity {
                                 Type clientType = Type.valueOf(clientTypeString);
                                 updateCustomer.setType(clientType);
 
-                                // sort the list by buyer name
-                                Collections.sort(customersList, orderByBuyerNameDesc);
-                                customerRecyclerViewAdapter.notifyDataSetChanged();
+                                sortCustomerList();
                             }
                         }
                         selectedPosition = -1; // no object of the list is selected
@@ -267,6 +275,28 @@ public class CustomersActivity extends AppCompatActivity {
 
         // load screen with customer data
         launcherUpdateCustomer.launch(intentOpen);
+    }
+    private void readPreferences () {
+        SharedPreferences sharedPreferences = getSharedPreferences("FILE_PREFERENCES", Context.MODE_PRIVATE);
+        ascendingOrder = sharedPreferences.getBoolean(KEY_ASCENDING_ORDER, ascendingOrder);
+    }
+
+    private void savePreferencesAscendingOrder (boolean newOrderValue) {
+        SharedPreferences sharedPreferences = getSharedPreferences("FILE_PREFERENCES", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean(KEY_ASCENDING_ORDER, newOrderValue);
+        editor.commit();
+        ascendingOrder= newOrderValue;
+    }
+
+    private void sortCustomerList() {
+        if(ascendingOrder==true) {
+            Collections.sort(customersList, orderByBuyerNameAsc);
+        } else {
+            Collections.sort(customersList, orderByBuyerNameDesc);
+        }
+        // render list after sort
+        this.customerRecyclerViewAdapter.notifyDataSetChanged();
     }
 
 }
