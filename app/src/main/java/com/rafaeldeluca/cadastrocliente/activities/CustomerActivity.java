@@ -46,12 +46,13 @@ public class CustomerActivity extends AppCompatActivity {
     private boolean suggestDivision = false;
     private int lastDivision = 0;
 
+    public MenuItem menuItemSuggestDivision;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        this.setContentView(R.layout.activity_customer);
+        setContentView(R.layout.activity_customer);
 
         editTextName = findViewById((R.id.editTextNome));
         editTextReason = findViewById(R.id.editTextReason);
@@ -74,7 +75,6 @@ public class CustomerActivity extends AppCompatActivity {
                 if(suggestDivision==true) {
                     spinnerDivision.setSelection(lastDivision);
                 }
-
             } else {
                 this.setTitle(getString(R.string.update_customer));
 
@@ -203,12 +203,12 @@ public class CustomerActivity extends AppCompatActivity {
                 clientType== originalCustomer.getType()) {
 
             // the values are the same, do not save
-            this.setResult(CustomerActivity.RESULT_CANCELED);
+            setResult(CustomerActivity.RESULT_CANCELED);
             finish();
             return;
         }
 
-        this.saveLastDivision(division);
+        saveLastDivision(division);
 
         Intent intentResponse = new Intent();
         intentResponse.putExtra(KEY_REASON,reason);
@@ -224,14 +224,14 @@ public class CustomerActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        this.getMenuInflater().inflate(R.menu.custosmer_options, menu);
+        getMenuInflater().inflate(R.menu.custosmer_options, menu);
         return true;
     }
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        MenuItem menuItem = menu.findItem(R.id.menuItemSuggestDivision);
-        menuItem.setChecked(suggestDivision);
+        MenuItem item = menu.findItem(R.id.menuItemSuggestDivision);
+        item.setChecked(suggestDivision);
         return true; // mandatory to show de Menu of division options
     }
 
@@ -239,32 +239,28 @@ public class CustomerActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem menuItem) {
         int menuItemId = menuItem.getItemId();
         if(menuItemId == R.id.menuItemClean) {
-            this.cleanFields();
+            cleanFields();
             return true;
-        } else {
+        } else
             if(menuItemId == R.id.menuItemSave) {
-                this.saveFieldsValues();
+                saveFieldsValues();
                 return true;
-            } else {
+            } else
                 if (menuItemId == R.id.menuItemSuggestDivision) {
                     boolean menuItemValue = !menuItem.isChecked();
                     saveSuggestDivision(menuItemValue);
                     menuItem.setChecked(menuItemValue);
                     // if user habilitate suggest division, show last division used
-                    if(suggestDivision==true) {
+                    if(suggestDivision) {
                         spinnerDivision.setSelection(lastDivision);
                     }
                     return true;
                 } else {
                     return super.onOptionsItemSelected(menuItem);
                 }
-            }
-        }
-    }
-
+     }
 
     private void readPreferences () {
-
         SharedPreferences sharedPreferences = getSharedPreferences(CustomersActivity.FILE_PREFERENCES, Context.MODE_PRIVATE);
         suggestDivision = sharedPreferences.getBoolean(KEY_SUGGEST_DIVISION, suggestDivision);
         lastDivision = sharedPreferences.getInt(KEY_LAST_DIVISION, lastDivision);
@@ -285,4 +281,5 @@ public class CustomerActivity extends AppCompatActivity {
         editor.commit();
         lastDivision = newDivisionValue;
     }
+
 }

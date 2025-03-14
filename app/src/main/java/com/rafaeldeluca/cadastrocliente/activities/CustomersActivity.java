@@ -209,7 +209,6 @@ public class CustomersActivity extends AppCompatActivity {
         if(menuItemId == R.id.menuItemAdd) {
             actionMenuAddNewCustomer();
             return true;
-
         } else {
             if(menuItemId == R.id.menuItemAbout) {
                 actionMenuAbout();
@@ -288,7 +287,6 @@ public class CustomersActivity extends AppCompatActivity {
         intentOpen.putExtra(CustomerActivity.KEY_RESTRICTION, updateCustomer.isRestriction());
         intentOpen.putExtra(CustomerActivity.KEY_DIVISION, updateCustomer.getDivision());
         intentOpen.putExtra(CustomerActivity.KEY_TYPE, updateCustomer.getType().toString());
-
         // load screen with customer data
         launcherUpdateCustomer.launch(intentOpen);
     }
@@ -312,7 +310,7 @@ public class CustomersActivity extends AppCompatActivity {
             Collections.sort(customersList, orderByBuyerNameDesc);
         }
         // render list after sort
-        this.customerRecyclerViewAdapter.notifyDataSetChanged();
+        customerRecyclerViewAdapter.notifyDataSetChanged();
     }
     private void updateOrderIcon () {
         if(ascendingOrder==true) {
@@ -321,21 +319,16 @@ public class CustomersActivity extends AppCompatActivity {
             menuItemSort.setIcon(R.drawable.ic_action_name_descending_order);
         }
     }
-
-    private void restoreFactoryDefaults () {
+    public void restoreFactoryDefaults () {
         SharedPreferences sharedPreferences = getSharedPreferences("FILE_PREFERENCES", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-
-        /* clean by each key
+        // clean by each key
         editor.remove(KEY_ASCENDING_ORDER);
         editor.remove(CustomerActivity.KEY_SUGGEST_DIVISION);
         editor.remove(CustomerActivity.KEY_LAST_DIVISION);
-         */
         // clean all menus
         editor.clear();
-        editor.apply();
+        editor.commit();
         ascendingOrder = INITIAL_ASCENDING_SORT_PATTER;
     }
-
-
 }
