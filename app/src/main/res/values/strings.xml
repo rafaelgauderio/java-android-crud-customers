@@ -1,61 +1,7 @@
 <resources>
-    <string name="app_name">Cadastro de Clientes</string>
-    <string name="nome">Nome/Comprador</string>
-    <string name="clean">Limpar</string>
-    <string name="save">Salvar</string>
-    <string name="nome_completo">Nome Completo</string>
-    <string name="os_valores_dos_campos_foram_limpos">Os valores de todos os campos foram deletados!</string>
-    <string name="campo_nome_preenchimento_obrigatorio">Campo nome é de preenchimento obrigatório.</string>
-    <string name="nome_valor">"Nome do Comprador: "</string>
-    <string name="campo_razao_preenchimento_obrigatorio">Razão Social é de preenchimento obrigatório</string>
-    <string name="possui_restricao">Possui Restrição Financeira\nVenda somente à vista.</string>
-    <string name="venda_somente_vista">\nVenda somente à vista</string>
-    <string name="nao_possui_restricao_financeira">Não possui restrição financeira\nPode faturar a prazo.</string>
-    <string name="cliente_novo">Cliente novo</string>
-    <string name="cliente_reativado">Cliente antigo reativado</string>
-    <string name="cliente_recorrente">Cliente compra com recorrência</string>
-    <string name="necessario_escolher_o_tipo_de_cliente">Necessário escolher o tipo de cliente</string>
-    <string name="tipo_cliente">Tipo de cliente</string>
-    <string name="tipo_cliente_valor">"Tipo de cliente: "</string>
-    <string name="divisao">Divisão</string>
-    <string name="lazer">Lazer (Restaurantes, Bares...)</string>
-    <string name="saude">Saúde (Clínicas, Hospitais...)</string>
-    <string name="comercio">Comércio (Lojas, Supermercados...)</string>
-    <string name="industria">Indústria</string>
-    <string name="condominio">Condomínio</string>
-    <string name="escritorio">Escritório</string>
-    <string name="outros">Outros</string>
-    <string name="o_spinner_nao_possui_dados">O spinner não possui dados</string>
-    <string name="divisao_valor">"Divisão: "</string>
-    <string name="razao_valor">"Razão Social: "</string>
-    <string name="razao">Razão Social</string>
-    <string name="razao_social_edit">Razão Social</string>
-    <string name="razao_fantasia">Razão Social ou Fantasia</string>
-    <string name="email">Email</string>
-    <string name="email_hint">Email Comercial</string>
-    <string name="campo_email_de_preenchimento_obrigatorio">Campo email é de preenchimento obrigatório!</string>
-    <string name="email_valor">"Email: "</string>
-    <string name="empresa_de_razao_social">Empresa de razão social\n\"</string>
-    <string name="foi_selecionada">\"\nfoi selecionada!</string>
-    <string name="recebeu_um_click_longo">\"\nrecebeu um click longo</string>
-    <string name="logo_utfpr">Logo da UTFPR</string>
-    <string name="description">Cadastro de Cliente Android</string>
-    <string name="author">Autor: <a href="https://github.com/rafaelgauderio">Rafael de Luca</a></string>
+    <string name="author" translatable="false">Author: <a href="https://github.com/rafaelgauderio">Rafael de Luca</a></string>
     <string name="about">Sobre</string>
     <string name="controle_de_clientes">Controle de Clientes</string>
-    <string name="add">Adicionar</string>
-    <string name="inserir_cliente_novo">Inserir Cliente Novo</string>
-    <string name="curso"><a href="https://pos-graduacao-ead.cp.utfpr.edu.br/java/">Pós-Graduação em Java</a></string>
-    <string name="detail_description">Inserção, Deleção, Atualização e Listagem de Clientes</string>
-    <string name="email_author"><u>rafaelluca@alunos.utfpr.edu.br</u></string>
-    <string name="nenhum_aplicativo_instalado_para_abrir_paginas_web">Nenhum aplicativo instalado para abrir páginas web</string>
-    <string name="nenhum_aplicativo_instalado_para_enviar_email">Nenhum aplicativo instalado para enviar email</string>
-    <string name="email_enviado_pelo_aplicativo">Email enviado pelo aplicativo</string>
-    <string name="delete">Excluir</string>
-    <string name="edit">Editar</string>
-    <string name="update_customer">Editar Cliente</string>
-    <string name="sugerir_divisao">Sugerir Divisão</string>
-    <string name="order">Ordenação</string>
-    <string name="factory_defauls">Restaurar para Padrões Fábrica</string>
-    <string name="configuracoes_restauradas_para_o_padrao_de_fabrica">Configurações restauradas para o padrão de fábrica.</string>
+    <string name="curso" translatable="false"><a href="https://pos-graduacao-ead.cp.utfpr.edu.br/java/">Pós-Graduação em Java</a></string>
+    <string name="email_author" translatable="false"><u>rafaelluca@alunos.utfpr.edu.br</u></string>
 </resources>
