@@ -1,7 +1,60 @@
 <resources>
-    <string name="author" translatable="false">Author: <a href="https://github.com/rafaelgauderio">Rafael de Luca</a></string>
-    <string name="about">Sobre</string>
-    <string name="controle_de_clientes">Controle de Clientes</string>
-    <string name="curso" translatable="false"><a href="https://pos-graduacao-ead.cp.utfpr.edu.br/java/">Pós-Graduação em Java</a></string>
+    <string name="author">Author: <a href="https://github.com/rafaelgauderio">Rafael de Luca</a></string>
+    <string name="about">About</string>
+    <string name="controle_de_clientes">Customer Control</string>
+    <string name="curso"><a href="https://pos-graduacao-ead.cp.utfpr.edu.br/java/">Postgraduate in Java</a></string>
     <string name="email_author" translatable="false"><u>rafaelluca@alunos.utfpr.edu.br</u></string>
+    <string name="app_name">Customer Registration</string>
+    <string name="nome">Name/Buyer</string>
+    <string name="clean">Clean</string>
+    <string name="save">Save</string>
+    <string name="nome_completo">Full Name</string>
+    <string name="os_valores_dos_campos_foram_limpos">All field values have been deleted!</string>
+    <string name="campo_nome_preenchimento_obrigatorio">The name field can not be empty</string>
+    <string name="nome_valor">"Buyers´s Name: "</string>
+    <string name="campo_razao_preenchimento_obrigatorio">Company name field can not be empty</string>
+    <string name="possui_restricao">Has Financial Restrictions\\nCash sales only.</string>
+    <string name="venda_somente_vista">\\nCash sales only.</string>
+    <string name="nao_possui_restricao_financeira">Has no financial restrictions\\nCan invoice in installments.</string>
+    <string name="cliente_novo">New customer</string>
+    <string name="cliente_reativado">Reactivated old customer</string>
+    <string name="cliente_recorrente">Recurring customer</string>
+    <string name="necessario_escolher_o_tipo_de_cliente">You must choose the type of customer</string>
+    <string name="tipo_cliente">Customer type</string>
+    <string name="tipo_cliente_valor">"Customer type: "</string>
+    <string name="divisao">Division</string>
+    <string name="lazer">Leisure(Restaurants, Bars...)</string>
+    <string name="saude">Health (Clinics, Hospitals...)</string>
+    <string name="comercio">Commerce(Shops, Supermarkets...)</string>
+    <string name="industria">Industry</string>
+    <string name="condominio">Condominium</string>
+    <string name="escritorio">Office</string>
+    <string name="outros">Other</string>
+    <string name="logo_utfpr">UTFPR Logo</string>
+    <string name="o_spinner_nao_possui_dados">The spinner has no data</string>
+    <string name="divisao_valor">"Division: "</string>
+    <string name="razao_valor">"Company Name: "</string>
+    <string name="razao">Company Name</string>
+    <string name="razao_social_edit">Company Name</string>
+    <string name="razao_fantasia">Company Name ou Trade Name</string>
+    <string name="email">Email</string>
+    <string name="email_hint">Business Email</string>
+    <string name="campo_email_de_preenchimento_obrigatorio">The email field can not be empty!</string>
+    <string name="email_valor">"Email: "</string>
+    <string name="empresa_de_razao_social">Company Name\\n\"</string>
+    <string name="description">Android Customer Registration</string>
+    <string name="add">Add</string>
+    <string name="inserir_cliente_novo">Insert New Customer</string>
+    <string name="detail_description">Insertion, Deletion, Update and List of Customers</string>
+    <string name="nenhum_aplicativo_instalado_para_abrir_paginas_web">No application installed to open web pages</string>
+    <string name="nenhum_aplicativo_instalado_para_enviar_email">No application installed to send email</string>
+    <string name="email_enviado_pelo_aplicativo">Email sent by the application</string>
+    <string name="delete">Delete</string>
+    <string name="edit">Edit</string>
+    <string name="update_customer">Edit Client</string>
+    <string name="sugerir_divisao">Suggest Division</string>
+    <string name="order">Ordering</string>
+    <string name="factory_defauls">Restory to Factory Defaults</string>
+    <string name="configuracoes_restauradas_para_o_padrao_de_fabrica">Settings restores to factory defaults</string>
+    <string name="possui_restricao_financeira">Has Financial Restrictions</string>
 </resources>

@@ -37,10 +37,9 @@
     <string name="campo_email_de_preenchimento_obrigatorio">Campo email é de preenchimento obrigatório!</string>
     <string name="email_valor">"Email: "</string>
     <string name="empresa_de_razao_social">Empresa de razão social\n\"</string>
-    <string name="foi_selecionada">\"\nfoi selecionada!</string>
-    <string name="recebeu_um_click_longo">\"\nrecebeu um click longo</string>
     <string name="logo_utfpr">Logo da UTFPR</string>
     <string name="description">Cadastro de Cliente Android</string>
+    <string name="author">Autor: <a href="https://github.com/rafaelgauderio">Rafael de Luca</a></string>
     <string name="about">Sobre</string>
     <string name="controle_de_clientes">Controle de Clientes</string>
     <string name="add">Adicionar</string>
@@ -56,4 +55,6 @@
     <string name="order">Ordenação</string>
     <string name="factory_defauls">Restaurar para Padrões Fábrica</string>
     <string name="configuracoes_restauradas_para_o_padrao_de_fabrica">Configurações restauradas para o padrão de fábrica.</string>
+    <string name="curso"><a href="https://pos-graduacao-ead.cp.utfpr.edu.br/java/">Pós-Graduação em Java</a></string>
+    <string name="possui_restricao_financeira">Possui Restrição Financeira</string>
 </resources>
