@@ -57,4 +57,5 @@
     <string name="configuracoes_restauradas_para_o_padrao_de_fabrica">Configurações restauradas para o padrão de fábrica.</string>
     <string name="curso"><a href="https://pos-graduacao-ead.cp.utfpr.edu.br/java/">Pós-Graduação em Java</a></string>
     <string name="possui_restricao_financeira">Possui Restrição Financeira</string>
+    <string name="nome_utfpr">UNIVERSIDADE TECNOLÓGICA FEDERAL DO PARANÁ</string>
 </resources>
