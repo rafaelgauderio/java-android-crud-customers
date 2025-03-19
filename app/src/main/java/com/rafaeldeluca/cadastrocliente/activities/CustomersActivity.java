@@ -5,6 +5,7 @@ import static com.rafaeldeluca.cadastrocliente.entities.Customer.orderByBuyerNam
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -32,6 +33,7 @@ import com.rafaeldeluca.cadastrocliente.R;
 import com.rafaeldeluca.cadastrocliente.adapters.CustomerRecyclerViewAdapter;
 import com.rafaeldeluca.cadastrocliente.entities.Customer;
 import com.rafaeldeluca.cadastrocliente.entities.enums.Type;
+import com.rafaeldeluca.cadastrocliente.useful.UsefulAlert;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -72,7 +74,7 @@ public class CustomersActivity extends AppCompatActivity {
             int menuItemId = menuItem.getItemId();
             if (menuItemId == R.id.menuItemDelete) {
                 removeCustomer();
-                actionMode.finish(); // close menu
+                //actionMode.finish(); // close menu
                 return true;
             } else {
                 if (menuItemId == R.id.menuItemUpdate) {
@@ -221,10 +223,7 @@ public class CustomersActivity extends AppCompatActivity {
                     return true;
                 } else {
                     if(menuItemId==R.id.menuItemRestoreFactoryDefaults) {
-                        restoreFactoryDefaults();
-                        updateOrderIcon();
-                        sortCustomerList();
-                        Toast.makeText(this, R.string.configuracoes_restauradas_para_o_padrao_de_fabrica, Toast.LENGTH_SHORT).show();
+                        this.confirmationRestoreFactoryDefaults();
                         return true;
                     } else {
                         return super.onOptionsItemSelected(item);
@@ -234,9 +233,22 @@ public class CustomersActivity extends AppCompatActivity {
         }
     }
     private void removeCustomer () {
-        customersList.remove(selectedPosition);
-        // render the list without the remove item
-        customerRecyclerViewAdapter.notifyDataSetChanged();
+
+        Customer customer = customersList.get(selectedPosition);
+        String message = getString(R.string.are_you_sure_you_want_to_delete_company)
+                + customer.getCorporateReason() + getString(R.string.quotes);
+
+        DialogInterface.OnClickListener listenerYes = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                customersList.remove(selectedPosition);
+                // render the list without the remove item
+                customerRecyclerViewAdapter.notifyItemRemoved(selectedPosition);
+                actionMode.finish();
+            }
+        };
+        // do nothing if user chose "NO"
+        UsefulAlert.confirmationActionAlertDialog(this,message,listenerYes,null);
     }
 
             ActivityResultLauncher<Intent> launcherUpdateCustomer = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
@@ -330,5 +342,24 @@ public class CustomersActivity extends AppCompatActivity {
         editor.clear();
         editor.commit();
         ascendingOrder = INITIAL_ASCENDING_SORT_PATTER;
+    }
+
+    private void confirmationRestoreFactoryDefaults () {
+        DialogInterface.OnClickListener listenerYes = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                restoreFactoryDefaults();
+                updateOrderIcon();
+                sortCustomerList();
+                Toast.makeText(CustomersActivity.this,
+                        R.string.configuracoes_restauradas_para_o_padrao_de_fabrica,
+                        Toast.LENGTH_SHORT).show();
+            }
+        };
+
+        UsefulAlert.confirmationActionAlertDialog(this,
+                getString(R.string.confirm_restore_to_factory_defaults),
+                listenerYes, null
+        );
     }
 }

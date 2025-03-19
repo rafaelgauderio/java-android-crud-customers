@@ -61,4 +61,6 @@
     <string name="warning">AVISO</string>
     <string name="ok">OK</string>
     <string name="o_spinner_nao_carregou_os_dados">O spinner não carregou os dados</string>
+    <string name="are_you_sure_you_want_to_delete_company">Tem certeza que deseja excluir a empresa?\n\"</string>
+    <string name="confirm_restore_to_factory_defaults">Confirma restaurar para os padrões de fábrica?</string>
 </resources>

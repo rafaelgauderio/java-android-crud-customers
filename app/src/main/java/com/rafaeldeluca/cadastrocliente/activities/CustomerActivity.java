@@ -15,6 +15,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.rafaeldeluca.cadastrocliente.R;
@@ -140,8 +141,8 @@ public class CustomerActivity extends AppCompatActivity {
         radioGroupClientType.clearCheck();
         spinnerDivision.setSelection(0); // spinner always have a select option, can not be null
         editTextName.requestFocus();
-        //message
-        Toast.makeText(this, R.string.os_valores_dos_campos_foram_limpos, Toast.LENGTH_LONG).show();
+        UsefulAlert.showAlertDialog(this, R.string.os_valores_dos_campos_foram_limpos);
+        //Toast.makeText(this, R.string.os_valores_dos_campos_foram_limpos, Toast.LENGTH_LONG).show();
     }
 
     public void saveFieldsValues() {

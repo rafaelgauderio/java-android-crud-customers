@@ -13,9 +13,9 @@
     <string name="campo_nome_preenchimento_obrigatorio">The name field can not be empty</string>
     <string name="nome_valor">"Buyers´s Name: "</string>
     <string name="campo_razao_preenchimento_obrigatorio">Company name field can not be empty</string>
-    <string name="possui_restricao">Has Financial Restrictions\\nCash sales only.</string>
+    <string name="possui_restricao">Has Financial Restrictions\nCash sales only.</string>
     <string name="venda_somente_vista">\\nCash sales only.</string>
-    <string name="nao_possui_restricao_financeira">Has no financial restrictions\\nCan invoice in installments.</string>
+    <string name="nao_possui_restricao_financeira">Has no financial restrictions\nCan invoice in installments.</string>
     <string name="cliente_novo">New customer</string>
     <string name="cliente_reativado">Reactivated old customer</string>
     <string name="cliente_recorrente">Recurring customer</string>
@@ -61,4 +61,7 @@
     <string name="warning">WARNING</string>
     <string name="ok">OK</string>
     <string name="o_spinner_nao_carregou_os_dados">Spinner do not load division data!</string>
+    <string name="are_you_sure_you_want_to_delete_company">Are you sure you want to delete Company?\n\"</string>
+    <string name="quotes" translatable="false">\"</string>
+    <string name="confirm_restore_to_factory_defaults">Confirm  restore to factory defaults?</string>
 </resources>
