@@ -20,6 +20,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.rafaeldeluca.cadastrocliente.R;
 import com.rafaeldeluca.cadastrocliente.entities.Customer;
 import com.rafaeldeluca.cadastrocliente.entities.enums.Type;
+import com.rafaeldeluca.cadastrocliente.useful.UsefulAlert;
 
 public class CustomerActivity extends AppCompatActivity {
 
@@ -154,20 +155,22 @@ public class CustomerActivity extends AppCompatActivity {
         int radioButtonId = radioGroupClientType.getCheckedRadioButtonId();
 
         if (name == null || nameWithoutSpace.isEmpty() || nameWithoutSpace.isBlank()) {
-            Toast.makeText(this, R.string.campo_nome_preenchimento_obrigatorio, Toast.LENGTH_LONG).show();
-
+            UsefulAlert.showAlertDialog(this,R.string.campo_nome_preenchimento_obrigatorio);
+            //Toast.makeText(this, R.string.campo_nome_preenchimento_obrigatorio, Toast.LENGTH_LONG).show();
             editTextName.requestFocus();
             return;
         }
 
         if(reason ==null || reasonWithoutSpace.isEmpty() || reasonWithoutSpace.isBlank()) {
-            Toast.makeText(this, R.string.campo_razao_preenchimento_obrigatorio, Toast.LENGTH_LONG).show();
+            //Toast.makeText(this, R.string.campo_razao_preenchimento_obrigatorio, Toast.LENGTH_LONG).show();
+            UsefulAlert.showAlertDialog(this,R.string.campo_razao_preenchimento_obrigatorio);
             editTextReason.requestFocus();
             return;
         }
 
         if(email ==null || email.trim().isBlank() || email.trim().isBlank()) {
-            Toast.makeText(this, R.string.campo_email_de_preenchimento_obrigatorio, Toast.LENGTH_LONG).show();
+            //Toast.makeText(this, R.string.campo_email_de_preenchimento_obrigatorio, Toast.LENGTH_LONG).show();
+            UsefulAlert.showAlertDialog(this, R.string.campo_email_de_preenchimento_obrigatorio);
             editTextEmailCommercial.requestFocus();
             return;
         }
@@ -175,7 +178,8 @@ public class CustomerActivity extends AppCompatActivity {
         Type clientType = null;
 
         if(radioButtonId == -1) {
-            Toast.makeText(this, R.string.necessario_escolher_o_tipo_de_cliente, Toast.LENGTH_LONG).show();
+            //Toast.makeText(this, R.string.necessario_escolher_o_tipo_de_cliente, Toast.LENGTH_LONG).show();
+            UsefulAlert.showAlertDialog(this, R.string.necessario_escolher_o_tipo_de_cliente);
             return;
 
         } else {
@@ -189,7 +193,8 @@ public class CustomerActivity extends AppCompatActivity {
 
         int division =  spinnerDivision.getSelectedItemPosition();
         if(division== AdapterView.INVALID_POSITION) {
-            Toast.makeText(this,"O spinner não carregou os dados", Toast.LENGTH_LONG).show();
+            //Toast.makeText(this, R.string.o_spinner_nao_carregou_os_dados, Toast.LENGTH_LONG).show();
+            UsefulAlert.showAlertDialog(this, R.string.o_spinner_nao_carregou_os_dados);
             return;
         }
         boolean haveRestriction = checkBoxRestriction.isChecked();

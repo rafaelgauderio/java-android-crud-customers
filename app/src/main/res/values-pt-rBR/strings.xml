@@ -58,4 +58,7 @@
     <string name="curso"><a href="https://pos-graduacao-ead.cp.utfpr.edu.br/java/">Pós-Graduação em Java</a></string>
     <string name="possui_restricao_financeira">Possui Restrição Financeira</string>
     <string name="nome_utfpr">UNIVERSIDADE TECNOLÓGICA FEDERAL DO PARANÁ</string>
+    <string name="warning">AVISO</string>
+    <string name="ok">OK</string>
+    <string name="o_spinner_nao_carregou_os_dados">O spinner não carregou os dados</string>
 </resources>

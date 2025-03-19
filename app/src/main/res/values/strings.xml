@@ -58,4 +58,7 @@
     <string name="configuracoes_restauradas_para_o_padrao_de_fabrica">Settings restores to factory defaults</string>
     <string name="possui_restricao_financeira">Has Financial Restrictions</string>
     <string name="nome_utfpr">FEDERAL UNIVERSITY OF TECHNOLOGY - PARANÁ</string>
+    <string name="warning">WARNING</string>
+    <string name="ok">OK</string>
+    <string name="o_spinner_nao_carregou_os_dados">Spinner do not load division data!</string>
 </resources>
