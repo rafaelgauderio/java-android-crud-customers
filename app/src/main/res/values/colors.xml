@@ -9,4 +9,5 @@
     <color name="yellow">#FFBE02</color>
     <color name="ic_launcher_utfpr_background">#FFFFFF</color>
     <color name="blue_dark">#3F52B6</color>
+    <color name="gray_transparent">#C9909090</color>
 </resources>

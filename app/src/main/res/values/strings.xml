@@ -61,7 +61,7 @@
     <string name="warning">WARNING</string>
     <string name="ok">OK</string>
     <string name="o_spinner_nao_carregou_os_dados">Spinner do not load division data!</string>
-    <string name="are_you_sure_you_want_to_delete_company">Are you sure you want to delete Company?\n\"</string>
+    <string name="are_you_sure_you_want_to_delete_company">Are you sure you want to delete Company?\n\"%1$s\"</string>
     <string name="quotes" translatable="false">\"</string>
     <string name="confirm_restore_to_factory_defaults">Confirm  restore to factory defaults?</string>
 </resources>

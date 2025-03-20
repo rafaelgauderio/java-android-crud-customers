@@ -9,4 +9,5 @@
         <item name="android:textColorLink">@color/blue_dark</item>
         <item name="android:textColorAlertDialogListItem">@color/black</item>
     </style>
+    <color name="selectColor">@color/green_light</color>
 </resources>

@@ -145,7 +145,8 @@ public class CustomersActivity extends AppCompatActivity {
                 selectedPosition = position;
                 selectedView = view;
                 backgroundDrawable = view.getBackground();
-                view.setBackgroundColor(Color.rgb(3,234,116));
+                //view.setBackgroundColor(Color.rgb(3,234,116));
+                view.setBackgroundColor(getColor(R.color.selectColor));
                 recyclerViewCustomers.setEnabled(false);
                 actionMode = startSupportActionMode(actionModeCallback);
                 return true;
@@ -235,8 +236,9 @@ public class CustomersActivity extends AppCompatActivity {
     private void removeCustomer () {
 
         Customer customer = customersList.get(selectedPosition);
-        String message = getString(R.string.are_you_sure_you_want_to_delete_company)
-                + customer.getCorporateReason() + getString(R.string.quotes);
+        //String message = getString(R.string.are_you_sure_you_want_to_delete_company)
+        // + customer.getCorporateReason() + getString(R.string.quotes);
+        String message = getString(R.string.are_you_sure_you_want_to_delete_company, customer.getCorporateReason());
 
         DialogInterface.OnClickListener listenerYes = new DialogInterface.OnClickListener() {
             @Override
