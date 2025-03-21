@@ -96,7 +96,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textViewClienteType">
 
         <RadioButton
-            android:id="@+id/radioNewClient"
+            android:id="@+id/radioButtonNewClient"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/cliente_novo" />

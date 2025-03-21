@@ -6,18 +6,19 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.AdapterView;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.ScrollView;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.rafaeldeluca.cadastrocliente.R;
 import com.rafaeldeluca.cadastrocliente.entities.Customer;
 import com.rafaeldeluca.cadastrocliente.entities.enums.Type;
@@ -62,7 +63,7 @@ public class CustomerActivity extends AppCompatActivity {
         checkBoxRestriction = findViewById(R.id.checkBoxRestriction);
         radioGroupClientType = findViewById(R.id.radioGroupClientType);
         spinnerDivision = findViewById(R.id.spinnerDivision);
-        radioButtonNew = findViewById(R.id.radioNewClient);
+        radioButtonNew = findViewById(R.id.radioButtonNewClient);
         radioButtonReactivated = findViewById(R.id.radioButtonClientReativated);
         radioButtonRecurrence = findViewById(R.id.radioButtonRecurrenceClient);
 
@@ -134,6 +135,16 @@ public class CustomerActivity extends AppCompatActivity {
     }
      */
     public void cleanFields() {
+
+        final String buyerName = editTextName.getText().toString();
+        final String reason = editTextReason.getText().toString();
+        final String emailCommercial= editTextEmailCommercial.getText().toString();
+        final boolean hasRestriction = checkBoxRestriction.isChecked();
+        final int radioButtonTypeId = radioGroupClientType.getCheckedRadioButtonId();
+        final int division = spinnerDivision.getSelectedItemPosition();
+        final ScrollView scrollView = findViewById(R.id.main);
+        final View viewWithFocus = scrollView.findFocus();
+
         editTextName.setText(null);
         editTextReason.setText(null);
         editTextEmailCommercial.setText(null);
@@ -141,8 +152,38 @@ public class CustomerActivity extends AppCompatActivity {
         radioGroupClientType.clearCheck();
         spinnerDivision.setSelection(0); // spinner always have a select option, can not be null
         editTextName.requestFocus();
-        UsefulAlert.showAlertDialog(this, R.string.os_valores_dos_campos_foram_limpos);
+
+        Snackbar snackbar = Snackbar.make(scrollView, R.string.os_valores_dos_campos_foram_limpos,
+                Snackbar.LENGTH_LONG);
+        snackbar.setAction(R.string.undo, new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                editTextName.setText(buyerName);
+                editTextReason.setText(reason);
+                editTextEmailCommercial.setText(emailCommercial);
+                checkBoxRestriction.setChecked(hasRestriction);
+                spinnerDivision.setSelection(division);
+                if(radioButtonTypeId== R.id.radioButtonNewClient) {
+                    radioButtonNew.setChecked(true);
+                } else {
+                    if(radioButtonTypeId == R.id.radioButtonClientReativated) {
+                        radioButtonReactivated.setChecked(true);
+                    } else {
+                      if(radioButtonTypeId== R.id.radioButtonRecurrenceClient) {
+                          radioButtonReactivated.setChecked(true);
+                      }
+                   }
+                }
+                if(viewWithFocus !=null) {
+                    viewWithFocus.requestFocus();
+                }
+            }
+        });
+
+        //UsefulAlert.showAlertDialog(this, R.string.os_valores_dos_campos_foram_limpos);
         //Toast.makeText(this, R.string.os_valores_dos_campos_foram_limpos, Toast.LENGTH_LONG).show();
+        snackbar.show();
+
     }
 
     public void saveFieldsValues() {
@@ -184,7 +225,7 @@ public class CustomerActivity extends AppCompatActivity {
             return;
 
         } else {
-            if (radioButtonId==R.id.radioNewClient)
+            if (radioButtonId==R.id.radioButtonNewClient)
                 clientType = Type.NOVO;
             else if(radioButtonId==R.id.radioButtonClientReativated)
                 clientType = Type.REATIVADO;
