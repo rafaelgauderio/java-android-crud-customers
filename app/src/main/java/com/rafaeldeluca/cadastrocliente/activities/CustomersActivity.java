@@ -25,10 +25,12 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.view.ActionMode;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.rafaeldeluca.cadastrocliente.R;
 import com.rafaeldeluca.cadastrocliente.adapters.CustomerRecyclerViewAdapter;
 import com.rafaeldeluca.cadastrocliente.entities.Customer;
@@ -88,13 +90,13 @@ public class CustomersActivity extends AppCompatActivity {
 
         @Override
         public void onDestroyActionMode(ActionMode mode) {
-            if(selectedView!= null) {
+            if (selectedView != null) {
                 selectedView.setBackground(backgroundDrawable);
             }
             // release objects on memory
-            actionMode=null;
-            selectedView=null;
-            backgroundDrawable=null;
+            actionMode = null;
+            selectedView = null;
+            backgroundDrawable = null;
             recyclerViewCustomers.setEnabled(true);
         }
     };
@@ -139,7 +141,7 @@ public class CustomersActivity extends AppCompatActivity {
         customerRecyclerViewAdapter.setOnItemLongClickListener(new CustomerRecyclerViewAdapter.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(View view, int position) {
-                if(actionMode!=null) {
+                if (actionMode != null) {
                     return false;
                 }
                 selectedPosition = position;
@@ -155,7 +157,7 @@ public class CustomersActivity extends AppCompatActivity {
         recyclerViewCustomers.setAdapter(customerRecyclerViewAdapter);
     }
 
-    public void actionMenuAbout () {
+    public void actionMenuAbout() {
         // object that moves between activities
         Intent intentOpen = new Intent(this, AboutActivity.class);
         startActivity(intentOpen);
@@ -165,28 +167,28 @@ public class CustomersActivity extends AppCompatActivity {
             new ActivityResultCallback<ActivityResult>() {
                 @Override
                 public void onActivityResult(ActivityResult activityResult) {
-                        if(activityResult.getResultCode() == CustomersActivity.RESULT_OK) {
-                            Intent intent = activityResult.getData();
+                    if (activityResult.getResultCode() == CustomersActivity.RESULT_OK) {
+                        Intent intent = activityResult.getData();
 
-                            Bundle bundle = intent.getExtras();
+                        Bundle bundle = intent.getExtras();
 
-                            if(bundle != null) {
-                                String reason = bundle.getString(CustomerActivity.KEY_REASON);
-                                String name = bundle.getString(CustomerActivity.KEY_NAME);
-                                String email = bundle.getString(CustomerActivity.KEY_EMAIL);
-                                boolean haveRestriction = bundle.getBoolean(CustomerActivity.KEY_RESTRICTION);
-                                String clientTypeString = bundle.getString(CustomerActivity.KEY_TYPE);
-                                int division = bundle.getInt(CustomerActivity.KEY_DIVISION);
+                        if (bundle != null) {
+                            String reason = bundle.getString(CustomerActivity.KEY_REASON);
+                            String name = bundle.getString(CustomerActivity.KEY_NAME);
+                            String email = bundle.getString(CustomerActivity.KEY_EMAIL);
+                            boolean haveRestriction = bundle.getBoolean(CustomerActivity.KEY_RESTRICTION);
+                            String clientTypeString = bundle.getString(CustomerActivity.KEY_TYPE);
+                            int division = bundle.getInt(CustomerActivity.KEY_DIVISION);
 
-                                Customer customer = new Customer(name,reason,email,haveRestriction,Type.valueOf(clientTypeString),division);
-                                customersList.add(customer);
-                                sortCustomerList();
-                            }
+                            Customer customer = new Customer(name, reason, email, haveRestriction, Type.valueOf(clientTypeString), division);
+                            customersList.add(customer);
+                            sortCustomerList();
                         }
+                    }
                 }
             });
 
-    public void actionMenuAddNewCustomer () {
+    public void actionMenuAddNewCustomer() {
 
         Intent intentOpen = new Intent(this, CustomerActivity.class);
         intentOpen.putExtra(CustomerActivity.KEY_MODE, CustomerActivity.MODE_INSERT);
@@ -202,28 +204,28 @@ public class CustomersActivity extends AppCompatActivity {
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-       this.updateOrderIcon();
-       return true;
+        this.updateOrderIcon();
+        return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int menuItemId = item.getItemId();
-        if(menuItemId == R.id.menuItemAdd) {
+        if (menuItemId == R.id.menuItemAdd) {
             actionMenuAddNewCustomer();
             return true;
         } else {
-            if(menuItemId == R.id.menuItemAbout) {
+            if (menuItemId == R.id.menuItemAbout) {
                 actionMenuAbout();
                 return true;
             } else {
-                if(menuItemId==R.id.menuItemSort) {
+                if (menuItemId == R.id.menuItemSort) {
                     savePreferencesAscendingOrder(!ascendingOrder);
                     updateOrderIcon();
                     sortCustomerList();
                     return true;
                 } else {
-                    if(menuItemId==R.id.menuItemRestoreFactoryDefaults) {
+                    if (menuItemId == R.id.menuItemRestoreFactoryDefaults) {
                         this.confirmationRestoreFactoryDefaults();
                         return true;
                     } else {
@@ -233,7 +235,8 @@ public class CustomersActivity extends AppCompatActivity {
             }
         }
     }
-    private void removeCustomer () {
+
+    private void removeCustomer() {
 
         Customer customer = customersList.get(selectedPosition);
         //String message = getString(R.string.are_you_sure_you_want_to_delete_company)
@@ -250,45 +253,66 @@ public class CustomersActivity extends AppCompatActivity {
             }
         };
         // do nothing if user chose "NO"
-        UsefulAlert.confirmationActionAlertDialog(this,message,listenerYes,null);
+        UsefulAlert.confirmationActionAlertDialog(this, message, listenerYes, null);
     }
 
-            ActivityResultLauncher<Intent> launcherUpdateCustomer = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
-                new ActivityResultCallback<ActivityResult>() {
-                    @Override
-                    public void onActivityResult(ActivityResult activityResult) {
-                        if(activityResult.getResultCode() == CustomersActivity.RESULT_OK) {
-                            Intent intent = activityResult.getData();
-                            Bundle bundle = intent.getExtras();
+    ActivityResultLauncher<Intent> launcherUpdateCustomer = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+            new ActivityResultCallback<ActivityResult>() {
+                @Override
+                public void onActivityResult(ActivityResult activityResult) {
+                    if (activityResult.getResultCode() == CustomersActivity.RESULT_OK) {
+                        Intent intent = activityResult.getData();
+                        Bundle bundle = intent.getExtras();
 
-                            if(bundle != null) {
-                                String reason = bundle.getString(CustomerActivity.KEY_REASON);
-                                String name = bundle.getString(CustomerActivity.KEY_NAME);
-                                String email = bundle.getString(CustomerActivity.KEY_EMAIL);
-                                boolean haveRestriction = bundle.getBoolean(CustomerActivity.KEY_RESTRICTION);
-                                String clientTypeString = bundle.getString(CustomerActivity.KEY_TYPE);
-                                int division = bundle.getInt(CustomerActivity.KEY_DIVISION);
+                        if (bundle != null) {
+                            String reason = bundle.getString(CustomerActivity.KEY_REASON);
+                            String name = bundle.getString(CustomerActivity.KEY_NAME);
+                            String email = bundle.getString(CustomerActivity.KEY_EMAIL);
+                            boolean haveRestriction = bundle.getBoolean(CustomerActivity.KEY_RESTRICTION);
+                            String clientTypeString = bundle.getString(CustomerActivity.KEY_TYPE);
+                            int division = bundle.getInt(CustomerActivity.KEY_DIVISION);
 
-                                Customer updateCustomer = customersList.get(selectedPosition);
-                                updateCustomer.setCorporateReason(reason);
-                                updateCustomer.setBuyerName(name);
-                                updateCustomer.setEmail(email);
-                                updateCustomer.setDivision(division);
-                                updateCustomer.setRestriction(haveRestriction);
-                                Type clientType = Type.valueOf(clientTypeString);
-                                updateCustomer.setType(clientType);
-
-                                sortCustomerList();
+                            final Customer updateCustomer = customersList.get(selectedPosition);
+                            final Customer originalCustomerClone;
+                            try {
+                                originalCustomerClone = (Customer)updateCustomer.clone();
+                            } catch (CloneNotSupportedException cnse) {
+                                cnse.printStackTrace();
+                                UsefulAlert.showAlertDialog(CustomersActivity.this,
+                                       0);
                             }
-                        }
-                        selectedPosition = -1; // no object of the list is selected
 
-                        // unselected object from list
-                        if(actionMode !=null) {
-                            actionMode.finish();
+                            updateCustomer.setCorporateReason(reason);
+                            updateCustomer.setBuyerName(name);
+                            updateCustomer.setEmail(email);
+                            updateCustomer.setDivision(division);
+                            updateCustomer.setRestriction(haveRestriction);
+                            Type clientType = Type.valueOf(clientTypeString);
+                            updateCustomer.setType(clientType);
+                            sortCustomerList();
+
+                            // snack bar undo edit Customer
+                            final ConstraintLayout constraintLayout = findViewById(R.id.main);
+                            Snackbar snackbar = Snackbar.make(constraintLayout,
+                                    R.string.undo_update_customer,Snackbar.LENGTH_LONG);
+                            snackbar.setAction(R.string.undo, new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+
+
+                                }
+                            });
+                            snackbar.show();
                         }
                     }
-                });
+                    selectedPosition = -1; // no object of the list is selected
+
+                    // unselected object from list
+                    if (actionMode != null) {
+                        actionMode.finish();
+                    }
+                }
+            });
 
     private void updateCustomer() {
         Customer updateCustomer = customersList.get(selectedPosition);
@@ -304,21 +328,22 @@ public class CustomersActivity extends AppCompatActivity {
         // load screen with customer data
         launcherUpdateCustomer.launch(intentOpen);
     }
-    private void readPreferences () {
+
+    private void readPreferences() {
         SharedPreferences sharedPreferences = getSharedPreferences("FILE_PREFERENCES", Context.MODE_PRIVATE);
         ascendingOrder = sharedPreferences.getBoolean(KEY_ASCENDING_ORDER, ascendingOrder);
     }
 
-    private void savePreferencesAscendingOrder (boolean newOrderValue) {
+    private void savePreferencesAscendingOrder(boolean newOrderValue) {
         SharedPreferences sharedPreferences = getSharedPreferences("FILE_PREFERENCES", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putBoolean(KEY_ASCENDING_ORDER, newOrderValue);
         editor.commit();
-        ascendingOrder= newOrderValue;
+        ascendingOrder = newOrderValue;
     }
 
     private void sortCustomerList() {
-        if(ascendingOrder==true) {
+        if (ascendingOrder == true) {
             Collections.sort(customersList, orderByBuyerNameAsc);
         } else {
             Collections.sort(customersList, orderByBuyerNameDesc);
@@ -326,14 +351,16 @@ public class CustomersActivity extends AppCompatActivity {
         // render list after sort
         customerRecyclerViewAdapter.notifyDataSetChanged();
     }
-    private void updateOrderIcon () {
-        if(ascendingOrder==true) {
+
+    private void updateOrderIcon() {
+        if (ascendingOrder == true) {
             menuItemSort.setIcon(R.drawable.ic_action_name_ascending_order);
         } else {
             menuItemSort.setIcon(R.drawable.ic_action_name_descending_order);
         }
     }
-    public void restoreFactoryDefaults () {
+
+    public void restoreFactoryDefaults() {
         SharedPreferences sharedPreferences = getSharedPreferences("FILE_PREFERENCES", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         // clean by each key
@@ -346,7 +373,7 @@ public class CustomersActivity extends AppCompatActivity {
         ascendingOrder = INITIAL_ASCENDING_SORT_PATTER;
     }
 
-    private void confirmationRestoreFactoryDefaults () {
+    private void confirmationRestoreFactoryDefaults() {
         DialogInterface.OnClickListener listenerYes = new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {

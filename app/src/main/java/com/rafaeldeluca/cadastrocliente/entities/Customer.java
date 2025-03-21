@@ -1,11 +1,13 @@
 package com.rafaeldeluca.cadastrocliente.entities;
 
+import androidx.annotation.NonNull;
+
 import com.rafaeldeluca.cadastrocliente.entities.enums.Type;
 
 import java.io.Serializable;
 import java.util.Comparator;
 
-public class Customer implements Serializable {
+public class Customer implements Serializable, Cloneable {
 
     public static Comparator<Customer> orderByBuyerNameAsc = new Comparator<Customer>() {
         @Override
@@ -85,6 +87,14 @@ public class Customer implements Serializable {
 
     public void setDivision(int division) {
         this.division = division;
+    }
+
+    @NonNull
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        // this class has only primitives attributes or immutable
+        // clone method is sufficient
+        return super.clone();
     }
 
     @Override

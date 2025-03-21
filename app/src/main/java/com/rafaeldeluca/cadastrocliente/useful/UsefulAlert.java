@@ -13,6 +13,15 @@ public final class UsefulAlert {
         // to avoid class to be instantiated
     }
 
+    public static void showAlertDialog (Context context, int messageId) {
+        showAlertDialog(context, context.getString(messageId), null );
+    }
+
+    public static void showAlertDialog (Context context, int messageId,
+                                        DialogInterface.OnClickListener listener) {
+        showAlertDialog(context, context.getString(messageId), listener );
+    }
+
     public static void showAlertDialog (Context context, String message,
                                     DialogInterface.OnClickListener listener) {
 
@@ -31,15 +40,6 @@ public final class UsefulAlert {
         builder.setNeutralButton(R.string.ok, listener);
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
-    }
-
-    public static void showAlertDialog (Context context, int messageId,
-                                  DialogInterface.OnClickListener listener) {
-        showAlertDialog(context, context.getString(messageId), listener );
-    }
-
-    public static void showAlertDialog (Context context, int messageId) {
-        showAlertDialog(context, context.getString(messageId), null );
     }
 
     public static void confirmationActionAlertDialog(Context context, String message,
