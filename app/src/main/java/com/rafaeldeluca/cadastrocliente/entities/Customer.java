@@ -10,7 +10,7 @@ import com.rafaeldeluca.cadastrocliente.entities.enums.Type;
 import java.io.Serializable;
 import java.util.Comparator;
 
-@Entity
+@Entity(tableName = "customer")
 public class Customer implements Serializable, Cloneable {
 
     public static Comparator<Customer> orderByBuyerNameAsc = new Comparator<Customer>() {
