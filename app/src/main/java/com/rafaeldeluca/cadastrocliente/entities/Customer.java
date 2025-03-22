@@ -1,12 +1,16 @@
 package com.rafaeldeluca.cadastrocliente.entities;
 
 import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
 import com.rafaeldeluca.cadastrocliente.entities.enums.Type;
 
 import java.io.Serializable;
 import java.util.Comparator;
 
+@Entity
 public class Customer implements Serializable, Cloneable {
 
     public static Comparator<Customer> orderByBuyerNameAsc = new Comparator<Customer>() {
@@ -23,14 +27,22 @@ public class Customer implements Serializable, Cloneable {
         }
     };
 
+    @PrimaryKey(autoGenerate = true)
+    private long id;
+    @NonNull
+    @ColumnInfo(index=true)
     private String buyerName;
+    @NonNull
     private String corporateReason;
+    @NonNull
     private String email;
     private boolean restriction;
     private Type type;
     private int division;
 
+    public Customer () {
 
+    }
 
     public Customer(String buyerName, String corporateReason, String email, boolean restriction, Type type, int division) {
         this.buyerName = buyerName;
@@ -39,6 +51,14 @@ public class Customer implements Serializable, Cloneable {
         this.restriction = restriction;
         this.type = type;
         this.division = division;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getBuyerName() {
