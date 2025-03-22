@@ -11,7 +11,7 @@ import java.io.Serializable;
 import java.util.Comparator;
 
 @Entity(tableName = "customer")
-public class Customer implements Serializable, Cloneable {
+public class Customer implements Cloneable {
 
     public static Comparator<Customer> orderByBuyerNameAsc = new Comparator<Customer>() {
         @Override
@@ -39,6 +39,7 @@ public class Customer implements Serializable, Cloneable {
     private boolean restriction;
     private Type type;
     private int division;
+
 
     public Customer () {
 
