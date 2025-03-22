@@ -295,7 +295,7 @@ public class CustomersActivity extends AppCompatActivity {
                             // snack bar undo edit Customer
                             final ConstraintLayout constraintLayout = findViewById(R.id.main);
                             Snackbar snackbar = Snackbar.make(constraintLayout,
-                                    R.string.undo_update_customer,Snackbar.LENGTH_LONG);
+                                    R.string.data_update_customer,Snackbar.LENGTH_LONG);
                             snackbar.setAction(R.string.undo, new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {

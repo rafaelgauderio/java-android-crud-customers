@@ -65,6 +65,6 @@
     <string name="quotes" translatable="false">\"</string>
     <string name="confirm_restore_to_factory_defaults">Confirm  restore to factory defaults?</string>
     <string name="undo">UNDO</string>
-    <string name="undo_update_customer">Undo update customer</string>
+    <string name="data_update_customer">Customer data update done</string>
     <string name="error_of_type_conversion">Error of type conversion</string>
 </resources>
