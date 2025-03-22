@@ -22,16 +22,12 @@ import com.google.android.material.snackbar.Snackbar;
 import com.rafaeldeluca.cadastrocliente.R;
 import com.rafaeldeluca.cadastrocliente.entities.Customer;
 import com.rafaeldeluca.cadastrocliente.entities.enums.Type;
+import com.rafaeldeluca.cadastrocliente.persistence.CustomersDatabase;
 import com.rafaeldeluca.cadastrocliente.useful.UsefulAlert;
 
 public class CustomerActivity extends AppCompatActivity {
 
-    public static final String KEY_REASON = "KEY_REASON";
-    public static final String KEY_NAME = "KEY_NAME";
-    public static final String KEY_EMAIL = "KEY_EMAIL";
-    public static final String KEY_RESTRICTION = "KEY_RESTRICTION";
-    public static final String KEY_TYPE = "KEY_TYPE";
-    public static final String KEY_DIVISION = "KEY_DIVISION";
+    public static final String KEY_ID = "ID";
     public static final String KEY_MODE = "MODE";
     public static final String KEY_SUGGEST_DIVISION = "SUGGEST_DIVISION";
     public static final String KEY_LAST_DIVISION = "LAST_DIVISION";
@@ -71,74 +67,49 @@ public class CustomerActivity extends AppCompatActivity {
         Intent intentOpen = getIntent();
         Bundle bundle = intentOpen.getExtras();
 
-        if(bundle !=null) {
+        if (bundle != null) {
             mode = bundle.getInt(KEY_MODE);
-            if(mode == MODE_INSERT) {
+            if (mode == MODE_INSERT) {
                 this.setTitle(getString(R.string.inserir_cliente_novo));
-                if(suggestDivision==true) {
+                if (suggestDivision == true) {
                     spinnerDivision.setSelection(lastDivision);
                 }
             } else {
                 this.setTitle(getString(R.string.update_customer));
 
-                String reason = bundle.getString(CustomerActivity.KEY_REASON);
-                String name = bundle.getString(CustomerActivity.KEY_NAME);
-                String email = bundle.getString(CustomerActivity.KEY_EMAIL);
-                boolean haveRestriction = bundle.getBoolean(CustomerActivity.KEY_RESTRICTION);
-                String clientTypeString = bundle.getString(CustomerActivity.KEY_TYPE);
-                int division = bundle.getInt(CustomerActivity.KEY_DIVISION);
+                long id = bundle.getLong(KEY_ID);
+                CustomersDatabase customersDatabase = CustomersDatabase.getInstance(this);
+                originalCustomer = customersDatabase.getCustomerDao().getCustomerById(id);
 
-                Type clientType = Type.valueOf(clientTypeString);
-
-                editTextName.setText(name);
-                editTextReason.setText(reason);
-                editTextEmailCommercial.setText(email);
-                checkBoxRestriction.setChecked(haveRestriction);
-                spinnerDivision.setSelection(division);
-
-                originalCustomer = new Customer(name, reason, email, haveRestriction, clientType, division);
+                editTextName.setText(originalCustomer.getBuyerName());
+                editTextReason.setText(originalCustomer.getCorporateReason());
+                editTextEmailCommercial.setText(originalCustomer.getEmail());
+                checkBoxRestriction.setChecked(originalCustomer.isRestriction());
+                spinnerDivision.setSelection(originalCustomer.getDivision());
+                Type clientType = originalCustomer.getType();
 
                 if (clientType == Type.NOVO) {
                     radioButtonNew.setChecked(true);
                 } else {
-                    if(clientType == Type.REATIVADO) {
+                    if (clientType == Type.REATIVADO) {
                         radioButtonReactivated.setChecked(true);
                     } else {
-                        if(clientType == Type.RECORRENTE) {
+                        if (clientType == Type.RECORRENTE) {
                             radioButtonRecurrence.setChecked(true);
                         }
                     }
                 }
+                editTextName.requestFocus();
+                editTextName.setSelection(editTextName.getText().length());
             }
         }
-
-        //insertDataSpinnerDivision ();
     }
-    /*
-    private void insertDataSpinnerDivision() {
-        ArrayList<String> arrayDivisions = new ArrayList<String>();
 
-        arrayDivisions.add(getString(R.string.lazer));
-        arrayDivisions.add(getString(R.string.saude));
-        arrayDivisions.add(getString(R.string.comercio));
-        arrayDivisions.add(getString(R.string.industria));
-        arrayDivisions.add(getString(R.string.condominio));
-        arrayDivisions.add(getString(R.string.escritorio));
-        arrayDivisions.add(getString(R.string.outros));
-
-        // render each line of the spinner
-        ArrayAdapter<String> adapterDivisions = new ArrayAdapter<>(
-                this, android.R.layout.preference_category, arrayDivisions
-        );
-        spinnerDivision.setAdapter(adapterDivisions);
-
-    }
-     */
     public void cleanFields() {
 
         final String buyerName = editTextName.getText().toString();
         final String reason = editTextReason.getText().toString();
-        final String emailCommercial= editTextEmailCommercial.getText().toString();
+        final String emailCommercial = editTextEmailCommercial.getText().toString();
         final boolean hasRestriction = checkBoxRestriction.isChecked();
         final int radioButtonTypeId = radioGroupClientType.getCheckedRadioButtonId();
         final int division = spinnerDivision.getSelectedItemPosition();
@@ -163,18 +134,18 @@ public class CustomerActivity extends AppCompatActivity {
                 editTextEmailCommercial.setText(emailCommercial);
                 checkBoxRestriction.setChecked(hasRestriction);
                 spinnerDivision.setSelection(division);
-                if(radioButtonTypeId== R.id.radioButtonNewClient) {
+                if (radioButtonTypeId == R.id.radioButtonNewClient) {
                     radioButtonNew.setChecked(true);
                 } else {
-                    if(radioButtonTypeId == R.id.radioButtonClientReativated) {
+                    if (radioButtonTypeId == R.id.radioButtonClientReativated) {
                         radioButtonReactivated.setChecked(true);
                     } else {
-                      if(radioButtonTypeId== R.id.radioButtonRecurrenceClient) {
-                          radioButtonReactivated.setChecked(true);
-                      }
-                   }
+                        if (radioButtonTypeId == R.id.radioButtonRecurrenceClient) {
+                            radioButtonReactivated.setChecked(true);
+                        }
+                    }
                 }
-                if(viewWithFocus !=null) {
+                if (viewWithFocus != null) {
                     viewWithFocus.requestFocus();
                 }
             }
@@ -197,20 +168,20 @@ public class CustomerActivity extends AppCompatActivity {
         int radioButtonId = radioGroupClientType.getCheckedRadioButtonId();
 
         if (name == null || nameWithoutSpace.isEmpty() || nameWithoutSpace.isBlank()) {
-            UsefulAlert.showAlertDialog(this,R.string.campo_nome_preenchimento_obrigatorio);
+            UsefulAlert.showAlertDialog(this, R.string.campo_nome_preenchimento_obrigatorio);
             //Toast.makeText(this, R.string.campo_nome_preenchimento_obrigatorio, Toast.LENGTH_LONG).show();
             editTextName.requestFocus();
             return;
         }
 
-        if(reason ==null || reasonWithoutSpace.isEmpty() || reasonWithoutSpace.isBlank()) {
+        if (reason == null || reasonWithoutSpace.isEmpty() || reasonWithoutSpace.isBlank()) {
             //Toast.makeText(this, R.string.campo_razao_preenchimento_obrigatorio, Toast.LENGTH_LONG).show();
-            UsefulAlert.showAlertDialog(this,R.string.campo_razao_preenchimento_obrigatorio);
+            UsefulAlert.showAlertDialog(this, R.string.campo_razao_preenchimento_obrigatorio);
             editTextReason.requestFocus();
             return;
         }
 
-        if(email ==null || email.trim().isBlank() || email.trim().isBlank()) {
+        if (email == null || email.trim().isBlank() || email.trim().isBlank()) {
             //Toast.makeText(this, R.string.campo_email_de_preenchimento_obrigatorio, Toast.LENGTH_LONG).show();
             UsefulAlert.showAlertDialog(this, R.string.campo_email_de_preenchimento_obrigatorio);
             editTextEmailCommercial.requestFocus();
@@ -219,52 +190,60 @@ public class CustomerActivity extends AppCompatActivity {
 
         Type clientType = null;
 
-        if(radioButtonId == -1) {
+        if (radioButtonId == -1) {
             //Toast.makeText(this, R.string.necessario_escolher_o_tipo_de_cliente, Toast.LENGTH_LONG).show();
             UsefulAlert.showAlertDialog(this, R.string.necessario_escolher_o_tipo_de_cliente);
             return;
 
         } else {
-            if (radioButtonId==R.id.radioButtonNewClient)
+            if (radioButtonId == R.id.radioButtonNewClient)
                 clientType = Type.NOVO;
-            else if(radioButtonId==R.id.radioButtonClientReativated)
+            else if (radioButtonId == R.id.radioButtonClientReativated)
                 clientType = Type.REATIVADO;
-                        else if (radioButtonId==R.id.radioButtonRecurrenceClient)
-                            clientType = Type.RECORRENTE;
+            else if (radioButtonId == R.id.radioButtonRecurrenceClient)
+                clientType = Type.RECORRENTE;
         }
 
-        int division =  spinnerDivision.getSelectedItemPosition();
-        if(division== AdapterView.INVALID_POSITION) {
+        int division = spinnerDivision.getSelectedItemPosition();
+        if (division == AdapterView.INVALID_POSITION) {
             //Toast.makeText(this, R.string.o_spinner_nao_carregou_os_dados, Toast.LENGTH_LONG).show();
             UsefulAlert.showAlertDialog(this, R.string.o_spinner_nao_carregou_os_dados);
             return;
         }
         boolean haveRestriction = checkBoxRestriction.isChecked();
-        // test with it was any change on the edition mode, if not don´t update the object
-        if(mode == MODE_UPDATE &&
-                name.equalsIgnoreCase(originalCustomer.getBuyerName()) &&
-                reason.equalsIgnoreCase(originalCustomer.getCorporateReason()) &&
-                email.equalsIgnoreCase(originalCustomer.getEmail()) &&
-                haveRestriction == originalCustomer.isRestriction() &&
-                division== originalCustomer.getDivision() &&
-                clientType== originalCustomer.getType()) {
 
+        Customer customer = new Customer(name, reason, email, haveRestriction, clientType, division);
+
+
+        // test with it was any change on the edition mode, if not don´t update the object
+        if (customer.equals(originalCustomer)) {
             // the values are the same, do not save
-            setResult(CustomerActivity.RESULT_CANCELED);
-            finish();
+            this.setResult(CustomerActivity.RESULT_CANCELED);
+            this.finish();
             return;
         }
 
-        saveLastDivision(division);
-
         Intent intentResponse = new Intent();
-        intentResponse.putExtra(KEY_REASON,reason);
-        intentResponse.putExtra(KEY_NAME,name);
-        intentResponse.putExtra(KEY_EMAIL,email);
-        intentResponse.putExtra(KEY_RESTRICTION,haveRestriction);
-        intentResponse.putExtra(KEY_TYPE, clientType.toString());
-        intentResponse.putExtra(KEY_DIVISION,division);
+        CustomersDatabase customersDatabase = CustomersDatabase.getInstance(this);
+        if (mode == MODE_INSERT) {
+            long newId = customersDatabase.getCustomerDao().insertCustomer(customer);
+            if (newId <= 0) {
+                UsefulAlert.showAlertDialog(this, R.string.error_while_trying_to_insert_new_customer);
+                return;
+            }
+            customer.setId(newId);
 
+        } else if (mode == MODE_UPDATE) {
+            customer.setId(originalCustomer.getId());
+            int quantityCustomersChanged = customersDatabase.getCustomerDao().updateCustomer(customer);
+            if(quantityCustomersChanged !=1) {
+                UsefulAlert.showAlertDialog(this, R.string.error_while_trying_to_update_a_customer);
+                return;
+            }
+        }
+
+        saveLastDivision(division);
+        intentResponse.putExtra(KEY_ID, customer.getId());
         setResult(CustomerActivity.RESULT_OK, intentResponse);
         finish();
     }
@@ -285,35 +264,33 @@ public class CustomerActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem menuItem) {
         int menuItemId = menuItem.getItemId();
-        if(menuItemId == R.id.menuItemClean) {
+        if (menuItemId == R.id.menuItemClean) {
             cleanFields();
             return true;
-        } else
-            if(menuItemId == R.id.menuItemSave) {
-                saveFieldsValues();
-                return true;
-            } else
-                if (menuItemId == R.id.menuItemSuggestDivision) {
-                    boolean menuItemValue = !menuItem.isChecked();
-                    saveSuggestDivision(menuItemValue);
-                    menuItem.setChecked(menuItemValue);
-                    // if user habilitate suggest division, show last division used
-                    if(suggestDivision) {
-                        spinnerDivision.setSelection(lastDivision);
-                    }
-                    return true;
-                } else {
-                    return super.onOptionsItemSelected(menuItem);
-                }
-     }
+        } else if (menuItemId == R.id.menuItemSave) {
+            saveFieldsValues();
+            return true;
+        } else if (menuItemId == R.id.menuItemSuggestDivision) {
+            boolean menuItemValue = !menuItem.isChecked();
+            saveSuggestDivision(menuItemValue);
+            menuItem.setChecked(menuItemValue);
+            // if user habilitate suggest division, show last division used
+            if (suggestDivision) {
+                spinnerDivision.setSelection(lastDivision);
+            }
+            return true;
+        } else {
+            return super.onOptionsItemSelected(menuItem);
+        }
+    }
 
-    private void readPreferences () {
+    private void readPreferences() {
         SharedPreferences sharedPreferences = getSharedPreferences(CustomersActivity.FILE_PREFERENCES, Context.MODE_PRIVATE);
         suggestDivision = sharedPreferences.getBoolean(KEY_SUGGEST_DIVISION, suggestDivision);
         lastDivision = sharedPreferences.getInt(KEY_LAST_DIVISION, lastDivision);
     }
 
-    private void saveSuggestDivision (boolean newSuggestValue) {
+    private void saveSuggestDivision(boolean newSuggestValue) {
         SharedPreferences sharedPreferences = getSharedPreferences(CustomersActivity.FILE_PREFERENCES, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putBoolean(KEY_SUGGEST_DIVISION, newSuggestValue);

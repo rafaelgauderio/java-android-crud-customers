@@ -6,6 +6,7 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
+import com.rafaeldeluca.cadastrocliente.activities.CustomerActivity;
 import com.rafaeldeluca.cadastrocliente.entities.Customer;
 
 @Database(entities = {Customer.class},
@@ -18,7 +19,7 @@ public abstract class CustomersDatabase extends RoomDatabase {
     //singleton pattern
     private static CustomersDatabase INSTANCE;
 
-    private static CustomersDatabase getInstance(final Context context) {
+    public static CustomersDatabase getInstance(final Context context) {
         if (INSTANCE == null) {
             synchronized (CustomersDatabase.class) {
                 // double thread block verification

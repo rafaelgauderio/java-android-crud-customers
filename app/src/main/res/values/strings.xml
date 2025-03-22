@@ -67,4 +67,6 @@
     <string name="undo">UNDO</string>
     <string name="data_update_customer">Customer data update done</string>
     <string name="error_of_type_conversion">Error of type conversion</string>
+    <string name="error_while_trying_to_insert_new_customer">Error while trying to insert new Customer</string>
+    <string name="error_while_trying_to_update_a_customer">Error while trying to update a Customer</string>
 </resources>
