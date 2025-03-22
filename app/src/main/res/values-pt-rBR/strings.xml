@@ -63,4 +63,7 @@
     <string name="o_spinner_nao_carregou_os_dados">O spinner não carregou os dados</string>
     <string name="are_you_sure_you_want_to_delete_company">Tem certeza que deseja excluir a empresa?\n\"%1$s\"</string>
     <string name="confirm_restore_to_factory_defaults">Confirma restaurar para os padrões de fábrica?</string>
+    <string name="undo">desfazer</string>
+    <string name="undo_update_customer">Desfeito atualização do cliente</string>
+    <string name="error_of_type_conversion">Erro na tentativa de conversão de objeto</string>
 </resources>

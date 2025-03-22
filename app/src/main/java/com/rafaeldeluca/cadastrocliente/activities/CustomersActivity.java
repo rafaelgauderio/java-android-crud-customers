@@ -279,7 +279,8 @@ public class CustomersActivity extends AppCompatActivity {
                             } catch (CloneNotSupportedException cnse) {
                                 cnse.printStackTrace();
                                 UsefulAlert.showAlertDialog(CustomersActivity.this,
-                                       0);
+                                       R.string.error_of_type_conversion);
+                                return;
                             }
 
                             updateCustomer.setCorporateReason(reason);
@@ -298,7 +299,10 @@ public class CustomersActivity extends AppCompatActivity {
                             snackbar.setAction(R.string.undo, new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
-
+                                    customersList.remove(updateCustomer);
+                                    // add object customer before the edition
+                                    customersList.add(originalCustomerClone);
+                                    sortCustomerList();
 
                                 }
                             });
