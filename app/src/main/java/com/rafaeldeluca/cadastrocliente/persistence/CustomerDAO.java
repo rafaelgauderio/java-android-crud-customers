@@ -34,7 +34,7 @@ public interface CustomerDAO {
 
     @Query("SELECT * " +
             "FROM customer " +
-            "WHERE id+:id")
+            "WHERE id=:id")
     Customer getCustomerById(long id);
 
 }

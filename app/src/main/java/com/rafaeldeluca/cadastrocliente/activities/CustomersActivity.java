@@ -176,7 +176,6 @@ public class CustomersActivity extends AppCompatActivity {
                 public void onActivityResult(ActivityResult activityResult) {
                     if (activityResult.getResultCode() == CustomersActivity.RESULT_OK) {
                         Intent intent = activityResult.getData();
-
                         Bundle bundle = intent.getExtras();
 
                         if (bundle != null) {
@@ -276,7 +275,6 @@ public class CustomersActivity extends AppCompatActivity {
                         Bundle bundle = intent.getExtras();
 
                         if (bundle != null) {
-
                             // undo the update on the database
                             final Customer originalCustomer = customersList.get(selectedPosition);
                             long id = bundle.getLong(CustomerActivity.KEY_ID);
@@ -292,7 +290,6 @@ public class CustomersActivity extends AppCompatActivity {
                             snackbar.setAction(R.string.undo, new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
-
                                     // undo on database
                                     int quantityChangedCustomers = customersDatabase.getCustomerDao().updateCustomer(originalCustomer);
                                     if (quantityChangedCustomers != 1) {
@@ -310,7 +307,6 @@ public class CustomersActivity extends AppCompatActivity {
                         }
                     }
                     selectedPosition = -1; // no object of the list is selected
-
                     // unselected object from list
                     if (actionMode != null) {
                         actionMode.finish();
@@ -321,7 +317,6 @@ public class CustomersActivity extends AppCompatActivity {
     private void updateCustomer() {
         Customer updateCustomer = customersList.get(selectedPosition);
         Intent intentOpen = new Intent(this, CustomerActivity.class);
-
         intentOpen.putExtra(CustomerActivity.KEY_MODE, CustomerActivity.MODE_UPDATE);
         intentOpen.putExtra(CustomerActivity.KEY_ID, updateCustomer.getId());
         // load screen with customer data
