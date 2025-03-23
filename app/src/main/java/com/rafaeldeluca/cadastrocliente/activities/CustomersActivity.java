@@ -35,6 +35,7 @@ import com.rafaeldeluca.cadastrocliente.R;
 import com.rafaeldeluca.cadastrocliente.adapters.CustomerRecyclerViewAdapter;
 import com.rafaeldeluca.cadastrocliente.entities.Customer;
 import com.rafaeldeluca.cadastrocliente.entities.enums.Type;
+import com.rafaeldeluca.cadastrocliente.persistence.CustomersDatabase;
 import com.rafaeldeluca.cadastrocliente.useful.UsefulAlert;
 
 import java.util.ArrayList;
@@ -125,9 +126,15 @@ public class CustomersActivity extends AppCompatActivity {
 
     private void insertCustomersListData() {
 
-        customersList = new ArrayList<Customer>();
-        customerRecyclerViewAdapter = new CustomerRecyclerViewAdapter(this, customersList);
+        CustomersDatabase customersDatabase = CustomersDatabase.getInstance(this);
+        if (ascendingOrder) {
+            customersList = customersDatabase.getCustomerDao().gelAllCustomerAscending();
+        } else {
+            customersList = customersDatabase.getCustomerDao().gelAllCustomerDescending();
+        }
 
+        //customersList = new ArrayList<Customer>();
+        customerRecyclerViewAdapter = new CustomerRecyclerViewAdapter(this, customersList);
         // simple click
         customerRecyclerViewAdapter.setOnItemClickListener(new CustomerRecyclerViewAdapter.OnItemClickListener() {
             @Override
@@ -173,14 +180,10 @@ public class CustomersActivity extends AppCompatActivity {
                         Bundle bundle = intent.getExtras();
 
                         if (bundle != null) {
-                            String reason = bundle.getString(CustomerActivity.KEY_REASON);
-                            String name = bundle.getString(CustomerActivity.KEY_NAME);
-                            String email = bundle.getString(CustomerActivity.KEY_EMAIL);
-                            boolean haveRestriction = bundle.getBoolean(CustomerActivity.KEY_RESTRICTION);
-                            String clientTypeString = bundle.getString(CustomerActivity.KEY_TYPE);
-                            int division = bundle.getInt(CustomerActivity.KEY_DIVISION);
-
-                            Customer customer = new Customer(name, reason, email, haveRestriction, Type.valueOf(clientTypeString), division);
+                            // getting customer from database
+                            long id = bundle.getLong(CustomerActivity.KEY_ID);
+                            CustomersDatabase customersDatabase = CustomersDatabase.getInstance(CustomersActivity.this);
+                            Customer customer = customersDatabase.getCustomerDao().getCustomerById(id);
                             customersList.add(customer);
                             sortCustomerList();
                         }
@@ -237,8 +240,8 @@ public class CustomersActivity extends AppCompatActivity {
     }
 
     private void removeCustomer() {
-
-        Customer customer = customersList.get(selectedPosition);
+        // make variable final to continue existing after close method remove Customer
+        final Customer customer = customersList.get(selectedPosition);
         //String message = getString(R.string.are_you_sure_you_want_to_delete_company)
         // + customer.getCorporateReason() + getString(R.string.quotes);
         String message = getString(R.string.are_you_sure_you_want_to_delete_company, customer.getCorporateReason());
@@ -246,6 +249,14 @@ public class CustomersActivity extends AppCompatActivity {
         DialogInterface.OnClickListener listenerYes = new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                // delete form database
+                CustomersDatabase customersDatabase = CustomersDatabase.getInstance(CustomersActivity.this);
+                int quantityChangedCustomers = customersDatabase.getCustomerDao().deleteCustomer(customer);
+                if (quantityChangedCustomers != 1) {
+                    UsefulAlert.showAlertDialog(CustomersActivity.this, R.string.error_while_trying_to_delete_customer);
+                    return;
+                }
+                // delete from memory
                 customersList.remove(selectedPosition);
                 // render the list without the remove item
                 customerRecyclerViewAdapter.notifyItemRemoved(selectedPosition);
@@ -265,45 +276,34 @@ public class CustomersActivity extends AppCompatActivity {
                         Bundle bundle = intent.getExtras();
 
                         if (bundle != null) {
-                            String reason = bundle.getString(CustomerActivity.KEY_REASON);
-                            String name = bundle.getString(CustomerActivity.KEY_NAME);
-                            String email = bundle.getString(CustomerActivity.KEY_EMAIL);
-                            boolean haveRestriction = bundle.getBoolean(CustomerActivity.KEY_RESTRICTION);
-                            String clientTypeString = bundle.getString(CustomerActivity.KEY_TYPE);
-                            int division = bundle.getInt(CustomerActivity.KEY_DIVISION);
 
-                            final Customer updateCustomer = customersList.get(selectedPosition);
-                            final Customer originalCustomerClone;
-                            try {
-                                originalCustomerClone = (Customer)updateCustomer.clone();
-                            } catch (CloneNotSupportedException cnse) {
-                                cnse.printStackTrace();
-                                UsefulAlert.showAlertDialog(CustomersActivity.this,
-                                       R.string.error_of_type_conversion);
-                                return;
-                            }
-
-                            updateCustomer.setCorporateReason(reason);
-                            updateCustomer.setBuyerName(name);
-                            updateCustomer.setEmail(email);
-                            updateCustomer.setDivision(division);
-                            updateCustomer.setRestriction(haveRestriction);
-                            Type clientType = Type.valueOf(clientTypeString);
-                            updateCustomer.setType(clientType);
+                            // undo the update on the database
+                            final Customer originalCustomer = customersList.get(selectedPosition);
+                            long id = bundle.getLong(CustomerActivity.KEY_ID);
+                            final CustomersDatabase customersDatabase = CustomersDatabase.getInstance(CustomersActivity.this);
+                            final Customer updatedCustomer = customersDatabase.getCustomerDao().getCustomerById(id);
+                            customersList.set(selectedPosition, updatedCustomer);
                             sortCustomerList();
 
                             // snack bar undo edit Customer
                             final ConstraintLayout constraintLayout = findViewById(R.id.main);
                             Snackbar snackbar = Snackbar.make(constraintLayout,
-                                    R.string.data_update_customer,Snackbar.LENGTH_LONG);
+                                    R.string.data_update_customer, Snackbar.LENGTH_LONG);
                             snackbar.setAction(R.string.undo, new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
-                                    customersList.remove(updateCustomer);
-                                    // add object customer before the edition
-                                    customersList.add(originalCustomerClone);
-                                    sortCustomerList();
 
+                                    // undo on database
+                                    int quantityChangedCustomers = customersDatabase.getCustomerDao().updateCustomer(originalCustomer);
+                                    if (quantityChangedCustomers != 1) {
+                                        UsefulAlert.showAlertDialog(CustomersActivity.this, R.string.error_while_trying_to_update_a_customer);
+                                        return;
+                                    }
+                                    // undo on memory
+                                    customersList.remove(updatedCustomer);
+                                    // add object customer before the edition
+                                    customersList.add(originalCustomer);
+                                    sortCustomerList();
                                 }
                             });
                             snackbar.show();
@@ -323,12 +323,7 @@ public class CustomersActivity extends AppCompatActivity {
         Intent intentOpen = new Intent(this, CustomerActivity.class);
 
         intentOpen.putExtra(CustomerActivity.KEY_MODE, CustomerActivity.MODE_UPDATE);
-        intentOpen.putExtra(CustomerActivity.KEY_NAME, updateCustomer.getBuyerName());
-        intentOpen.putExtra(CustomerActivity.KEY_REASON, updateCustomer.getCorporateReason());
-        intentOpen.putExtra(CustomerActivity.KEY_EMAIL, updateCustomer.getEmail());
-        intentOpen.putExtra(CustomerActivity.KEY_RESTRICTION, updateCustomer.isRestriction());
-        intentOpen.putExtra(CustomerActivity.KEY_DIVISION, updateCustomer.getDivision());
-        intentOpen.putExtra(CustomerActivity.KEY_TYPE, updateCustomer.getType().toString());
+        intentOpen.putExtra(CustomerActivity.KEY_ID, updateCustomer.getId());
         // load screen with customer data
         launcherUpdateCustomer.launch(intentOpen);
     }

@@ -25,12 +25,12 @@ public interface CustomerDAO {
     @Query("SELECT * " +
             "FROM customer " +
             "ORDER BY buyerName ASC")
-    List<Customer> listAllCustomerAscending();
+    List<Customer> gelAllCustomerAscending();
 
     @Query("SELECT * " +
             "FROM customer " +
             "ORDER BY buyerName DESC")
-    List<Customer> listAllCustomerDescending();
+    List<Customer> gelAllCustomerDescending();
 
     @Query("SELECT * " +
             "FROM customer " +
