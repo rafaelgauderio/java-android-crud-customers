@@ -10,9 +10,9 @@
     <string name="save">Save</string>
     <string name="nome_completo">Full Name</string>
     <string name="os_valores_dos_campos_foram_limpos">All field values have been deleted!</string>
-    <string name="campo_nome_preenchimento_obrigatorio">The name field can not be empty</string>
+    <string name="campo_nome_preenchimento_obrigatorio">The name field can not be empty or less than 3 characters</string>
     <string name="nome_valor">"Buyers´s Name: "</string>
-    <string name="campo_razao_preenchimento_obrigatorio">Company name field can not be empty</string>
+    <string name="campo_razao_preenchimento_obrigatorio">Company name field can not be empty or less than 3 characters!</string>
     <string name="possui_restricao">Has Financial Restrictions\nCash sales only.</string>
     <string name="venda_somente_vista">\\nCash sales only.</string>
     <string name="nao_possui_restricao_financeira">Has no financial restrictions\nCan invoice in installments.</string>
@@ -39,7 +39,7 @@
     <string name="razao_fantasia">Company Name ou Trade Name</string>
     <string name="email">Email</string>
     <string name="email_hint">Business Email</string>
-    <string name="campo_email_de_preenchimento_obrigatorio">The email field can not be empty!</string>
+    <string name="campo_email_de_preenchimento_obrigatorio">The email field can not be empty or less than 5 characters!</string>
     <string name="email_valor">"Email: "</string>
     <string name="empresa_de_razao_social">Company Name\\n\"</string>
     <string name="description">Android Customer Registration</string>

@@ -6,9 +6,9 @@
     <string name="save">Salvar</string>
     <string name="nome_completo">Nome Completo</string>
     <string name="os_valores_dos_campos_foram_limpos">Os valores de todos os campos foram deletados!</string>
-    <string name="campo_nome_preenchimento_obrigatorio">Campo nome é de preenchimento obrigatório.</string>
+    <string name="campo_nome_preenchimento_obrigatorio">Campo nome é de preenchimento obrigatório e deve ter mais que 3 caracteres.</string>
     <string name="nome_valor">"Nome do Comprador: "</string>
-    <string name="campo_razao_preenchimento_obrigatorio">Razão Social é de preenchimento obrigatório</string>
+    <string name="campo_razao_preenchimento_obrigatorio">Razão Social é de preenchimento obrigatório e deve ter mais que 3 caracteres!</string>
     <string name="possui_restricao">Possui Restrição Financeira\nVenda somente à vista.</string>
     <string name="venda_somente_vista">\nVenda somente à vista</string>
     <string name="nao_possui_restricao_financeira">Não possui restrição financeira\nPode faturar a prazo.</string>
@@ -34,7 +34,7 @@
     <string name="razao_fantasia">Razão Social ou Fantasia</string>
     <string name="email">Email</string>
     <string name="email_hint">Email Comercial</string>
-    <string name="campo_email_de_preenchimento_obrigatorio">Campo email é de preenchimento obrigatório!</string>
+    <string name="campo_email_de_preenchimento_obrigatorio">Campo email é de preenchimento obrigatório e deve ter mais que 5 caracteres!</string>
     <string name="email_valor">"Email: "</string>
     <string name="empresa_de_razao_social">Empresa de razão social\n\"</string>
     <string name="logo_utfpr">Logo da UTFPR</string>

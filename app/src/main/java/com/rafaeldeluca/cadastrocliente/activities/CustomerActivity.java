@@ -167,21 +167,21 @@ public class CustomerActivity extends AppCompatActivity {
 
         int radioButtonId = radioGroupClientType.getCheckedRadioButtonId();
 
-        if (name == null || nameWithoutSpace.isEmpty() || nameWithoutSpace.isBlank()) {
+        if (name == null || nameWithoutSpace.isEmpty() || nameWithoutSpace.isBlank() || nameWithoutSpace.length() <=3) {
             UsefulAlert.showAlertDialog(this, R.string.campo_nome_preenchimento_obrigatorio);
             //Toast.makeText(this, R.string.campo_nome_preenchimento_obrigatorio, Toast.LENGTH_LONG).show();
             editTextName.requestFocus();
             return;
         }
 
-        if (reason == null || reasonWithoutSpace.isEmpty() || reasonWithoutSpace.isBlank()) {
+        if (reason == null || reasonWithoutSpace.isEmpty() || reasonWithoutSpace.isBlank() || reasonWithoutSpace.length() <=3) {
             //Toast.makeText(this, R.string.campo_razao_preenchimento_obrigatorio, Toast.LENGTH_LONG).show();
             UsefulAlert.showAlertDialog(this, R.string.campo_razao_preenchimento_obrigatorio);
             editTextReason.requestFocus();
             return;
         }
 
-        if (email == null || email.trim().isBlank() || email.trim().isBlank()) {
+        if (email == null || email.trim().isBlank() || email.trim().isBlank() || email.trim().length() <=5) {
             //Toast.makeText(this, R.string.campo_email_de_preenchimento_obrigatorio, Toast.LENGTH_LONG).show();
             UsefulAlert.showAlertDialog(this, R.string.campo_email_de_preenchimento_obrigatorio);
             editTextEmailCommercial.requestFocus();
