@@ -66,4 +66,7 @@
     <string name="undo">desfazer</string>
     <string name="data_update_customer">Dados do cliente atualizados</string>
     <string name="error_of_type_conversion">Erro na tentativa de conversão de objeto</string>
+    <string name="error_while_trying_to_insert_new_customer">Erro ao tentar adicionar um cliente novo!</string>
+    <string name="error_while_trying_to_update_a_customer">Erro ao tentar editar um cliente!</string>
+    <string name="error_while_trying_to_delete_customer">Erro ao tentar excluir um cliente!</string>
 </resources>
